@@ -1,9 +1,12 @@
 <script>
-	export let body
+	export let items
+	export let title
 </script>
 
+<h1>{title}</h1>
+
 <ul>
-	{#each body as { title, link }}
+	{#each items as { title, link }}
 		<a href={link}>
 			<li>{title}</li>
 		</a>
