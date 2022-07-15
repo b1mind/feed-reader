@@ -1,4 +1,6 @@
 <script>
+	import { session } from '$app/stores'
+	console.log($session.sessionId)
 	export let sessionId
 </script>
 
