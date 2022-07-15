@@ -1,9 +1,8 @@
 <script>
-	import { session } from '$app/stores'
-	console.log($session.data)
+	export let webId
 </script>
 
-{$session.data}
+{webId}
 
 <style lang="scss">
 </style>
