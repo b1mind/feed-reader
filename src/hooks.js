@@ -15,19 +15,6 @@ export const handle = handleSession(
 	{ secret: 'test' },
 	async ({ event, resolve }) => {
 		console.log(event.locals.session.data)
-		let redirect = ''
-		let solidSession = new Session()
-
-		event.locals.session.set({
-			name: 'session',
-			sessionId: solidSession.info.sessionId || '',
-			keys: [
-				'Required, but value not relevant for this demo - key1',
-				'Required, but value not relevant for this demo - key2',
-			],
-			maxAge: 24 * 60 * 60 * 1000, // 24 hours
-		})
-
 		// if (event.url.pathname === '/login') {
 		// 	const handleSolidRedirect = (url) => {
 		// 		return (redirect = url)
@@ -63,13 +50,14 @@ export const handle = handleSession(
 			// 4. With your session back from storage, you are now able to
 			//    complete the login process using the data appended to it as query
 			//    parameters in req.url by the Solid Identity Provider:
-			await session.handleIncomingRedirect(
-				`http://localhost:${port}${event.url.href}`
-			)
+			await session.handleIncomingRedirect(`${event.url.href}`)
 
 			// 5. `session` now contains an authenticated Session instance.
 			if (session.info.isLoggedIn) {
-				console.lot(`<p>Logged in with the WebID ${session.info.webId}.</p>`)
+				return new Response(
+					`<p>Logged in with the WebID ${session.info.webId}.</p>`
+				)
+				// console.log(`<p>Logged in with the WebID ${session.info.webId}.</p>`)
 			}
 		}
 

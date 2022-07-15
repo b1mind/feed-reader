@@ -1,7 +1,9 @@
 <script>
 	import { session } from '$app/stores'
-	console.log($session)
+	console.log($session.data)
 </script>
+
+{$session.data}
 
 <style lang="scss">
 </style>

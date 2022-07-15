@@ -1,25 +1,36 @@
-import { serialize } from 'cookie'
+import { Session } from '@inrupt/solid-client-authn-node'
 
 export async function GET({ locals }) {
-	console.log(locals)
+	let redirect = ''
+	let solidSession = new Session()
+
+	locals.session.set({
+		name: 'session',
+		sessionId: solidSession.info.sessionId,
+		keys: [
+			'Required, but value not relevant for this demo - key1',
+			'Required, but value not relevant for this demo - key2',
+		],
+		maxAge: 24 * 60 * 60 * 1000, // 24 hours
+	})
+
+	const handleSolidRedirect = (url) => {
+		return (redirect = url)
+	}
+
+	await solidSession.login({
+		// After login, the Solid Identity Provider will send the user back to the following
+		// URL, with the data necessary to complete the authentication process
+		// appended as query parameters:
+		redirectUrl: `http://localhost:5173/redirected`,
+		// Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
+		oidcIssuer: 'https://login.inrupt.com',
+		// Pick an application name that will be shown when asked
+		// to approve the application's access to the requested data.
+		clientName: 'Feed Reader',
+		handleRedirect: handleSolidRedirect,
+	})
+
+	//can we set a cookie header with this redirect?
+	return Response.redirect(redirect)
 }
-// headers: {
-//   'Set-Cookie': cookie.serialize(
-//     'session',
-//     user.userAuthToken,
-//     {
-//       // send cookie for every page
-//       path: '/',
-//       // server side only cookie so you can't use `document.cookie`
-//       httpOnly: true,
-//       // only requests from same site can send cookies
-//       // and serves to protect from CSRF
-//       // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-//       sameSite: 'strict',
-//       // only sent over HTTPS
-//       secure: process.env.NODE_ENV === 'production',
-//       // set cookie to expire after a month
-//       maxAge: 60 * 60 * 24 * 30,
-//     }
-//   ),
-// },
