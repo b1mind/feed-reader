@@ -1,5 +1,7 @@
-export async function get(res) {
+export async function GET({ locals }) {
 	return {
-		body: { res },
+		body: {
+			sessionId: locals.session.data.sessionId,
+		},
 	}
 }
