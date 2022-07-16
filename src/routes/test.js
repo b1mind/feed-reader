@@ -1,43 +1,45 @@
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
-import {
-	getThingAll,
-	getSolidDataset,
-	getPodUrlAll,
-	getThing,
-	getUrl,
-	getStringNoLocale,
-} from '@inrupt/solid-client'
-import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
+// temp nuke to test pulling from session vs fetching data in endpoint
 
-export async function GET({ locals }) {
-	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = session.info.webId
-	console.log(session)
-	// const myPods = await getPodUrlAll(webId, {
-	// 	fetch: session.fetch,
-	// })
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+// import {
+// 	getThingAll,
+// 	getSolidDataset,
+// 	getPodUrlAll,
+// 	getThing,
+// 	getUrl,
+// 	getStringNoLocale,
+// } from '@inrupt/solid-client'
+// import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
-	//have to pass session.fetch to gain access as logged in
-	const profileDataSet = await getSolidDataset(`${webId}`, {
-		fetch: session.fetch,
-	})
-	console.log(locals.session.data)
+// export async function GET({ locals }) {
+// 	const session = await getSessionFromStorage(locals.session.data.sessionId)
+// 	const webId = session.info.webId
+// 	console.log(session)
+// 	// const myPods = await getPodUrlAll(webId, {
+// 	// 	fetch: session.fetch,
+// 	// })
 
-	const profileThing = getThing(profileDataSet, webId)
-	const img = getUrl(profileThing, VCARD.hasPhoto)
-	const name = getStringNoLocale(profileThing, FOAF.name)
-	const note = getStringNoLocale(profileThing, VCARD.note)
+// 	//have to pass session.fetch to gain access as logged in
+// 	const profileDataSet = await getSolidDataset(`${webId}`, {
+// 		fetch: session.fetch,
+// 	})
+// 	console.log(locals.session.data)
 
-	return {
-		body: {
-			img,
-			name,
-			note,
-			// profileThing,
-		},
-	}
-}
+// 	const profileThing = getThing(profileDataSet, webId)
+// 	const img = getUrl(profileThing, VCARD.hasPhoto)
+// 	const name = getStringNoLocale(profileThing, FOAF.name)
+// 	const note = getStringNoLocale(profileThing, VCARD.note)
 
-export async function POST({ locals }) {
-	//do post stuffs here
-}
+// 	return {
+// 		body: {
+// 			img,
+// 			name,
+// 			note,
+// 			// profileThing,
+// 		},
+// 	}
+// }
+
+// export async function POST({ locals }) {
+// 	//do post stuffs here
+// }

@@ -4,13 +4,14 @@
 	// import { getUrl, getStringNoLocale } from '@inrupt/solid-client'
 
 	//these work
-	import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
-	import { session } from '$app/stores'
-	// console.log($session)
+	// import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
-	export let img
-	export let name
-	export let note
+	//lets pull from session rather than hit the pod api again.
+	//we can use endpoint for post to make changes but we would need to reset session info like if pfp changed?
+	import { session } from '$app/stores'
+	// export let img
+	// export let name
+	// export let note
 
 	// export let profileThing
 	//here is the dataThing object try import with if browser?
@@ -22,9 +23,9 @@
 <div>
 	LogginId: {$session.info.isLoggedIn}
 </div>
-<i>{note}</i>
-<h1>{name}</h1>
-<img src={img} alt="profile" />
+<!-- <i>{note}</i> -->
+<h1>{$session.info.name}</h1>
+<img src={$session.info.img} alt="profile" />
 
 <style lang="scss">
 </style>

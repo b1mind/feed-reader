@@ -20,6 +20,7 @@ export const handle = handleSession(
 	{ secret: 'SUPER_NOTSECRET_SECRET_32_CHARATERS_OR_MORE' },
 	async ({ event, resolve }) => {
 		if (event.url.pathname === '/redirected') {
+			console.log(event.url)
 			//    If the user is sent back to the `redirectUrl` provided in step 2,
 			//    it means that the login has been initiated and can be completed. In
 			//    particular, initiating the login stores the session in storage,
