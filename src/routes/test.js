@@ -11,23 +11,27 @@ import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
 export async function GET({ locals }) {
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const myPods = await getPodUrlAll(session.info.webId, {
+	const webId = session.info.webId
+	const myPods = await getPodUrlAll(webId, {
 		fetch: session.fetch,
 	})
 
 	//have to pass session.fetch to gain access as logged in
-	const profileDataSet = await getSolidDataset(`${myPods[0]}profile/card#me`, {
+	const profileDataSet = await getSolidDataset(`${myPods[0]}profile/card`, {
 		fetch: session.fetch,
 	})
 
-	const items = getThingAll(profileDataSet)
-	// const image = getThing(profileDataSet, VCARD.hasPhoto)
-	const img = items.forEach((i) =>
-		console.log(getUrl(i, RDF.type) === VCARD.hasPhoto)
-	)
+	const profileThing = getThing(profileDataSet, webId)
+	const img = getUrl(profileThing, VCARD.hasPhoto)
+
+	console.log(img)
+
+	// const img = items.forEach((i) =>
+	// 	console.log(getUrl(i, RDF.type) === VCARD.hasPhoto)
+	// )
+
 	// const img = getUrl(items, VCARD.hasPhoto)
 	console.log(session.info.webId)
-	console.dir(items)
 
 	return {
 		body: {
