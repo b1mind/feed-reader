@@ -24,7 +24,8 @@ export async function GET({ locals }) {
 		// appended as query parameters:
 		redirectUrl: `http://localhost:5173/redirected`,
 		// Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
-		oidcIssuer: 'https://login.inrupt.com',
+		oidcIssuer: 'https://inrupt.net/',
+		// oidcIssuer: 'https://broker.pod.inrupt.com',
 		// Pick an application name that will be shown when asked
 		// to approve the application's access to the requested data.
 		clientName: 'Feed Reader',
