@@ -1,6 +1,6 @@
 import { Session } from '@inrupt/solid-client-authn-node'
 
-export async function GET({ locals }) {
+export async function GET({ locals, url }) {
 	let redirect = ''
 	let solidSession = new Session()
 
@@ -22,7 +22,7 @@ export async function GET({ locals }) {
 		// After login, the Solid Identity Provider will send the user back to the following
 		// URL, with the data necessary to complete the authentication process
 		// appended as query parameters:
-		redirectUrl: `http://localhost:5173/redirected`,
+		redirectUrl: `${url.origin}/redirected`,
 		// Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
 		oidcIssuer: 'https://inrupt.net/',
 		// oidcIssuer: 'https://broker.pod.inrupt.com',

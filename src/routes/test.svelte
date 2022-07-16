@@ -1,8 +1,8 @@
 <script>
-	export let webId
+	export let img
 </script>
 
-{webId}
+<img src={img} alt="profile" />
 
 <style lang="scss">
 </style>

@@ -30,6 +30,7 @@
 		"@inrupt/solid-client": "^1.23.1",
 		"@inrupt/solid-client-authn-browser": "^1.12.1",
 		"@inrupt/solid-client-authn-node": "^1.12.1",
+		"@inrupt/vocab-common-rdf": "^1.0.5",
 		"cookie": "^0.5.0"
 	}
 }

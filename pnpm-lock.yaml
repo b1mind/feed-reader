@@ -4,6 +4,7 @@ specifiers:
   '@inrupt/solid-client': ^1.23.1
   '@inrupt/solid-client-authn-browser': ^1.12.1
   '@inrupt/solid-client-authn-node': ^1.12.1
+  '@inrupt/vocab-common-rdf': ^1.0.5
   '@playwright/test': ^1.22.2
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
@@ -22,6 +23,7 @@ dependencies:
   '@inrupt/solid-client': 1.23.1
   '@inrupt/solid-client-authn-browser': 1.12.1
   '@inrupt/solid-client-authn-node': 1.12.1
+  '@inrupt/vocab-common-rdf': 1.0.5
   cookie: 0.5.0
 
 devDependencies:
@@ -179,6 +181,10 @@ packages:
 
   /@inrupt/solid-common-vocab/1.0.0:
     resolution: {integrity: sha512-LcImhJqqPsNl/OlULzEEK2rYevty0eh1zaOLVz3lnydEU1DQkeaJ8fKBxKdp5/QjCtnIYcaDjh5U11PGh29Dgg==}
+    dev: false
+
+  /@inrupt/vocab-common-rdf/1.0.5:
+    resolution: {integrity: sha512-onrehQte8m0XW83WwM6T4o5WgmYGzdYUCef6FDjMKfQCF64FnARFNn5fYhKodimBaAOFKhuJ3vw1NBZV/EYqJw==}
     dev: false
 
   /@mapbox/node-pre-gyp/1.0.9:
