@@ -1,8 +1,9 @@
 <script>
 	import { session } from '$app/stores'
-	console.log($session.sessionId)
-	export let sessionId
+	console.log($session)
+
+	export let sessionData
 </script>
 
 <h1>Just another RSS Reader</h1>
-{sessionId}
+{sessionData.sessionId}

@@ -20,15 +20,19 @@ export async function GET({ locals }) {
 	const profileDataSet = await getSolidDataset(`${webId}`, {
 		fetch: session.fetch,
 	})
+	console.log(profileDataSet)
 
 	const profileThing = getThing(profileDataSet, webId)
 	const img = getUrl(profileThing, VCARD.hasPhoto)
 	const name = getStringNoLocale(profileThing, FOAF.name)
+	const note = getStringNoLocale(profileThing, VCARD.note)
 
 	return {
 		body: {
 			img,
 			name,
+			note,
+			// profileThing,
 		},
 	}
 }
