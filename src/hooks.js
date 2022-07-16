@@ -1,9 +1,19 @@
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import {
+	getThingAll,
+	getSolidDataset,
+	getPodUrlAll,
+	getThing,
+	getUrl,
+	getStringNoLocale,
+} from '@inrupt/solid-client'
+import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
+
 import { handleSession } from 'svelte-kit-cookie-session'
 
 export const getSession = ({ locals }) => {
 	if (!locals.session) return {}
-	return { sessionData: locals.session.data }
+	return locals.session.data
 }
 
 export const handle = handleSession(
@@ -24,7 +34,23 @@ export const handle = handleSession(
 
 			//   `session` now contains an authenticated Session instance.
 			if (session.info.isLoggedIn) {
-				return new Response(`Logged in with the WebID ${session.info.webId}.`)
+				const webId = session.info.webId
+
+				const profileDataSet = await getSolidDataset(`${webId}`, {
+					fetch: session.fetch,
+				})
+
+				const profileThing = getThing(profileDataSet, webId)
+				const img = getUrl(profileThing, VCARD.hasPhoto)
+				const name = getStringNoLocale(profileThing, FOAF.name)
+
+				await event.locals.session.update(() => ({
+					info: { ...session.info, img, name },
+				}))
+
+				return new Response(
+					`Logged in with the WebID ${session.info.webId} as ${name}.`
+				)
 			}
 		}
 
@@ -32,10 +58,10 @@ export const handle = handleSession(
 			const session = await getSessionFromStorage(
 				event.locals.session.data.sessionId
 			)
+			await event.locals.session.destroy()
 			session.logout()
 			return new Response(`Logged out`)
 		}
-
 		const response = await resolve(event)
 
 		return response

@@ -7,6 +7,7 @@ export async function GET({ locals, url }) {
 	locals.session.set({
 		name: 'session',
 		sessionId: solidSession.info.sessionId,
+		info: {},
 		keys: [
 			'Required, but value not relevant for this demo - key1',
 			'Required, but value not relevant for this demo - key2',
@@ -23,6 +24,7 @@ export async function GET({ locals, url }) {
 		// URL, with the data necessary to complete the authentication process
 		// appended as query parameters:
 		redirectUrl: `${url.origin}/redirected`,
+		// redirectUrl: `${url.href}`,
 		// Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
 		oidcIssuer: 'https://inrupt.net/',
 		// oidcIssuer: 'https://broker.pod.inrupt.com',

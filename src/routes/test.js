@@ -12,6 +12,7 @@ import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 export async function GET({ locals }) {
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = session.info.webId
+	console.log(session)
 	// const myPods = await getPodUrlAll(webId, {
 	// 	fetch: session.fetch,
 	// })
@@ -20,7 +21,7 @@ export async function GET({ locals }) {
 	const profileDataSet = await getSolidDataset(`${webId}`, {
 		fetch: session.fetch,
 	})
-	console.log(profileDataSet)
+	console.log(locals.session.data)
 
 	const profileThing = getThing(profileDataSet, webId)
 	const img = getUrl(profileThing, VCARD.hasPhoto)
