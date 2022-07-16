@@ -1,10 +1,14 @@
 <script>
+	import { session } from '$app/stores'
 </script>
 
 <nav>
-	<a href="/login">login</a>
-	<a href="/logout">logout</a>
-	<a href="/test">test</a>
+	{#if $session.info}
+		<a href="/logout">logout</a>
+		<a href="/test">test</a>
+	{:else}
+		<a href="/login">login</a>
+	{/if}
 </nav>
 
 <style lang="scss">
