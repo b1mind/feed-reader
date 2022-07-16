@@ -1,3 +1,3 @@
 # Feed-Reader
 
-Just another RSS feed reader built with SvelteKit
+Just another RSS feed reader built with SvelteKit and SolidPods.
