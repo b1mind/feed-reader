@@ -1,10 +1,10 @@
 import Parser from 'rss-parser'
 let parser = new Parser()
 
-export async function get(res) {
-	// let feed = await parser.parseURL('https://www.reddit.com/r/spaceporn.rss')
-	let feed = await parser.parseURL('https://www.sarasoueidan.com/feed.xml')
-	console.dir(feed)
+export async function GET({ url, params }) {
+	let xmlUrl = url.searchParams.has('xml') ? url.searchParams.get('xml') : false
+
+	let feed = await parser.parseURL(xmlUrl)
 	let items = []
 
 	feed.items.forEach((item) => {
@@ -13,6 +13,6 @@ export async function get(res) {
 	})
 
 	return {
-		body: { title: feed.title, items, res },
+		body: { title: feed.title, items },
 	}
 }

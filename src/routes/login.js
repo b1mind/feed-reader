@@ -7,7 +7,7 @@ export async function GET({ locals, url }) {
 	locals.session.set({
 		name: 'session',
 		sessionId: solidSession.info.sessionId,
-		info: {},
+		info: false,
 		keys: [
 			'Required, but value not relevant for this demo - key1',
 			'Required, but value not relevant for this demo - key2',
