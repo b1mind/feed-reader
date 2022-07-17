@@ -27,6 +27,7 @@ export async function GET({ locals, url }) {
 	const name = getStringNoLocale(profileThing, FOAF.name)
 	const note = getStringNoLocale(profileThing, VCARD.note)
 
+	// this is a test of local.session vs sessionCookie
 	locals.session.user = { ...session.info, img, name, note }
 
 	await locals.session.update(() => ({
