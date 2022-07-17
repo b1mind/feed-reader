@@ -22,13 +22,13 @@
 </ul>
 
 <form action="" method="POST" on:submit={handleSubmit}>
-	<label for="RSSname">
-		Name:
-		<input type="text" name="" id="RSSname" />
+	<label for="rssFeed">
+		RSS Feed:
+		<input autocomplete="off" type="text" name="" id="rssFeed" />
 	</label>
-	<label for="RSSfeed">
-		Feed:
-		<input type="text" name="" id="RSSfeed" />
+	<label for="rssUrl">
+		RSS Url:
+		<input type="text" name="" id="rssUrl" />
 	</label>
 	<button type="submit">add</button>
 </form>

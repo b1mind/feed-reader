@@ -2,6 +2,7 @@ import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getSolidDataset,
 	getThing,
+	createThing,
 	getUrl,
 	getStringNoLocale,
 	createSolidDataset,
@@ -12,6 +13,10 @@ let rssList = [
 	{ name: '5t3ph Eckles', href: 'https://thinkdobecreate.com/feed' },
 	{ name: 'Space Porn', href: 'https://www.reddit.com/r/spaceporn.rss' },
 	{ name: 'Sara Soueidan', href: 'https://www.sarasoueidan.com/feed.xml' },
+	{
+		name: 'Test Newsletter',
+		href: 'https://kill-the-newsletter.com/feeds/e3etd1qk7rz90re8.xml',
+	},
 ]
 
 export async function GET({ locals, url }) {
@@ -26,6 +31,7 @@ export async function GET({ locals, url }) {
 	const profileDataSet = await getSolidDataset(`${webId.origin}/public/`, {
 		// fetch: session.fetch,
 	})
+	console.log(profileDataSet)
 
 	return {
 		body: {
@@ -39,7 +45,11 @@ export async function POST({ locals }) {
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.session.data.info.webId)
 
-	console.log(session.info)
+	const publicDataSet = await getSolidDataset(`${webId.origin}/public/`, {
+		fetch: session.fetch,
+	})
+
+	// let feed = createThing({ name: '' })
 
 	return {
 		body: {
