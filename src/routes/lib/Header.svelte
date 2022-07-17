@@ -3,9 +3,10 @@
 </script>
 
 <nav>
+	<a href="/">home</a>
 	{#if $session.info}
-		<a href="/logout">logout</a>
 		<a href="/test">test</a>
+		<a href="/logout">logout</a>
 	{:else}
 		<a href="/login">login</a>
 	{/if}

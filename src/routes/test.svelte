@@ -20,12 +20,16 @@
 
 <!-- todo post update to name -->
 <!-- <input bind:value={name} type="text" name="name" /> -->
-<div>
-	LogginId: {$session.info.isLoggedIn}
-</div>
-<!-- <i>{note}</i> -->
-<h1>{$session.info.name}</h1>
-<img src={$session.info.img} alt="profile" />
+{#if $session.info}
+	<div>
+		LogginId: {$session.info.isLoggedIn}
+	</div>
+	<!-- <i>{note}</i> -->
+	<h1>{$session.info.name}</h1>
+	<img src={$session.info.img} alt="profile" />
+{:else}
+	<p>nothing to display <a href="/login">login</a></p>
+{/if}
 
 <style lang="scss">
 </style>
