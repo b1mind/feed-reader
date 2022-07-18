@@ -4,7 +4,7 @@ import { handleSession } from 'svelte-kit-cookie-session'
 export const getSession = ({ locals }) => {
 	if (!locals.session) return
 	//passing in both cookieSession and event below
-	return locals.session.data
+	return { ...locals.session.data }
 }
 
 export const handle = handleSession(
@@ -12,19 +12,9 @@ export const handle = handleSession(
 	// no sensitive data being passed atm.
 	{ secret: 'SUPER_NOTSECRET_SECRET_32_CHARATERS_OR_MORE' },
 	async ({ event, resolve }) => {
-		const session = await getSessionFromStorage(
-			event.locals.session.data.sessionId
-		)
-
-		if (event.url.pathname === '/redirected') {
-			await session.handleIncomingRedirect(`${event.url.href}`)
-
-			event.locals.session.update(() => ({
-				solidSession: session,
-			}))
-
-			// event.locals.session.solidSession = session
-		}
+		// const session = await getSessionFromStorage(
+		// 	event.locals.session.data.sessionId
+		// )
 
 		//should I check for session here and set user stuffs?
 		// event.locals.session.user = { test: 'test' }

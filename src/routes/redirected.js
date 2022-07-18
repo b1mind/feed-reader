@@ -10,8 +10,9 @@ import {
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
 export async function GET({ locals, url }) {
-	const session = await locals.session.data.solidSession
-	// const session = await getSessionFromStorage(locals.session.data.sessionId)
+	const session = await getSessionFromStorage(locals.session.data.sessionId)
+
+	await session.handleIncomingRedirect(`${url.href}`)
 
 	if (!session.info.isLoggedIn) return console.log('not loggedIn')
 	const webId = session.info.webId
@@ -21,6 +22,7 @@ export async function GET({ locals, url }) {
 	})
 
 	const profileThing = getThing(profileDataSet, webId)
+	console.log(profileThing)
 	// where is this name FOAF schema
 	// const name = getStringNoLocale(profileThing, FOAF.name)
 	const img = getUrl(profileThing, VCARD.hasPhoto)

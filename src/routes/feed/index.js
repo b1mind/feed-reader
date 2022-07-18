@@ -31,8 +31,7 @@ export async function GET({ locals }) {
 
 	// by not getting session to read public its way way faster
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const session = await locals.session.data.solidSession
-	const webId = new URL(session.info.webId)
+	const webId = new URL(locals.session.data.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList`
 
 	try {
@@ -57,8 +56,7 @@ export async function GET({ locals }) {
 			let href = 'https://www.reddit.com/r/keyboards.rss'
 			//should this return an option to create vs just doing it?
 			rssDataSet = createSolidDataset()
-			const session = await locals.session.data.solidSession
-			// const session = await getSessionFromStorage(locals.session.data.sessionId)
+			const session = await getSessionFromStorage(locals.session.data.sessionId)
 
 			// need to figure out what kinda Thing to make, want a good list for urls/names/params
 			// must have created date to check and get newest/oldest order
@@ -91,9 +89,7 @@ export async function POST({ locals, request }) {
 	const url = formData.get('url')
 
 	//need util classes for abstraction
-	const session = await locals.session.data.solidSession
-	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-
+	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.session.data.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList`
 	let rssDataSet
