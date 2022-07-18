@@ -1,5 +1,8 @@
 <script>
+	export let error
 	export let rssList
+	let feed = ''
+	let url = ''
 
 	//todo need a utils file
 	function slugify(string) {
@@ -21,14 +24,18 @@
 	{/each}
 </ul>
 
-<form action="" method="POST" on:submit={handleSubmit}>
-	<label for="rssFeed">
+<form action="/feed" method="post" autocomplete="off">
+	{#if error}
+		{error}
+	{/if}
+
+	<label for="feed">
 		RSS Feed:
-		<input autocomplete="off" type="text" name="" id="rssFeed" />
+		<input type="text" name="feed" bind:value={feed} />
 	</label>
-	<label for="rssUrl">
+	<label for="url">
 		RSS Url:
-		<input type="text" name="" id="rssUrl" />
+		<input type="text" name="url" bind:value={url} />
 	</label>
 	<button type="submit">add</button>
 </form>
