@@ -4,7 +4,7 @@ import { handleSession } from 'svelte-kit-cookie-session'
 export const getSession = ({ locals }) => {
 	if (!locals.session) return
 	//passing in both cookieSession and event below
-	return { ...locals.session.data, user: locals.session.user }
+	return { ...locals.session.data }
 }
 
 export const handle = handleSession(
@@ -17,7 +17,7 @@ export const handle = handleSession(
 		// )
 
 		//should I check for session here and set user stuffs?
-		event.locals.session.user = { test: 'test' }
+		// event.locals.session.user = { test: 'test' }
 		const response = await resolve(event)
 
 		return response

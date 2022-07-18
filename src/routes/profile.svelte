@@ -3,7 +3,7 @@
 </script>
 
 {#if $session.info}
-	<h1>{$session.info.name}</h1>
+	<h1>{$session.info.name}: {$session.info.nick}</h1>
 	<img src={$session.info.img} width="300px" alt="profile" />
 	<p>
 		<i>{$session.info.note}</i>

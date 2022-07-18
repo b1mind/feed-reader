@@ -23,15 +23,17 @@ export async function GET({ locals, url }) {
 
 	const profileThing = getThing(profileDataSet, webId)
 	console.log(profileThing)
+	// where is this name FOAF schema
+	// const name = getStringNoLocale(profileThing, FOAF.name)
 	const img = getUrl(profileThing, VCARD.hasPhoto)
-	const name = getStringNoLocale(profileThing, FOAF.name)
+	const name = getStringNoLocale(profileThing, VCARD.fn)
+	const nick = getStringNoLocale(profileThing, FOAF.nick)
 	const note = getStringNoLocale(profileThing, VCARD.note)
 
 	// this is a test of local.session vs sessionCookie
-	locals.session.user = { ...session.info, img, name, note }
 
 	await locals.session.update(() => ({
-		info: { ...session.info, img, name, note },
+		info: { ...session.info, img, name, nick, note },
 	}))
 
 	return {

@@ -30,7 +30,7 @@
 	{/if}
 
 	<label for="feed">
-		RSS Feed:
+		Feed Name:
 		<input type="text" name="feed" bind:value={feed} />
 	</label>
 	<label for="url">
