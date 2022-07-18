@@ -11,43 +11,50 @@ import {
 	setThing,
 } from '@inrupt/solid-client'
 import { FOAF, VCARD, RDF, SCHEMA_INRUPT } from '@inrupt/vocab-common-rdf'
-
-let rssList = [
-	{ name: '5t3ph Eckles', href: 'https://thinkdobecreate.com/feed' },
-	{ name: 'Space Porn', href: 'https://www.reddit.com/r/spaceporn.rss' },
-	{ name: 'Sara Soueidan', href: 'https://www.sarasoueidan.com/feed.xml' },
-	{
-		name: 'Test Newsletter',
-		href: 'https://kill-the-newsletter.com/feeds/e3etd1qk7rz90re8.xml',
-	},
-]
+import { getThingAll } from '@inrupt/solid-client'
 
 export async function GET({ locals, url }) {
+	let rssList = [
+		{ name: 'Space Porn', href: 'https://www.reddit.com/r/spaceporn.rss' },
+		{ name: 'Sara Soueidan', href: 'https://www.sarasoueidan.com/feed.xml' },
+		{
+			name: 'Test Newsletter',
+			href: 'https://kill-the-newsletter.com/feeds/e3etd1qk7rz90re8.xml',
+		},
+	]
+
 	// by not getting session to read public its way way faster
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.session.data.info.webId)
 	let listUrl = `${webId.origin}/public/rssList`
 
-	//is this a better way to fetch data?
-	// const testData = await session.fetch(webId)
-	// console.log(testData)
-
 	try {
 		const rssDataSet = await getSolidDataset(listUrl)
-		const rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
-		// console.log(rssThing)
+
+		let things = getThingAll(rssDataSet)
+		things.forEach((thing) => {
+			let feedName = getStringNoLocale(thing, SCHEMA_INRUPT.name)
+			let feedUrl = getUrl(thing, RDF.type)
+			rssList = [{ name: feedName, href: feedUrl }, ...rssList]
+		})
+
+		return {
+			body: {
+				rssList,
+			},
+		}
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			//should this return an option to create vs just doing it?
 			rssDataSet = createSolidDataset()
 			const session = await getSessionFromStorage(locals.session.data.sessionId)
 
-			rssThing = buildThing(createThing({ name: 'NewList' }))
-				.addStringNoLocale(SCHEMA_INRUPT.name, 'ErickO smells of elderberries')
-				.addUrl(RDF.type, 'https://b.1mind.dev')
+			// need to figure out what kinda Thing to make, want a good list for urls/names/params
+			rssThing = buildThing(createThing({ name: 'RedditKeyboards' }))
+				.addStringNoLocale(SCHEMA_INRUPT.name, 'RedditKeyboards')
+				.addUrl(RDF.type, 'https://www.reddit.com/r/keyboards.rss')
 				.build()
 
-			console.log(rssThing)
 			rssDataSet = setThing(rssDataSet, rssThing)
 			saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
 		} else {
@@ -57,6 +64,7 @@ export async function GET({ locals, url }) {
 
 	return {
 		body: {
+			//should we add defaults here if no feeds?
 			rssList,
 		},
 	}
@@ -76,8 +84,8 @@ export async function POST({ locals, request }) {
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
-		let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
-		rssThing = buildThing(rssThing)
+		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+		rssThing = buildThing(createThing({ name: feedName }))
 			.addStringNoLocale(SCHEMA_INRUPT.name, feedName)
 			.addUrl(RDF.type, feedUrl)
 			.build()
