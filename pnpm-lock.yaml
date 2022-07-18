@@ -13,6 +13,7 @@ specifiers:
   eslint-plugin-svelte3: ^4.0.0
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
+  rdf-namespaces: ^1.9.2
   rss-parser: ^3.12.0
   svelte: ^3.44.0
   svelte-kit-cookie-session: ^3.0.6
@@ -32,6 +33,7 @@ devDependencies:
   eslint-plugin-svelte3: 4.0.0_piwa6j2njmnknm35bh3wz5v52y
   prettier: 2.7.1
   prettier-plugin-svelte: 2.7.0_o3ioganyptcsrh6x4hnxvjkpqi
+  rdf-namespaces: 1.9.2
   rss-parser: 3.12.0
   svelte: 3.49.0
   svelte-kit-cookie-session: 3.0.6
@@ -1623,6 +1625,10 @@ packages:
     resolution: {integrity: sha512-ApvlFa/WsQh8LpPK/6hctQwG06Z9ztQQGWVtrcrf9L6+sejHNXLPOqL+w7q3hF+iL0C4sv3AX1PUtGkLNzyZ0Q==}
     dependencies:
       '@rdfjs/types': 1.1.0
+    dev: true
+
+  /rdf-namespaces/1.9.2:
+    resolution: {integrity: sha512-Gf/sZLUo758fDLnqZs0laG0IbOm06yq1fVrCnFhOEcGyTKt9hh7lcs+7L0DAQquacwARqfsJIOcJDsfdZRU/Wg==}
     dev: true
 
   /react-is/17.0.2:
