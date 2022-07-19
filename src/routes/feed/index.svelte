@@ -8,19 +8,21 @@
 	function slugify(string) {
 		return string.split(' ').join('-').toLowerCase()
 	}
-
-	function handleSubmit(e) {
-		console.log(e)
-	}
 </script>
 
 <h1>RssList</h1>
 
 <ul>
 	{#each rssList as { name, href }}
-		<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
-			<li>{name}</li>
-		</a>
+		<li>
+			<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
+				{name}
+			</a>
+			<form action="/feed?_method=delete" method="POST">
+				<input type="hidden" name="name" value={name} />
+				<button title="remove" type="submit">x</button>
+			</form>
+		</li>
 	{/each}
 </ul>
 
@@ -41,4 +43,7 @@
 </form>
 
 <style lang="scss">
+	li > form {
+		display: inline-block;
+	}
 </style>

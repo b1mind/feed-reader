@@ -10,6 +10,7 @@ import {
 	createThing,
 	buildThing,
 	setThing,
+	removeThing,
 } from '@inrupt/solid-client'
 
 //need to figure out if I need both or can just use namespaces
@@ -17,15 +18,15 @@ import {
 import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(dc)
 // console.log(XSD)
-// console.log(schema)
+// console.log(rdf)
 
 export async function GET({ locals }) {
 	let rssList = [
 		// { name: 'Space Porn', href: 'https://www.reddit.com/r/spaceporn.rss' },
 		// { name: 'Sara Soueidan', href: 'https://www.sarasoueidan.com/feed.xml' },
 		// {
-		// 	name: 'Test Newsletter',
-		// 	href: 'https://kill-the-newsletter.com/feeds/e3etd1qk7rz90re8.xml',
+		// 	name: 'Frontend Horse',
+		// 	href: 'https://kill-the-newsletter.com/feeds/5te3foxx135wx2ai.xml',
 		// },
 	]
 
@@ -45,6 +46,7 @@ export async function GET({ locals }) {
 			rssList = [...rssList, { name, href }]
 		})
 
+		//return here or in the end?
 		return {
 			body: {
 				rssList,
@@ -90,7 +92,7 @@ export async function POST({ locals, request }) {
 
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(locals.session.data.info.webId)
+	const webId = new URL(session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList`
 	let rssDataSet
 
@@ -98,13 +100,16 @@ export async function POST({ locals, request }) {
 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = buildThing(createThing({ name: name }))
+			.addUrl(rdf.type, schema.DataFeed)
 			.addStringNoLocale(schema.name, name)
 			.addUrl(schema.url, url)
 			// .addUrl(rdf.type, feedUrl)
 			.build()
 
 		rssDataSet = setThing(rssDataSet, rssThing)
-		saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		//should we return here or let it escape out to the main return?
+		//
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			//need to create the list name
@@ -116,5 +121,45 @@ export async function POST({ locals, request }) {
 		}
 	}
 
+	//all is good in the hood return
 	return { status: 201 }
+}
+
+export async function DELETE({ locals, request }) {
+	const formData = await request.formData()
+	const name = formData.get('name')
+
+	//need util classes for abstraction
+	const session = await getSessionFromStorage(locals.session.data.sessionId)
+	const webId = new URL(session.info.webId)
+	const listUrl = `${webId.origin}/public/feedReader/rssList`
+	let rssDataSet
+
+	try {
+		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
+		rssDataSet = removeThing(rssDataSet, rssThing)
+
+		// rssDataSet = setThing(rssDataSet, rssThing)
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		//should we return here or let it escape out to the main return?
+		//
+	} catch (error) {
+		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+			console.log('no Thing to del')
+			//need a proper return
+		} else {
+			return {
+				status: 400,
+				body: { error: error.message },
+			}
+		}
+	}
+
+	//all is good in the hood return
+	return {
+		status: 303,
+		headers: { location: '/feed' },
+	}
 }
