@@ -163,3 +163,46 @@ export async function DELETE({ locals, request }) {
 		headers: { location: '/feed' },
 	}
 }
+
+export async function PUT({ locals, request }) {
+	const formData = await request.formData()
+	const name = formData.get('name').replace(' ', '%20')
+	// const name = formData.get('name').split(' ').join('%20')
+	console.log(name)
+
+	//need util classes for abstraction
+	const session = await getSessionFromStorage(locals.session.data.sessionId)
+	const webId = new URL(session.info.webId)
+	const listUrl = `${webId.origin}/public/feedReader/rssList`
+	let rssDataSet
+
+	try {
+		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
+		//update Thing
+		console.log(rssThing)
+		if (rssThing) return { body: { error: 'Worked but not implemented' } }
+
+		// rssDataSet = setThing(rssDataSet, rssThing)
+		// await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		//should we return here or let it escape out to the main return?
+		//
+	} catch (error) {
+		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+			console.log('no Thing to del')
+			//need a proper return
+		} else {
+			return {
+				status: 400,
+				body: { error: error.message },
+			}
+		}
+	}
+
+	//all is good in the hood return
+	return {
+		status: 303,
+		headers: { location: '/feed' },
+	}
+}

@@ -6,7 +6,7 @@
 
 	//todo need a utils file
 	function slugify(string) {
-		return string.split(' ').join('-').toLowerCase()
+		return string.replace(' ', '%20').toLowerCase()
 	}
 </script>
 
@@ -18,9 +18,14 @@
 			<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
 				{name}
 			</a>
-			<form action="/feed?_method=delete" method="POST">
+			<form action="/feed?_method=PUT" method="POST">
 				<input type="hidden" name="name" value={name} />
-				<button title="remove" type="submit">x</button>
+
+				<button title="remove" type="submit">📝</button>
+			</form>
+			<form action="/feed?_method=DELETE" method="POST">
+				<input type="hidden" name="name" value={name} />
+				<button title="remove" type="submit">❌</button>
 			</form>
 		</li>
 	{/each}
