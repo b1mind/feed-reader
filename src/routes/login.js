@@ -5,14 +5,8 @@ export async function GET({ locals, url }) {
 	let solidSession = new Session()
 
 	locals.session.set({
-		name: 'session',
 		sessionId: solidSession.info.sessionId,
 		info: false,
-		keys: [
-			'Required, but value not relevant for this demo - key1',
-			'Required, but value not relevant for this demo - key2',
-		],
-		maxAge: 24 * 60 * 60 * 1000, // 24 hours
 	})
 
 	const handleSolidRedirect = (url) => {
