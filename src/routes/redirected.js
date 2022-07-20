@@ -22,7 +22,6 @@ export async function GET({ locals, url }) {
 	})
 
 	const profileThing = getThing(profileDataSet, webId)
-	console.log(profileThing)
 	// where is this name FOAF schema
 	// const name = getStringNoLocale(profileThing, FOAF.name)
 	const img = getUrl(profileThing, VCARD.hasPhoto)
