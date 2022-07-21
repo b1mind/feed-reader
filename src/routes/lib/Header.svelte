@@ -14,4 +14,11 @@
 </nav>
 
 <style lang="scss">
+	nav {
+		font-size: 1.3rem;
+	}
+
+	a {
+		color: var(--clr-primary);
+	}
 </style>
