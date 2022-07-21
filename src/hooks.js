@@ -1,9 +1,9 @@
 // import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+// look at using Cookie vs session coookie?
 import { handleSession } from 'svelte-kit-cookie-session'
 
 export const getSession = ({ locals }) => {
 	if (!locals.session) return
-	//passing in both cookieSession and event below
 	return locals.session.data
 }
 

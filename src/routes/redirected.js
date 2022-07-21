@@ -32,13 +32,7 @@ export async function GET({ locals, url }) {
 	// this is a test of local.session vs sessionCookie
 
 	await locals.session.update(() => ({
-		info: {
-			...session.info,
-			img,
-			name,
-			nick,
-			note,
-		},
+		info: { ...session.info, img, name, nick, note },
 	}))
 
 	return {

@@ -33,7 +33,7 @@ export async function GET({ locals }) {
 	// by not getting session to read public its way way faster
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.session.data.info.webId)
-	let listUrl = `${webId.origin}/public/feedReader/rssList`
+	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
 		const rssDataSet = await getSolidDataset(listUrl)
@@ -93,7 +93,7 @@ export async function POST({ locals, request }) {
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList`
+	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 
 	try {
@@ -127,12 +127,12 @@ export async function POST({ locals, request }) {
 
 export async function DELETE({ locals, request }) {
 	const formData = await request.formData()
-	const name = formData.get('name')
+	const name = formData.get('name').replace(' ', '%20')
 
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList`
+	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 
 	try {
