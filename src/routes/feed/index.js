@@ -173,7 +173,7 @@ export async function PUT({ locals, request }) {
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList`
+	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 
 	try {
