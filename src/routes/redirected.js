@@ -2,7 +2,6 @@ import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getThingAll,
 	getSolidDataset,
-	getPodUrlAll,
 	getThing,
 	getUrl,
 	getStringNoLocale,
@@ -17,9 +16,13 @@ export async function GET({ locals, url }) {
 	if (!session.info.isLoggedIn) return console.log('not loggedIn')
 	const webId = session.info.webId
 
+	console.log(await session.fetch(webId).body)
+
 	const profileDataSet = await getSolidDataset(`${webId}`, {
 		fetch: session.fetch,
 	})
+
+	console.log(profileDataSet)
 
 	const profileThing = getThing(profileDataSet, webId)
 	// where is this name FOAF schema
