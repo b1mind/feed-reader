@@ -29,6 +29,7 @@ export async function GET({ locals }) {
 		// 	href: 'https://kill-the-newsletter.com/feeds/5te3foxx135wx2ai.xml',
 		// },
 	]
+	let rssThing
 
 	// by not getting session to read public its way way faster
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
@@ -95,6 +96,7 @@ export async function POST({ locals, request }) {
 	const webId = new URL(session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
+	let rssThing
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
@@ -134,6 +136,7 @@ export async function DELETE({ locals, request }) {
 	const webId = new URL(session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
+	let rssThing
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
@@ -175,6 +178,7 @@ export async function PUT({ locals, request }) {
 	const webId = new URL(session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
+	let rssThing
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
