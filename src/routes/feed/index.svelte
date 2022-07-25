@@ -6,7 +6,7 @@
 
 	//todo need a utils file
 	function slugify(string) {
-		return string.replace(' ', '%20').toLowerCase()
+		return string.replace(' ', '-').toLowerCase()
 	}
 </script>
 
@@ -20,12 +20,14 @@
 			</a>
 			<form action="/feed?_method=PUT" method="POST">
 				<input type="hidden" name="name" value={name} />
+				<input type="hidden" name="url" value={href} />
 
-				<button title="remove" type="submit">📝</button>
+				<button type="submit" title="edit">📝</button>
 			</form>
+
 			<form action="/feed?_method=DELETE" method="POST">
 				<input type="hidden" name="name" value={name} />
-				<button title="remove" type="submit">❌</button>
+				<button type="submit" title="remove">❌</button>
 			</form>
 		</li>
 	{/each}
