@@ -1,5 +1,5 @@
 Todo:
-  ✔ test a proper node deployment @done
+  ☐ being able to pick a Pod provider 
   ☐ auth check for non-public pages
   ☐ make request util helpers (pretty wet get DRY)
   ☐ utils for slug/spaces in names + any others
@@ -9,10 +9,17 @@ Todo:
   
 Features:
   ☐ friends list + their public lists
+  ☐ suggested me/rssPod if no friends with feeds
+  ☐ add a friend via webId
   ☐ date added, and last updated props
   ☐ refactor endpoint to handle multiple lists
+  ☐ better client enhancements i.e. transitions (logic in .svelte?)
+  ☐ localStorage for remembering Pod Provider and other settings
 
 WishList:
   make dreams come true
   ☐ better persistant auth and data
   ☐ login redirect to last page pass ?last=pagename param (this even needed?)
+Archive:
+  ✔ test a proper node deployment @done @project(Todo)
+  ✔ better progressive enhancement forms work no JS @done @project(Features)
