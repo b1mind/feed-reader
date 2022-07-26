@@ -1,10 +1,12 @@
 Todo:
-  ☐ test a proper node deployment
+  ✔ test a proper node deployment @done
+  ☐ auth check for non-public pages
   ☐ make request util helpers (pretty wet get DRY)
   ☐ refactor endpoint to handle lists
   ☐ utils for slug/spaces in names + any others
   ☐ try/catch for if logged in on requests redirect /login
   ☐ give some better styles for temp
+  ☐ favicon(s)
   
 Features:
   ☐ friends list + their public lists
