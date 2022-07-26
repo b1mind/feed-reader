@@ -1,7 +1,7 @@
 # Node build and run environment
 FROM node:16.7 as builder
 RUN mkdir /usr/src/app
-ARG GIT_TOKEN
+# ARG GIT_TOKEN
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY . /usr/src/app
