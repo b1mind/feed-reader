@@ -1,5 +1,5 @@
 # Node build and run environment
-FROM node:16.7 as builder
+FROM node:16.9 as builder
 RUN mkdir /usr/src/app
 # ARG GIT_TOKEN
 WORKDIR /usr/src/app
