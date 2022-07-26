@@ -1,0 +1,13 @@
+Todo:
+  ☐ test a proper node deployment
+  ☐ make request util helpers (pretty wet get DRY)
+  ☐ refactor endpoint to handle lists
+  ☐ utils for slug/spaces in names + any others
+  ☐ try/catch for if logged in on requests redirect /login
+  ☐ give some better styles for temp
+  
+Features:
+  ☐ friends list + their public lists
+
+WishList:
+  make dreams come true
