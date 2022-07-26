@@ -2,7 +2,6 @@ Todo:
   ✔ test a proper node deployment @done
   ☐ auth check for non-public pages
   ☐ make request util helpers (pretty wet get DRY)
-  ☐ refactor endpoint to handle lists
   ☐ utils for slug/spaces in names + any others
   ☐ try/catch for if logged in on requests redirect /login
   ☐ give some better styles for temp
@@ -10,6 +9,10 @@ Todo:
   
 Features:
   ☐ friends list + their public lists
+  ☐ date added, and last updated props
+  ☐ refactor endpoint to handle multiple lists
 
 WishList:
   make dreams come true
+  ☐ better persistant auth and data
+  ☐ login redirect to last page pass ?last=pagename param (this even needed?)
