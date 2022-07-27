@@ -1,8 +1,8 @@
 import { invalidate } from '$app/navigation'
 import { page } from '$app/stores'
 
-export const enhance = (form) => {
-	let invalidatePath = URL
+export const enhance = (form, { result } = {}) => {
+	let invalidatePath
 	page.subscribe((path) => {
 		invalidatePath = path.url
 	})
@@ -15,23 +15,22 @@ export const enhance = (form) => {
 			headers: { accept: 'application/json' },
 			body: new FormData(form),
 		})
-		console.log(form)
 
 		if (!response.ok) {
 			console.error(await response.text())
 		}
+
+		let url = new URL(invalidatePath)
+		url.search = ''
+		url.hash = ''
+		invalidate(url.href)
+
+		if (result) {
+			result({ form })
+		}
 	}
 
-	let url = new URL(invalidatePath)
-	url.search = ''
-	url.hash = ''
-	invalidate(url.href)
-
 	form.addEventListener('submit', handleSubmit)
-
-	// if (result) {
-	// 	result({ form })
-	// }
 
 	return {
 		distroy() {

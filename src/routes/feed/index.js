@@ -36,9 +36,9 @@ export async function GET({ locals }) {
 	const webId = new URL(locals.session.data.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
-	try {
-		const rssDataSet = await getSolidDataset(listUrl)
+	const rssDataSet = await getSolidDataset(listUrl)
 
+	try {
 		let things = getThingAll(rssDataSet)
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
@@ -80,6 +80,7 @@ export async function GET({ locals }) {
 		},
 		body: {
 			rssList,
+			error: '',
 		},
 	}
 }
@@ -148,7 +149,7 @@ export async function DELETE({ locals, request }) {
 		// rssDataSet = setThing(rssDataSet, rssThing)
 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
 		//should we return here or let it escape out to the main return?
-		//
+		console.log('deleted')
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			console.log('no Thing to del')

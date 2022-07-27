@@ -2,8 +2,8 @@
 	import { enhance } from '$lib/utils/form.js'
 	import { slide } from 'svelte/transition'
 
-	export let error
-	export let rssList
+	export let error = ''
+	export let rssList = []
 
 	let feed = ''
 	let url = ''
