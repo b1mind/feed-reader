@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$lib/utils/form.js'
-	import { slide } from 'svelte/transition'
+	import { fly, slide } from 'svelte/transition'
+	import { flip } from 'svelte/animate'
 
 	export let error = ''
 	export let rssList = []
@@ -23,8 +24,11 @@
 {/if}
 
 <ul>
-	{#each rssList as { name, href }}
-		<li>
+	{#each rssList as { name, href, id }, dex (id)}
+		<li
+			animate:flip={{ duration: 350 }}
+			transition:fly={{ x: 150, duration: 350 }}
+		>
 			<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
 				{name}
 			</a>

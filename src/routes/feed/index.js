@@ -40,11 +40,12 @@ export async function GET({ locals }) {
 
 	try {
 		let things = getThingAll(rssDataSet)
+		let id = 0
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
 			let href = getUrl(thing, schema.url)
 			// let feedUrl = getUrl(thing, rdf.type)
-			rssList = [...rssList, { name, href }]
+			rssList = [...rssList, { name, href, id: id++ }]
 		})
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
@@ -66,7 +67,7 @@ export async function GET({ locals }) {
 			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 				fetch: session.fetch,
 			})
-			rssList = [...rssList, { name, href }]
+			rssList = [...rssList, { name, href, id: 0 }]
 		} else {
 			console.error(error.message)
 		}
