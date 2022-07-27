@@ -6,7 +6,7 @@ export async function GET({ locals, url }) {
 
 	locals.session.set({
 		sessionId: solidSession.info.sessionId,
-		info: false,
+		user: false,
 	})
 
 	const handleSolidRedirect = (url) => {

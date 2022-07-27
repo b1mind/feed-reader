@@ -4,12 +4,12 @@
 
 <nav>
 	<a href="/">home</a>
-	{#if $session.info}
+	{#if $session.user}
 		<a sveltekit:prefetch href="/profile">profile</a>
 		<a sveltekit:prefetch href="/feed">feed</a>
-		<a sveltekit:reload href="/logout">logout</a>
+		<a href="/logout">logout</a>
 	{:else}
-		<a sveltekit:reload href="/login">login</a>
+		<a href="/login">login</a>
 	{/if}
 </nav>
 

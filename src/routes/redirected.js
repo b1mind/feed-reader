@@ -16,26 +16,26 @@ export async function GET({ locals, url }) {
 	if (!session.info.isLoggedIn) return console.log('not loggedIn')
 	const webId = session.info.webId
 
-	console.log(await session.fetch(webId).body)
-
 	const profileDataSet = await getSolidDataset(`${webId}`, {
 		fetch: session.fetch,
 	})
 
-	console.log(profileDataSet)
-
 	const profileThing = getThing(profileDataSet, webId)
+	console.log(profileThing)
 	// where is this name FOAF schema
 	// const name = getStringNoLocale(profileThing, FOAF.name)
 	const img = getUrl(profileThing, VCARD.hasPhoto)
 	const name = getStringNoLocale(profileThing, VCARD.fn)
 	const nick = getStringNoLocale(profileThing, FOAF.nick)
 	const note = getStringNoLocale(profileThing, VCARD.note)
+	const contacts = getStringNoLocale(profileThing, FOAF.knows)
+
+	console.log(contacts)
 
 	// this is a test of local.session vs sessionCookie
 
 	await locals.session.update(() => ({
-		info: { ...session.info, img, name, nick, note },
+		user: { ...session.info, img, name, nick, note, contacts },
 	}))
 
 	return {

@@ -27,7 +27,7 @@ export async function GET({ locals }) {
 	// by not getting session to read public its way way faster
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(locals.session.data.info.webId)
+	const webId = new URL(locals.session.data.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	const rssDataSet = await getSolidDataset(listUrl)
