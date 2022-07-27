@@ -21,17 +21,11 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(rdf)
 
 export async function GET({ locals }) {
-	let rssList = [
-		// { name: 'Space Porn', href: 'https://www.reddit.com/r/spaceporn.rss' },
-		// { name: 'Sara Soueidan', href: 'https://www.sarasoueidan.com/feed.xml' },
-		// {
-		// 	name: 'Frontend Horse',
-		// 	href: 'https://kill-the-newsletter.com/feeds/5te3foxx135wx2ai.xml',
-		// },
-	]
+	let rssList = []
 	let rssThing
 
 	// by not getting session to read public its way way faster
+	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.session.data.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
@@ -40,12 +34,11 @@ export async function GET({ locals }) {
 
 	try {
 		let things = getThingAll(rssDataSet)
-		let id = 0
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
 			let href = getUrl(thing, schema.url)
 			// let feedUrl = getUrl(thing, rdf.type)
-			rssList = [...rssList, { name, href, id: id++ }]
+			rssList = [...rssList, { name, href }]
 		})
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
@@ -67,7 +60,7 @@ export async function GET({ locals }) {
 			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 				fetch: session.fetch,
 			})
-			rssList = [...rssList, { name, href, id: 0 }]
+			rssList = [...rssList, { name, href }]
 		} else {
 			console.error(error.message)
 		}

@@ -24,7 +24,7 @@
 {/if}
 
 <ul>
-	{#each rssList as { name, href, id }, dex (id)}
+	{#each rssList as { name, href }, dex (name)}
 		<li
 			animate:flip={{ duration: 350 }}
 			transition:fly={{ x: 150, duration: 350 }}
