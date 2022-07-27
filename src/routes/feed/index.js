@@ -46,13 +46,6 @@ export async function GET({ locals }) {
 			// let feedUrl = getUrl(thing, rdf.type)
 			rssList = [...rssList, { name, href }]
 		})
-
-		//return here or in the end?
-		return {
-			body: {
-				rssList,
-			},
-		}
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			let name = 'RedditKeyboards'
@@ -70,7 +63,9 @@ export async function GET({ locals }) {
 				.build()
 
 			rssDataSet = setThing(rssDataSet, rssThing)
-			saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
+				fetch: session.fetch,
+			})
 			rssList = [...rssList, { name, href }]
 		} else {
 			console.error(error.message)
@@ -78,15 +73,18 @@ export async function GET({ locals }) {
 	}
 
 	return {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'max-age=0, s-maxage=60',
+		},
 		body: {
-			//should we add defaults here if no feeds?
 			rssList,
 		},
 	}
 }
 
 export async function POST({ locals, request }) {
-	//fix not getting formData... wtf
 	const formData = await request.formData()
 	const name = formData.get('feed')
 	const url = formData.get('url')
@@ -124,7 +122,10 @@ export async function POST({ locals, request }) {
 	}
 
 	//all is good in the hood return
-	return { status: 201 }
+	return {
+		status: 303,
+		headers: { location: '/feed' },
+	}
 }
 
 export async function DELETE({ locals, request }) {
@@ -186,7 +187,9 @@ export async function PUT({ locals, request }) {
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing
 		console.log(rssThing)
-		if (rssThing) return { body: { error: 'Worked but not implemented' } }
+		if (rssThing) {
+			return { status: 200, body: { error: 'Worked but not implemented' } }
+		}
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
 		// await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })

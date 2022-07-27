@@ -1,6 +1,10 @@
 <script>
+	import { enhance } from '$lib/utils/form.js'
+	import { slide } from 'svelte/transition'
+
 	export let error
 	export let rssList
+
 	let feed = ''
 	let url = ''
 
@@ -12,20 +16,26 @@
 
 <h1>RssList</h1>
 
+{#if error}
+	<div transition:slide class="error">
+		{error}
+	</div>
+{/if}
+
 <ul>
 	{#each rssList as { name, href }}
 		<li>
 			<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
 				{name}
 			</a>
-			<form action="/feed?_method=PUT" method="POST">
+			<form action="/feed?_method=PUT" method="POST" use:enhance>
 				<input type="hidden" name="name" value={name} />
 				<input type="hidden" name="url" value={href} />
 
 				<button type="submit" title="edit">📝</button>
 			</form>
 
-			<form action="/feed?_method=DELETE" method="POST">
+			<form action="/feed?_method=DELETE" method="POST" use:enhance>
 				<input type="hidden" name="name" value={name} />
 				<button type="submit" title="remove">❌</button>
 			</form>
@@ -33,11 +43,7 @@
 	{/each}
 </ul>
 
-<form action="/feed" method="post" autocomplete="off">
-	{#if error}
-		{error}
-	{/if}
-
+<form action="/feed" method="post" autocomplete="off" use:enhance>
 	<label for="feed">
 		Feed Name:
 		<input type="text" name="feed" bind:value={feed} />

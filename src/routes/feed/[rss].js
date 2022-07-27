@@ -1,7 +1,5 @@
 import Parser from 'rss-parser'
 
-// import txml from 'txml'
-
 let parser = new Parser()
 
 // const isValidImageUrl = (url) => {
@@ -16,10 +14,9 @@ export async function GET({ url, params }) {
 		? url.searchParams.get('xml')
 		: false
 
-	// txml wants a string of xml only ...
-	// let feed = await txml.toContentString(txml.parse(xmlUrl))
-	//
 	const feed = await parser.parseURL(xmlUrl)
+
+	// is there away to check against build and return updated?
 	let items = []
 
 	feed.items.forEach((item) => {

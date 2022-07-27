@@ -5,7 +5,7 @@
 
 <h1>Just another RSS Reader</h1>
 {#if $session.info}
-	{$session.sessionId}
+	Welcome {$session.info.nick} you are logged in.
 {/if}
 
 <!-- {#if msg}
