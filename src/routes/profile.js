@@ -11,21 +11,31 @@ export async function GET({ locals }) {
 	let friends = []
 	const webId = locals.session.data.user.webId
 
-	const profileDataSet = await getSolidDataset(`${webId}`, {})
-	const profileThing = getThing(profileDataSet, webId)
-	const contacts = getUrlAll(profileThing, FOAF.knows)
+	try {
+		const profileDataSet = await getSolidDataset(`${webId}`)
+		const profileThing = getThing(profileDataSet, webId)
+		const contacts = getUrlAll(profileThing, FOAF.knows)
 
-	for (const contact of contacts) {
-		const friendDataSet = await getSolidDataset(contact)
-		const friendThing = getThing(friendDataSet, contact)
-		const img = getUrl(friendThing, VCARD.hasPhoto)
-		const name = getStringNoLocale(friendThing, VCARD.fn)
-		const nick = getStringNoLocale(friendThing, FOAF.nick)
+		for (let contact of contacts) {
+			contact = new URL(contact)
+			let listUrl = `${contact.origin}/public/feedReader/rssList.ttl`
+			//check if friend has feedReader
+			const friendListDataSet = await getSolidDataset(listUrl)
 
-		friends = [...friends, { img, name, nick, webId: contact }]
+			if (friendListDataSet) {
+				const friendUserDataSet = await getSolidDataset(contact.href)
+				const friendThing = getThing(friendUserDataSet, contact.href)
+				const img = getUrl(friendThing, VCARD.hasPhoto)
+				const name = getStringNoLocale(friendThing, VCARD.fn)
+				const nick = getStringNoLocale(friendThing, FOAF.nick)
+
+				friends = [...friends, { img, name, nick, webId: contact.href }]
+			}
+		}
+	} catch (error) {
+		console.error(error)
+		return { body: { friends: [{ nick: 'No friends with pods' }] } }
 	}
-
-	console.log(friends)
 
 	return { body: { friends } }
 }
