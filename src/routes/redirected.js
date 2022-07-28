@@ -28,14 +28,11 @@ export async function GET({ locals, url }) {
 	const name = getStringNoLocale(profileThing, VCARD.fn)
 	const nick = getStringNoLocale(profileThing, FOAF.nick)
 	const note = getStringNoLocale(profileThing, VCARD.note)
-	const contacts = getStringNoLocale(profileThing, FOAF.knows)
-
-	console.log(contacts)
 
 	// this is a test of local.session vs sessionCookie
 
 	await locals.session.update(() => ({
-		user: { ...session.info, img, name, nick, note, contacts },
+		user: { ...session.info, img, name, nick, note },
 	}))
 
 	return {

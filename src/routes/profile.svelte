@@ -1,6 +1,8 @@
 <script>
 	import { session } from '$app/stores'
 	import { fade } from 'svelte/transition'
+
+	export let friends = []
 </script>
 
 {#if $session.user}
@@ -12,6 +14,15 @@
 			<i>{$session.user.contacts}</i>
 		</p>
 	</main>
+
+	Friends
+	<ul>
+		{#each friends as friend}
+			<li>
+				<a href={friend.webId}> {friend.nick} </a>
+			</li>
+		{/each}
+	</ul>
 {:else}
 	<p>nothing to display <a href="/login">login</a></p>
 {/if}
