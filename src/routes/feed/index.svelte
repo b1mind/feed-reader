@@ -48,7 +48,17 @@
 		{/each}
 	</ul>
 
-	<form action="/feed" method="post" autocomplete="off" use:enhance>
+	<form
+		action="/feed"
+		method="POST"
+		autocomplete="off"
+		use:enhance={{
+			pending: ({ data, form }) => {
+				console.log('data', data)
+				console.log('form', form)
+			},
+		}}
+	>
 		<label for="feed">
 			Feed Name:
 			<input type="text" name="feed" bind:value={feed} />
