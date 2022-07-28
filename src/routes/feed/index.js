@@ -30,9 +30,8 @@ export async function GET({ locals }) {
 	const webId = new URL(locals.session.data.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
-	const rssDataSet = await getSolidDataset(listUrl)
-
 	try {
+		const rssDataSet = await getSolidDataset(listUrl)
 		let things = getThingAll(rssDataSet)
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
