@@ -1,6 +1,6 @@
 <script>
 	import { session } from '$app/stores'
-	import { fade } from 'svelte/transition'
+	import { enhance } from '$lib/utils/form.js'
 
 	export let friends = []
 </script>
@@ -20,6 +20,18 @@
 		{#each friends as friend}
 			<li>
 				<a href={friend.webId}> {friend.nick} </a>
+				<ul>
+					{#each friend.rssList as list}
+						<li>
+							<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
+							<form action="/feed" method="POST" use:enhance>
+								<input type="hidden" name="feed" bind:value={list.name} />
+								<input type="hidden" name="url" bind:value={list.href} />
+								<button type="submit">➕</button>
+							</form>
+						</li>
+					{/each}
+				</ul>
 			</li>
 		{/each}
 	</ul>
@@ -28,4 +40,7 @@
 {/if}
 
 <style lang="scss">
+	li > form {
+		display: inline-block;
+	}
 </style>
