@@ -1,39 +1,22 @@
 <script>
 	import { enhance } from '$lib/utils/form.js'
-	import { fly, fade, slide } from 'svelte/transition'
+	import { nameSort, slugify } from '$lib/utils'
+	import { fly, slide } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
-	export let error = ''
+	export let error = {}
 	export let rssList = []
 
 	let feed = ''
 	let url = ''
-
-	//todo need a utils file
-	const nameSort = (a, b) => {
-		let fa = a.name.toLowerCase(),
-			fb = b.name.toLowerCase()
-
-		if (fa < fb) {
-			return -1
-		}
-		if (fa > fb) {
-			return 1
-		}
-		return 0
-	}
-
-	function slugify(string) {
-		return string.replaceAll(' ', '-').toLowerCase()
-	}
 </script>
 
 <main>
 	<h1>RssList</h1>
 
-	{#if error}
+	{#if error.message}
 		<div transition:slide class="error">
-			{error}
+			{error.message}
 		</div>
 	{/if}
 
@@ -74,9 +57,8 @@
 		method="POST"
 		autocomplete="off"
 		use:enhance={{
-			pending: ({ name, href, error }) => {
-				//need to be able to return errors
-				error = error
+			result: ({ form }) => form.reset(),
+			pending: ({ name, href }) => {
 				rssList = [...rssList, { name, href }].sort(nameSort)
 			},
 		}}
