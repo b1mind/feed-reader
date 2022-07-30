@@ -40,7 +40,19 @@
 					<button type="submit" title="edit">📝</button>
 				</form>
 
-				<form action="/feed?_method=DELETE" method="POST" use:enhance>
+				<form
+					action="/feed?_method=DELETE"
+					method="POST"
+					use:enhance={{
+						pendingDelete: ({ name }) => {
+							console.log(name)
+							rssList = rssList.filter((item) => {
+								console.log(item.name)
+								return item.name !== name
+							})
+						},
+					}}
+				>
 					<input type="hidden" name="name" value={name} />
 					<button type="submit" title="remove">❌</button>
 				</form>
@@ -53,16 +65,29 @@
 		method="POST"
 		autocomplete="off"
 		use:enhance={{
-			pending: ({ data, form }) => {
-				console.log('data', data)
-				console.log('form', form)
+			pending: ({ name, href, error }) => {
+				//need to be able to return errors
+				error = error
+				rssList = [...rssList, { name, href }].sort((a, b) => {
+					//abstract and clean up in utils function
+					let fa = a.name.toLowerCase(),
+						fb = b.name.toLowerCase()
+
+					if (fa < fb) {
+						return -1
+					}
+					if (fa > fb) {
+						return 1
+					}
+					return 0
+				})
 			},
 		}}
 	>
 		<label for="feed">
 			Feed Name:
 			<input type="text" name="feed" bind:value={feed} />
-		</label>
+		</label><br />
 		<label for="url">
 			RSS Url:
 			<input type="text" name="url" bind:value={url} />

@@ -1,7 +1,7 @@
 import { invalidate } from '$app/navigation'
 import { page } from '$app/stores'
 
-export const enhance = (form, { result } = {}) => {
+export const enhance = (form, { result, pending, pendingDelete } = {}) => {
 	let invalidatePath
 	let error
 	page.subscribe((path) => {
@@ -11,20 +11,33 @@ export const enhance = (form, { result } = {}) => {
 	async function handleSubmit(event) {
 		event.preventDefault()
 		let btn = event.submitter
+		let btnResetInner = btn.innerText
+		let formData = new FormData(form)
+
+		if (pending) {
+			pending({ name: formData.get('feed'), href: formData.get('url') })
+		} else if (pendingDelete) {
+			pendingDelete({ name: formData.get('name') })
+		}
+
+		// 🧪 testing style choices, can animate
+		// form.style = '--color: red;'
+		form.dataset.loading = true
 		btn.innerText = '⌛'
 
 		const response = await fetch(form.action, {
 			method: form.method,
 			headers: { accept: 'application/json' },
-			body: new FormData(form),
+			body: formData,
 		})
 
-		console.log(invalidatePath)
-		btn.innerText = '➕'
-
 		if (!response.ok) {
+			btn.innerText = '❌'
 			error = await response.text()
+
 			console.error(error)
+		} else {
+			btn.innerText = btnResetInner
 		}
 
 		if (invalidatePath.pathname === '/feed') {
@@ -32,10 +45,10 @@ export const enhance = (form, { result } = {}) => {
 			url.search = ''
 			url.hash = ''
 			invalidate(url.href)
+		}
 
-			if (result) {
-				result({ form })
-			}
+		if (result) {
+			result({ form })
 		}
 	}
 

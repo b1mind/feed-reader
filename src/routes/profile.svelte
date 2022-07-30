@@ -24,10 +24,15 @@
 					{#each friend.rssList as list}
 						<li>
 							<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
-							<form action="/feed" method="POST" use:enhance>
+							<form
+								data-loading="false"
+								action="/feed"
+								method="POST"
+								use:enhance
+							>
 								<input type="hidden" name="feed" bind:value={list.name} />
 								<input type="hidden" name="url" bind:value={list.href} />
-								<button type="submit">➕</button>
+								<button type="submit">➕test</button>
 							</form>
 						</li>
 					{/each}
@@ -40,7 +45,20 @@
 {/if}
 
 <style lang="scss">
+	:root {
+		--color: var(--clr-primary);
+	}
+
+	a,
+	button {
+		color: var(--color);
+	}
+
 	li > form {
 		display: inline-block;
+	}
+
+	[data-loading='false'] > button {
+		color: black;
 	}
 </style>
