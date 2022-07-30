@@ -57,6 +57,7 @@
 		method="POST"
 		autocomplete="off"
 		use:enhance={{
+			errorHandle: ({ errorMsg }) => (error.message = errorMsg),
 			result: ({ form }) => form.reset(),
 			pending: ({ name, href }) => {
 				rssList = [...rssList, { name, href }].sort(nameSort)

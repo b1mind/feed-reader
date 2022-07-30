@@ -1,7 +1,10 @@
 import { invalidate } from '$app/navigation'
 import { page } from '$app/stores'
 
-export const enhance = (form, { result, pending, pendingDelete } = {}) => {
+export const enhance = (
+	form,
+	{ result, errorHandle, pending, pendingDelete } = {}
+) => {
 	let invalidatePath
 	page.subscribe((path) => {
 		invalidatePath = path.url
@@ -32,7 +35,11 @@ export const enhance = (form, { result, pending, pendingDelete } = {}) => {
 
 		if (!response.ok) {
 			btn.innerText = '❌'
-			console.error(await response.text())
+
+			let errorMsg = await response.text()
+			errorHandle({ errorMsg })
+
+			console.error(errorMsg)
 		} else {
 			btn.innerText = btnResetInner
 		}

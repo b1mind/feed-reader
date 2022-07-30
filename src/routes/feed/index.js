@@ -75,7 +75,7 @@ export async function GET({ locals }) {
 		},
 		body: {
 			rssList,
-			error: '',
+			// error: '',
 		},
 	}
 }
