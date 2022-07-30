@@ -4,7 +4,7 @@
 	import { fly, slide } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
-	export let error = {}
+	export let error
 	export let rssList = []
 
 	let feed = ''
@@ -14,9 +14,9 @@
 <main>
 	<h1>RssList</h1>
 
-	{#if error.message}
+	{#if error}
 		<div transition:slide class="error">
-			{error.message}
+			{error}
 		</div>
 	{/if}
 
@@ -57,7 +57,7 @@
 		method="POST"
 		autocomplete="off"
 		use:enhance={{
-			errorHandle: ({ errorMsg }) => (error.message = errorMsg),
+			errorHandle: ({ errorMsg }) => (error = errorMsg),
 			result: ({ form }) => form.reset(),
 			pending: ({ name, href }) => {
 				rssList = [...rssList, { name, href }].sort(nameSort)

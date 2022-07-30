@@ -35,7 +35,6 @@ export const enhance = (
 
 		if (!response.ok) {
 			btn.innerText = '❌'
-
 			let errorMsg = await response.text()
 			errorHandle({ errorMsg })
 

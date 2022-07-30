@@ -75,7 +75,6 @@ export async function GET({ locals }) {
 		},
 		body: {
 			rssList,
-			// error: '',
 		},
 	}
 }
@@ -107,12 +106,16 @@ export async function POST({ locals, request }) {
 		//should we return here or let it escape out to the main return?
 		//
 	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message)
+		}
+
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			//need to create the list name
 		} else {
 			return {
 				status: 400,
-				body: { error: error },
+				body: { error },
 			}
 		}
 	}
@@ -146,13 +149,14 @@ export async function DELETE({ locals, request }) {
 		//should we return here or let it escape out to the main return?
 		console.log('deleted')
 	} catch (error) {
+		error = error
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
 			return {
 				status: 400,
-				body: { error: error.message },
+				body: { error },
 			}
 		}
 	}
@@ -198,7 +202,7 @@ export async function PUT({ locals, request }) {
 		} else {
 			return {
 				status: 400,
-				body: { error: error.message },
+				body: { error: error },
 			}
 		}
 	}
