@@ -124,7 +124,7 @@ export async function POST({ locals, request }) {
 
 export async function DELETE({ locals, request }) {
 	const formData = await request.formData()
-	const name = formData.get('name').replace(' ', '%20')
+	const name = formData.get('name').replaceAll(' ', '%20')
 
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)

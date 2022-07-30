@@ -11,7 +11,7 @@
 
 	//todo need a utils file
 	function slugify(string) {
-		return string.replace(' ', '-').toLowerCase()
+		return string.replaceAll(' ', '-').toLowerCase()
 	}
 </script>
 
