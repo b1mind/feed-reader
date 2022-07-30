@@ -10,6 +10,19 @@
 	let url = ''
 
 	//todo need a utils file
+	const nameSort = (a, b) => {
+		let fa = a.name.toLowerCase(),
+			fb = b.name.toLowerCase()
+
+		if (fa < fb) {
+			return -1
+		}
+		if (fa > fb) {
+			return 1
+		}
+		return 0
+	}
+
 	function slugify(string) {
 		return string.replaceAll(' ', '-').toLowerCase()
 	}
@@ -45,11 +58,7 @@
 					method="POST"
 					use:enhance={{
 						pendingDelete: ({ name }) => {
-							console.log(name)
-							rssList = rssList.filter((item) => {
-								console.log(item.name)
-								return item.name !== name
-							})
+							rssList = rssList.filter((item) => item.name !== name)
 						},
 					}}
 				>
@@ -68,19 +77,7 @@
 			pending: ({ name, href, error }) => {
 				//need to be able to return errors
 				error = error
-				rssList = [...rssList, { name, href }].sort((a, b) => {
-					//abstract and clean up in utils function
-					let fa = a.name.toLowerCase(),
-						fb = b.name.toLowerCase()
-
-					if (fa < fb) {
-						return -1
-					}
-					if (fa > fb) {
-						return 1
-					}
-					return 0
-				})
+				rssList = [...rssList, { name, href }].sort(nameSort)
 			},
 		}}
 	>
