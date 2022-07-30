@@ -1,3 +1,4 @@
+import { safeSpace } from '$lib/utils'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getSolidDataset,
@@ -23,6 +24,7 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 export async function GET({ locals }) {
 	let rssList = []
 	let rssThing
+	let rssDataSet
 
 	// by not getting session to read public its way way faster
 	// look into using a api /fetch/ from server.fetch()
@@ -31,7 +33,7 @@ export async function GET({ locals }) {
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
-		const rssDataSet = await getSolidDataset(listUrl)
+		rssDataSet = await getSolidDataset(listUrl)
 		let things = getThingAll(rssDataSet)
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
@@ -110,7 +112,7 @@ export async function POST({ locals, request }) {
 		} else {
 			return {
 				status: 400,
-				body: { error: error.message },
+				body: { error: error },
 			}
 		}
 	}
@@ -124,7 +126,7 @@ export async function POST({ locals, request }) {
 
 export async function DELETE({ locals, request }) {
 	const formData = await request.formData()
-	const name = formData.get('name').replaceAll(' ', '%20')
+	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
 	const session = await getSessionFromStorage(locals.session.data.sessionId)

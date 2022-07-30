@@ -3,7 +3,6 @@ import { page } from '$app/stores'
 
 export const enhance = (form, { result, pending, pendingDelete } = {}) => {
 	let invalidatePath
-	let error
 	page.subscribe((path) => {
 		invalidatePath = path.url
 	})
@@ -33,9 +32,7 @@ export const enhance = (form, { result, pending, pendingDelete } = {}) => {
 
 		if (!response.ok) {
 			btn.innerText = '❌'
-			error = await response.text()
-
-			console.error(error)
+			console.error(await response.text())
 		} else {
 			btn.innerText = btnResetInner
 		}
