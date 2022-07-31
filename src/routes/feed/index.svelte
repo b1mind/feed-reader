@@ -6,7 +6,7 @@
 	import { nameSort, slugify } from '$lib/utils'
 
 	export let error
-	export let rssList = []
+	export let rssList
 
 	let feed = ''
 	let url = ''

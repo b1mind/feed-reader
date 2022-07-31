@@ -3,11 +3,7 @@
 	// export let msg
 </script>
 
-<h1>Just another RSS Reader</h1>
+<h1>Welcome</h1>
 {#if $session.user}
-	Welcome {$session.user.nick} you are logged in.
+	{$session.user.nick} you are logged in.
 {/if}
-
-<!-- {#if msg}
-	{msg}
-{/if} -->
