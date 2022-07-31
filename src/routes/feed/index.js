@@ -75,6 +75,7 @@ export async function GET({ locals }) {
 		},
 		body: {
 			rssList,
+			// error: '',
 		},
 	}
 }
@@ -107,7 +108,7 @@ export async function POST({ locals, request }) {
 		//
 	} catch (error) {
 		if (error instanceof Error) {
-			console.log(error.message)
+			// console.log(error.message)
 		}
 
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {

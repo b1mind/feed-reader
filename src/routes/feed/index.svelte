@@ -1,8 +1,9 @@
 <script>
-	import { enhance } from '$lib/utils/form.js'
-	import { nameSort, slugify } from '$lib/utils'
 	import { fly, slide } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
+
+	import { enhance } from '$lib/utils/form.js'
+	import { nameSort, slugify } from '$lib/utils'
 
 	export let error
 	export let rssList = []
