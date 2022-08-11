@@ -5,7 +5,7 @@
 	import { enhance } from '$lib/utils/form.js'
 	import { nameSort, slugify } from '$lib/utils'
 
-	export let error
+	export let error = ''
 	export let rssList
 
 	let feed = ''
@@ -22,7 +22,7 @@
 	{/if}
 
 	<ul>
-		{#each rssList as { name, href }, dex (name)}
+		{#each rssList as { name, href } (name)}
 			<li
 				animate:flip={{ duration: 350 }}
 				transition:fly={{ x: 150, duration: 350 }}
@@ -30,7 +30,7 @@
 				<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
 					{name}
 				</a>
-				<form action="/feed?_method=PUT" method="POST" use:enhance>
+				<form action="/feed?_method=PATCH" method="POST" use:enhance>
 					<input type="hidden" name="name" value={name} />
 					<input type="hidden" name="url" value={href} />
 

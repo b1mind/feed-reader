@@ -169,7 +169,7 @@ export async function DELETE({ locals, request }) {
 	}
 }
 
-export async function PUT({ locals, request }) {
+export async function PATCH({ locals, request }) {
 	const formData = await request.formData()
 	const name = formData.get('name').replace(' ', '%20')
 	// const name = formData.get('name').split(' ').join('%20')
