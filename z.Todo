@@ -10,7 +10,7 @@ Todo:
   ☐ favicon(s)
   
 Features:
-  ☐ friends list + their public lists
+  ✔ friends list + their public lists @done
   ☐ suggested me/rssPod if no friends with feeds
   ☐ add a friend via webId
   ☐ date added, and last updated props
