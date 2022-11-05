@@ -9,7 +9,7 @@ import {
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
-export async function GET({ locals }) {
+export async function load({ locals }) {
 	let friends = []
 	const webId = locals.session.data.user.webId
 
@@ -47,8 +47,8 @@ export async function GET({ locals }) {
 		}
 	} catch (error) {
 		console.error(error)
-		return { body: { friends: [{ nick: 'No friends with rss lists' }] } }
+		return { friends: [{ nick: 'No friends with rss lists' }] }
 	}
 
-	return { body: { friends } }
+	return { friends }
 }

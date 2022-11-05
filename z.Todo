@@ -2,15 +2,13 @@ Todo:
   ☐ being able to pick a Pod provider 
   ☐ localStorage for remembering Pod Provider and other settings (persitant$store)
   ☐ home page needs a introduction to SolidPods and how to use.
-  ☐ auth check for non-public pages
   ☐ make request util helpers (pretty wet get DRY)
-  ☐ utils for slug/spaces in names + any others
+  ☐ memoization for getThings (during refactor)
   ☐ try/catch for if logged in on requests redirect /login
   ☐ give some better styles for temp
   ☐ favicon(s)
   
 Features:
-  ✔ friends list + their public lists @done
   ☐ suggested me/rssPod if no friends with feeds
   ☐ add a friend via webId
   ☐ date added, and last updated props
@@ -23,5 +21,8 @@ WishList:
   ☐ login redirect to last page pass ?last=pagename param (this even needed?)
 
 Archive:
+  ✔ friends list + their public lists @done @project(Features)
+  ✔ auth check for non-public pages @done
+  ✔ utils for slug/spaces in names + any others @done
   ✔ test a proper node deployment @done @project(Todo)
   ✔ better progressive enhancement forms work no JS @done @project(Features)

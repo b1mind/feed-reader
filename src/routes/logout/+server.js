@@ -8,21 +8,11 @@ export async function GET({ locals }) {
 		const session = await getSessionFromStorage(locals.session.data.sessionId)
 		locals.session.destroy()
 		session.logout()
-		return {
-			headers: { Location: '/' },
-			status: 302,
-			//how can we return a prop with the redirect header?
-			// body: {
-			// 	msg,
-			// },
-		}
+		return new Response(undefined, { status: 302, headers: { Location: '/' } })
 	} catch (error) {
 		//issues with session destroy and login
 		locals.session.destroy()
 
-		return {
-			headers: { Location: '/' },
-			status: 302,
-		}
+		return new Response(undefined, { status: 302, headers: { Location: '/' } })
 	}
 }

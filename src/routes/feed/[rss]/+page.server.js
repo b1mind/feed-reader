@@ -9,7 +9,7 @@ let parser = new Parser()
 // 	if (url.match(allowedExtensions)) return true
 // }
 
-export async function GET({ url, params }) {
+export async function load({ url, params }) {
 	const xmlUrl = url.searchParams.has('xml')
 		? url.searchParams.get('xml')
 		: false
@@ -38,7 +38,5 @@ export async function GET({ url, params }) {
 		items = [...items, newItem]
 	})
 
-	return {
-		body: { title: feed.title, items },
-	}
+	return { title: feed.title, items }
 }

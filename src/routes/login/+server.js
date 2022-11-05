@@ -29,5 +29,6 @@ export async function GET({ locals, url }) {
 	})
 
 	//can we set a cookie header with this redirect?
+	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
 	return Response.redirect(redirect)
 }

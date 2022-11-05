@@ -21,7 +21,7 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(XSD)
 // console.log(rdf)
 
-export async function GET({ locals }) {
+export async function load({ locals }) {
 	let rssList = []
 	let rssThing
 	let rssDataSet
@@ -67,6 +67,7 @@ export async function GET({ locals }) {
 		}
 	}
 
+	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 	return {
 		status: 200,
 		headers: {
@@ -114,6 +115,7 @@ export async function POST({ locals, request }) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			//need to create the list name
 		} else {
+			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 			return {
 				status: 400,
 				body: { error },
@@ -122,6 +124,7 @@ export async function POST({ locals, request }) {
 	}
 
 	//all is good in the hood return
+	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 	return {
 		status: 303,
 		headers: { location: '/feed' },
@@ -155,6 +158,7 @@ export async function DELETE({ locals, request }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
+			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 			return {
 				status: 400,
 				body: { error },
@@ -163,6 +167,7 @@ export async function DELETE({ locals, request }) {
 	}
 
 	//all is good in the hood return
+	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 	return {
 		status: 303,
 		headers: { location: '/feed' },
@@ -189,6 +194,7 @@ export async function PATCH({ locals, request }) {
 		//update Thing
 		console.log(rssThing)
 		if (rssThing) {
+			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 			return { status: 200, body: { error: 'Worked but not implemented' } }
 		}
 
@@ -201,6 +207,7 @@ export async function PATCH({ locals, request }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
+			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 			return {
 				status: 400,
 				body: { error: error },
@@ -209,6 +216,7 @@ export async function PATCH({ locals, request }) {
 	}
 
 	//all is good in the hood return
+	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 	return {
 		status: 303,
 		headers: { location: '/feed' },

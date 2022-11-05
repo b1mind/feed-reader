@@ -13,7 +13,8 @@ export async function GET({ locals, url }) {
 
 	await session.handleIncomingRedirect(`${url.href}`)
 
-	if (!session.info.isLoggedIn) return console.log('not loggedIn')
+	if (!session.info.isLoggedIn) throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
+	return console.log('not loggedIn')
 	const webId = session.info.webId
 
 	const profileDataSet = await getSolidDataset(`${webId}`, {
@@ -35,8 +36,5 @@ export async function GET({ locals, url }) {
 		user: { ...session.info, img, name, nick, note },
 	}))
 
-	return {
-		headers: { Location: '/' },
-		status: 302,
-	}
+	return new Response(undefined, { status: 302, headers: { Location: '/' } })
 }
