@@ -1,17 +1,17 @@
 import { redirect } from '@sveltejs/kit'
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
-export async function load({ locals, cookies }) {
+export async function load({}) {
 	throw redirect(302, '/')
 }
 
 export const actions = {
 	async default({ locals, cookies }) {
-		console.log(locals.info)
-		if (!locals.info.sessionId) return
+		// const sessionCookie = cookies.get('session')
+		// const session = await getSessionFromStorage(sessionCookie)
 
-		const session = await getSessionFromStorage(locals.info.sessionId)
-		session.logout()
+		// session.logout()
+		locals.logout()
 		cookies.set('session', '', {
 			path: '/',
 			expires: new Date(0),

@@ -1,4 +1,5 @@
 <script>
+	import { enhance } from '$app/forms'
 	import { fly, slide } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
@@ -17,7 +18,7 @@
 		{#each data.rssList as { name, href } (name)}
 			<li
 				animate:flip={{ duration: 350 }}
-				transition:fly={{ x: 150, duration: 350 }}
+				transition:fly|local={{ x: 150, duration: 350 }}
 			>
 				<a data-sveltekit-prefetch href="/feed/{slugify(name)}/?xml={href}">
 					{name}
@@ -29,7 +30,7 @@
 					<button type="submit" title="edit">📝</button>
 				</form>
 
-				<form action="/feed?/remove" method="POST">
+				<form action="/feed?/remove" method="POST" use:enhance>
 					<input type="hidden" name="name" value={name} />
 					<button type="submit" title="remove">❌</button>
 				</form>
@@ -37,7 +38,7 @@
 		{/each}
 	</ul>
 
-	<form action="/feed?/add" method="POST" autocomplete="off">
+	<form action="/feed?/add" method="POST" autocomplete="off" use:enhance>
 		<label for="feed">
 			Feed Name:
 			<input type="text" name="feed" bind:value={feed} />

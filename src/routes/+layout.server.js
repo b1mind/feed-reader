@@ -1,5 +1,11 @@
-export async function load({ locals }) {
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+
+export async function load({ locals, cookies }) {
+	// const sessionCookie = cookies.get('session')
+	// const session = await getSessionFromStorage(sessionCookie)
+
 	return {
-		session: locals.info,
+		// info: session.info,
+		info: locals.info,
 	}
 }

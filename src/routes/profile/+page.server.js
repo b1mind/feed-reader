@@ -1,4 +1,6 @@
 import { redirect } from '@sveltejs/kit'
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+
 import {
 	getSolidDataset,
 	getThing,
@@ -7,11 +9,16 @@ import {
 } from '@inrupt/solid-client'
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
-export async function load({ locals, url }) {
+export async function load({ parent, locals, url, cookies }) {
+	console.log(await parent())
 	if (!locals.info) {
 		throw redirect(302, '/')
 	}
-	// const session = await getSessionFromStorage(locals.info.sessionId)
+
+	// const sessionCookie = cookies.get('session')
+
+	// const session = await getSessionFromStorage(sessionCookie)
+	// const webId = session.info.webId
 	const webId = locals.info.webId
 	const profileDataSet = await getSolidDataset(`${webId}`)
 

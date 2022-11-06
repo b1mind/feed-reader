@@ -7,6 +7,7 @@ export async function handle({ event, resolve }) {
 		return await resolve(event)
 	}
 
+	console.log('ran session hook')
 	const session = await getSessionFromStorage(sessionCookie)
 	if (session) {
 		event.locals = session
