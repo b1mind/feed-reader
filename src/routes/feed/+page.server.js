@@ -22,8 +22,12 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(XSD)
 // console.log(rdf)
 
-export async function load({ locals }) {
-	if (!locals.info) {
+export async function load({ parent, locals }) {
+	// if (!locals.info) {
+	// 	throw redirect(302, '/')
+	// }
+	const sessionInfo = await parent()
+	if (!sessionInfo.info) {
 		throw redirect(302, '/')
 	}
 
@@ -34,7 +38,8 @@ export async function load({ locals }) {
 	// by not getting session to read public its way way faster
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(locals.info.webId)
+	// const webId = new URL(locals.info.webId)
+	const webId = new URL(sessionInfo.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {

@@ -1,17 +1,17 @@
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
-export async function handle({ event, resolve }) {
-	const sessionCookie = event.cookies.get('session')
+// export async function handle({ event, resolve }) {
+// 	const sessionCookie = event.cookies.get('session')
 
-	if (!sessionCookie) {
-		return await resolve(event)
-	}
+// 	if (!sessionCookie) {
+// 		return await resolve(event)
+// 	}
 
-	console.log('ran session hook')
-	const session = await getSessionFromStorage(sessionCookie)
-	if (session) {
-		event.locals = session
-	}
+// 	console.log('ran session hook')
+// 	const session = await getSessionFromStorage(sessionCookie)
+// 	if (session) {
+// 		event.locals = session
+// 	}
 
-	return await resolve(event)
-}
+// 	return await resolve(event)
+// }
