@@ -6,7 +6,6 @@
 		"build": "vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync",
 		"test": "playwright test",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
 		"format": "prettier --write --plugin-search-dir=. ."
@@ -18,7 +17,7 @@
 		"@inrupt/vocab-common-rdf": "^1.0.5",
 		"@playwright/test": "^1.22.2",
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/adapter-node": "1.0.0-next.100",
+		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "next",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",

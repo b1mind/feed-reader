@@ -10,4 +10,4 @@ RUN rm -f .npmrc
 # might have to change this cause vite3 update
 EXPOSE 3000
 RUN npm run build
-CMD ["node", "./build/index.js"]
+CMD ["node", "build"]
