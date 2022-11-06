@@ -169,20 +169,22 @@ export async function edit({ locals, request }) {
 	console.log(name)
 
 	//need util classes for abstraction
-	// const session = await getSessionFromStorage(locals.info.sessionId)
-	const webId = new URL(locals.info.webId)
+	const session = await getSessionFromStorage(locals.info.sessionId)
+	const webId = new URL(session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: locals.fetch })
+		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing
 		console.log(rssThing)
 		if (rssThing) {
-			console.log('would edit but not implemented')
+			throw new Error(
+				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+			)
 		}
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
@@ -194,7 +196,13 @@ export async function edit({ locals, request }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
-			//need a proper return
+			throw new Error(
+				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+			)
+			return {
+				status: 400,
+				body: { error: error },
+			}
 		}
 	}
 
