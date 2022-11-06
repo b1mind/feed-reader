@@ -19,17 +19,17 @@
 				animate:flip={{ duration: 350 }}
 				transition:fly={{ x: 150, duration: 350 }}
 			>
-				<a sveltekit:prefetch href="/feed/{slugify(name)}/?xml={href}">
+				<a data-sveltekit-prefetch href="/feed/{slugify(name)}/?xml={href}">
 					{name}
 				</a>
-				<form action="/feed?_method=PATCH" method="POST">
+				<form action="/feed?/edit" method="POST">
 					<input type="hidden" name="name" value={name} />
 					<input type="hidden" name="url" value={href} />
 
 					<button type="submit" title="edit">📝</button>
 				</form>
 
-				<form action="/feed?_method=DELETE" method="POST">
+				<form action="/feed?/remove" method="POST">
 					<input type="hidden" name="name" value={name} />
 					<button type="submit" title="remove">❌</button>
 				</form>
@@ -37,7 +37,7 @@
 		{/each}
 	</ul>
 
-	<form action="/feed" method="POST" autocomplete="off">
+	<form action="/feed?/add" method="POST" autocomplete="off">
 		<label for="feed">
 			Feed Name:
 			<input type="text" name="feed" bind:value={feed} />

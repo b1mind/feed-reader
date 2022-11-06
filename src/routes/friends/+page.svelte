@@ -1,5 +1,5 @@
 <script>
-	import { enhance } from '$lib/utils/form.js'
+	import { enhance } from '$app/forms'
 
 	export let data
 </script>
@@ -14,10 +14,15 @@
 					{#each friend.rssList as list}
 						<li>
 							<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
-							<form data-loading="false" action="/feed?/add" method="POST">
+							<form
+								data-loading="false"
+								action="/feed?/add"
+								method="POST"
+								use:enhance
+							>
 								<input type="hidden" name="feed" bind:value={list.name} />
 								<input type="hidden" name="url" bind:value={list.href} />
-								<button type="submit">➕test</button>
+								<button type="submit">➕</button>
 							</form>
 						</li>
 					{/each}
