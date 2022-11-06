@@ -9,8 +9,7 @@ export async function handle({ event, resolve }) {
 
 	const session = await getSessionFromStorage(sessionCookie)
 	if (session) {
-		await session.handleIncomingRedirect(`${event.url.href}`)
-		event.locals.info = session.info
+		event.locals = session
 	}
 
 	return await resolve(event)

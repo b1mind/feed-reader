@@ -35,7 +35,6 @@ export async function load({ locals }) {
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	const webId = new URL(locals.info.webId)
-	console.log(webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
@@ -79,46 +78,47 @@ export async function load({ locals }) {
 	}
 }
 
-async function add({ locals, request }) {
+async function add({ locals, request, url }) {
 	const formData = await request.formData()
 	const name = formData.get('feed')
-	const url = formData.get('url')
+	const formUrl = formData.get('url')
 
 	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.info.sessionId)
-	const webId = new URL(session.info.webId)
+	const webId = new URL(locals.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = buildThing(createThing({ name: name }))
 			.addUrl(rdf.type, schema.DataFeed)
 			.addStringNoLocale(schema.name, name)
-			.addUrl(schema.url, url)
+			.addUrl(schema.url, formUrl)
 			// .addUrl(rdf.type, feedUrl)
 			.build()
 
 		rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: locals.fetch })
 		//should we return here or let it escape out to the main return?
 		//
 	} catch (error) {
 		if (error instanceof Error) {
-			// console.log(error.message)
+			console.log(error.message)
 		}
 
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			//need to create the list name
+			console.log(error.message)
 		} else {
 			//need to throw out error
+			console.log(error.message)
 		}
 	}
 
 	//all is good in the hood return
-	throw redirect(302, '/feed')
+	throw redirect(302, url)
 }
 
 export async function remove({ locals, request }) {
@@ -126,20 +126,19 @@ export async function remove({ locals, request }) {
 	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.info.sessionId)
-	const webId = new URL(session.info.webId)
+	const webId = new URL(locals.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		rssDataSet = removeThing(rssDataSet, rssThing)
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: locals.fetch })
 		//should we return here or let it escape out to the main return?
 		console.log('deleted')
 	} catch (error) {

@@ -1,5 +1,5 @@
 export async function load({ locals }) {
 	return {
-		info: locals.info,
+		session: locals.info,
 	}
 }

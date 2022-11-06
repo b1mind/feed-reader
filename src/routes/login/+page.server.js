@@ -28,7 +28,7 @@ export async function load({ locals, url, cookies }) {
 		// After login, the Solid Identity Provider will send the user back to the following
 		// URL, with the data necessary to complete the authentication process
 		// appended as query parameters:
-		redirectUrl: `${url.origin}`,
+		redirectUrl: `${url.origin}/redirected`,
 		// redirectUrl: `${url.href}`,
 		// Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
 		oidcIssuer: 'https://inrupt.net/',

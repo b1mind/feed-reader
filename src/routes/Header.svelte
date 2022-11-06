@@ -7,7 +7,7 @@
 <nav>
 	<a href="/">home</a>
 	{#if !$page.data.info}
-		<a href="/login">login</a>
+		<a href="/login" rel="external">login</a>
 	{:else}
 		<a data-sveltekit-prefetch href="/profile">profile</a>
 		<a href="/friends">friends</a>
@@ -30,10 +30,9 @@
 
 <style lang="scss">
 	nav {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
 		font-size: 1.3rem;
-	}
-
-	a {
-		color: var(--clr-primary);
 	}
 </style>
