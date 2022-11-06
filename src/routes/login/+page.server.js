@@ -14,7 +14,8 @@ export async function load({ locals, url, cookies }) {
 		// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
 		sameSite: 'strict',
 		// only sent over HTTPS in production
-		secure: process.env.NODE_ENV === 'production',
+		// secure: process.env.NODE_ENV === 'production',
+		secure: true,
 		// set cookie to expire after a month
 		maxAge: 60 * 60 * 24 * 30,
 	})
