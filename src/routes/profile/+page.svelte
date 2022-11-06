@@ -1,15 +1,16 @@
 <script>
 	import { page } from '$app/stores'
-	console.log($page.data.info.isLoggedIn)
 </script>
 
-<!-- {#if $session.user}
+{#if !$page.data.user}
+	<p>not logged in</p>
+{:else}
 	<main>
-		<h1>{$session.user.name}: {$session.user.nick}</h1>
-		<img src={$session.user.img} width="300px" alt="profile" />
+		<h1>{$page.data.user.name}: {$page.data.user.nick}</h1>
+		<img src={$page.data.user.img} width="300px" alt="profile" />
 		<p>
-			<i>{$session.user.note}</i>
-			<i>{$session.user.contacts}</i>
+			<i>{$page.data.user.note}</i>
+			<i>{$page.data.user.contacts}</i>
 		</p>
 	</main>
-{/if} -->
+{/if}

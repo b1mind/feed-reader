@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
@@ -22,6 +23,10 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(rdf)
 
 export async function load({ locals }) {
+	if (!locals.info) {
+		throw redirect(302, '/')
+	}
+
 	let rssList = []
 	let rssThing
 	let rssDataSet
@@ -29,7 +34,8 @@ export async function load({ locals }) {
 	// by not getting session to read public its way way faster
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(locals.session.data.user.webId)
+	const webId = new URL(locals.info.webId)
+	console.log(webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
@@ -67,158 +73,164 @@ export async function load({ locals }) {
 		}
 	}
 
-	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
 	return {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json',
-			'Cache-Control': 'max-age=0, s-maxage=60',
-		},
-		body: {
-			rssList,
-			// error: '',
-		},
+		rssList,
+		// error: '',
 	}
 }
 
-export async function POST({ locals, request }) {
-	const formData = await request.formData()
-	const name = formData.get('feed')
-	const url = formData.get('url')
+// export async function POST({ locals, request }) {
+// 	const formData = await request.formData()
+// 	const name = formData.get('feed')
+// 	const url = formData.get('url')
 
-	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
-	let rssDataSet
-	let rssThing
+// 	//need util classes for abstraction
+// 	const session = await getSessionFromStorage(locals.session.data.sessionId)
+// 	const webId = new URL(session.info.webId)
+// 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+// 	let rssDataSet
+// 	let rssThing
 
-	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
-		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
-		rssThing = buildThing(createThing({ name: name }))
-			.addUrl(rdf.type, schema.DataFeed)
-			.addStringNoLocale(schema.name, name)
-			.addUrl(schema.url, url)
-			// .addUrl(rdf.type, feedUrl)
-			.build()
+// 	try {
+// 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+// 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+// 		rssThing = buildThing(createThing({ name: name }))
+// 			.addUrl(rdf.type, schema.DataFeed)
+// 			.addStringNoLocale(schema.name, name)
+// 			.addUrl(schema.url, url)
+// 			// .addUrl(rdf.type, feedUrl)
+// 			.build()
 
-		rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
-		//should we return here or let it escape out to the main return?
-		//
-	} catch (error) {
-		if (error instanceof Error) {
-			// console.log(error.message)
-		}
+// 		rssDataSet = setThing(rssDataSet, rssThing)
+// 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+// 		//should we return here or let it escape out to the main return?
+// 		//
+// 	} catch (error) {
+// 		if (error instanceof Error) {
+// 			// console.log(error.message)
+// 		}
 
-		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
-			//need to create the list name
-		} else {
-			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-			return {
-				status: 400,
-				body: { error },
-			}
-		}
-	}
+// 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+// 			//need to create the list name
+// 		} else {
+// 			throw new Error(
+// 				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 			)
+// 			return {
+// 				status: 400,
+// 				body: { error },
+// 			}
+// 		}
+// 	}
 
-	//all is good in the hood return
-	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-	return {
-		status: 303,
-		headers: { location: '/feed' },
-	}
-}
+// 	//all is good in the hood return
+// 	throw new Error(
+// 		'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 	)
+// 	return {
+// 		status: 303,
+// 		headers: { location: '/feed' },
+// 	}
+// }
 
-export async function DELETE({ locals, request }) {
-	const formData = await request.formData()
-	const name = safeSpace(formData.get('name'))
+// export async function DELETE({ locals, request }) {
+// 	const formData = await request.formData()
+// 	const name = safeSpace(formData.get('name'))
 
-	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
-	let rssDataSet
-	let rssThing
+// 	//need util classes for abstraction
+// 	const session = await getSessionFromStorage(locals.session.data.sessionId)
+// 	const webId = new URL(session.info.webId)
+// 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+// 	let rssDataSet
+// 	let rssThing
 
-	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
-		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
-		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
-		rssDataSet = removeThing(rssDataSet, rssThing)
+// 	try {
+// 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+// 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+// 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
+// 		rssDataSet = removeThing(rssDataSet, rssThing)
 
-		// rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
-		//should we return here or let it escape out to the main return?
-		console.log('deleted')
-	} catch (error) {
-		error = error
-		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
-			console.log('no Thing to del')
-			//need a proper return
-		} else {
-			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-			return {
-				status: 400,
-				body: { error },
-			}
-		}
-	}
+// 		// rssDataSet = setThing(rssDataSet, rssThing)
+// 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+// 		//should we return here or let it escape out to the main return?
+// 		console.log('deleted')
+// 	} catch (error) {
+// 		error = error
+// 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+// 			console.log('no Thing to del')
+// 			//need a proper return
+// 		} else {
+// 			throw new Error(
+// 				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 			)
+// 			return {
+// 				status: 400,
+// 				body: { error },
+// 			}
+// 		}
+// 	}
 
-	//all is good in the hood return
-	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-	return {
-		status: 303,
-		headers: { location: '/feed' },
-	}
-}
+// 	//all is good in the hood return
+// 	throw new Error(
+// 		'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 	)
+// 	return {
+// 		status: 303,
+// 		headers: { location: '/feed' },
+// 	}
+// }
 
-export async function PATCH({ locals, request }) {
-	const formData = await request.formData()
-	const name = formData.get('name').replace(' ', '%20')
-	// const name = formData.get('name').split(' ').join('%20')
-	console.log(name)
+// export async function PATCH({ locals, request }) {
+// 	const formData = await request.formData()
+// 	const name = formData.get('name').replace(' ', '%20')
+// 	// const name = formData.get('name').split(' ').join('%20')
+// 	console.log(name)
 
-	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.session.data.sessionId)
-	const webId = new URL(session.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
-	let rssDataSet
-	let rssThing
+// 	//need util classes for abstraction
+// 	const session = await getSessionFromStorage(locals.session.data.sessionId)
+// 	const webId = new URL(session.info.webId)
+// 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+// 	let rssDataSet
+// 	let rssThing
 
-	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
-		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
-		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
-		//update Thing
-		console.log(rssThing)
-		if (rssThing) {
-			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-			return { status: 200, body: { error: 'Worked but not implemented' } }
-		}
+// 	try {
+// 		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+// 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
+// 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
+// 		//update Thing
+// 		console.log(rssThing)
+// 		if (rssThing) {
+// 			throw new Error(
+// 				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 			)
+// 			return { status: 200, body: { error: 'Worked but not implemented' } }
+// 		}
 
-		// rssDataSet = setThing(rssDataSet, rssThing)
-		// await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
-		//should we return here or let it escape out to the main return?
-		//
-	} catch (error) {
-		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
-			console.log('no Thing to del')
-			//need a proper return
-		} else {
-			throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-			return {
-				status: 400,
-				body: { error: error },
-			}
-		}
-	}
+// 		// rssDataSet = setThing(rssDataSet, rssThing)
+// 		// await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: session.fetch })
+// 		//should we return here or let it escape out to the main return?
+// 		//
+// 	} catch (error) {
+// 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+// 			console.log('no Thing to del')
+// 			//need a proper return
+// 		} else {
+// 			throw new Error(
+// 				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 			)
+// 			return {
+// 				status: 400,
+// 				body: { error: error },
+// 			}
+// 		}
+// 	}
 
-	//all is good in the hood return
-	throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-	return {
-		status: 303,
-		headers: { location: '/feed' },
-	}
-}
+// 	//all is good in the hood return
+// 	throw new Error(
+// 		'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
+// 	)
+// 	return {
+// 		status: 303,
+// 		headers: { location: '/feed' },
+// 	}
+// }

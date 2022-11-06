@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit'
 import {
 	getSolidDataset,
 	getThing,
@@ -10,8 +11,12 @@ import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 export async function load({ locals }) {
+	if (!locals.info) {
+		throw redirect(302, '/')
+	}
+
 	let friends = []
-	const webId = locals.session.data.user.webId
+	const webId = locals.info.webId
 
 	try {
 		const profileDataSet = await getSolidDataset(`${webId}`)
