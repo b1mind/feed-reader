@@ -1,17 +1,13 @@
 <script>
-	import { session } from '$app/stores'
 </script>
 
 <nav>
 	<a href="/">home</a>
-	{#if $session.user}
-		<a sveltekit:prefetch href="/profile">profile</a>
-		<a sveltekit:prefetch href="/friends">friends</a>
-		<a sveltekit:prefetch href="/feed">feed</a>
-		<a href="/logout">logout</a>
-	{:else}
-		<a href="/login">login</a>
-	{/if}
+	<a href="/profile">profile</a>
+	<a href="/friends">friends</a>
+	<a href="/feed">feed</a>
+	<a href="/logout">logout</a>
+	<a href="/login">login</a>
 </nav>
 
 <style lang="scss">

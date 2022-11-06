@@ -1,3 +1,5 @@
+import { invalid, redirect } from '@sveltejs/kit'
+
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getThingAll,
@@ -8,13 +10,15 @@ import {
 } from '@inrupt/solid-client'
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
-export async function GET({ locals, url }) {
-	const session = await getSessionFromStorage(locals.session.data.sessionId)
+export async function load({ locals, url }) {
+	const session = await getSessionFromStorage(locals.data.sessionId)
 
 	await session.handleIncomingRedirect(`${url.href}`)
 
-	if (!session.info.isLoggedIn) throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
-	return console.log('not loggedIn')
+	if (!session.info.isLoggedIn)
+		throw new Error(
+			'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)'
+		)
 	const webId = session.info.webId
 
 	const profileDataSet = await getSolidDataset(`${webId}`, {
@@ -36,5 +40,7 @@ export async function GET({ locals, url }) {
 		user: { ...session.info, img, name, nick, note },
 	}))
 
-	return new Response(undefined, { status: 302, headers: { Location: '/' } })
+	console.log(locals.session)
+
+	throw redirect(302, '/')
 }

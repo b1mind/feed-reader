@@ -1,6 +1,7 @@
+import { redirect } from '@sveltejs/kit'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
-export async function GET({ locals }) {
+export async function load({ locals }) {
 	let msg = 'Logged Out'
 	if (!locals.session.data.sessionId) return
 
@@ -8,11 +9,11 @@ export async function GET({ locals }) {
 		const session = await getSessionFromStorage(locals.session.data.sessionId)
 		locals.session.destroy()
 		session.logout()
-		return new Response(undefined, { status: 302, headers: { Location: '/' } })
+		return redirect(302, '/')
 	} catch (error) {
 		//issues with session destroy and login
 		locals.session.destroy()
 
-		return new Response(undefined, { status: 302, headers: { Location: '/' } })
+		return redirect(302, '/')
 	}
 }

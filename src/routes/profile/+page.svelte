@@ -1,8 +1,9 @@
 <script>
-	import { session } from '$app/stores'
+	import { page } from '$app/stores'
+	console.log($page.data.info.isLoggedIn)
 </script>
 
-{#if $session.user}
+<!-- {#if $session.user}
 	<main>
 		<h1>{$session.user.name}: {$session.user.nick}</h1>
 		<img src={$session.user.img} width="300px" alt="profile" />
@@ -11,7 +12,4 @@
 			<i>{$session.user.contacts}</i>
 		</p>
 	</main>
-{/if}
-
-<style lang="scss">
-</style>
+{/if} -->
