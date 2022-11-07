@@ -8,11 +8,11 @@ import {
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 
 export async function load({ locals, url }) {
-	if (!locals.info) {
+	if (!locals.session) {
 		throw redirect(302, '/')
 	}
 	// const session = await getSessionFromStorage(locals.info.sessionId)
-	const webId = locals.info.webId
+	const webId = locals.session.info.webId
 	const profileDataSet = await getSolidDataset(`${webId}`)
 
 	const profileThing = getThing(profileDataSet, webId)

@@ -11,20 +11,21 @@ import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 export async function load({ locals }) {
-	if (!locals.info) {
+	if (!locals.session) {
 		throw redirect(302, '/')
 	}
 
 	let friends = []
-	const webId = locals.info.webId
+	const webId = locals.session.info.webId
 
 	try {
 		const profileDataSet = await getSolidDataset(`${webId}`)
 		const profileThing = getThing(profileDataSet, webId)
 		const contacts = getUrlAll(profileThing, FOAF.knows)
-		let rssList = []
 
 		for (let contact of contacts) {
+			let rssList = []
+
 			contact = new URL(contact)
 			let listUrl = `${contact.origin}/public/feedReader/rssList.ttl`
 			//check if friend has feedReader

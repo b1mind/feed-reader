@@ -38,5 +38,5 @@ export async function load({ url, params }) {
 		items = [...items, newItem]
 	})
 
-	return { title: feed.title, items }
+	return { rss: { title: feed.title, items } }
 }

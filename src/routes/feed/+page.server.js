@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
+
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getSolidDataset,
@@ -22,12 +23,8 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(XSD)
 // console.log(rdf)
 
-export async function load({ parent, locals }) {
-	// if (!locals.info) {
-	// 	throw redirect(302, '/')
-	// }
-	const sessionInfo = await parent()
-	if (!sessionInfo.info) {
+export async function load({ locals }) {
+	if (!locals.session) {
 		throw redirect(302, '/')
 	}
 
@@ -36,10 +33,11 @@ export async function load({ parent, locals }) {
 	let rssDataSet
 
 	// by not getting session to read public its way way faster
+	// but right now the hook gets session from cookie every server.js
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
-	const webId = new URL(sessionInfo.info.webId)
+	const webId = new URL(locals.session.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
@@ -57,7 +55,7 @@ export async function load({ parent, locals }) {
 			let href = 'https://www.reddit.com/r/keyboards.rss'
 			//should this return an option to create vs just doing it?
 			rssDataSet = createSolidDataset()
-			const session = await getSessionFromStorage(locals.info.sessionId)
+			const session = await getSessionFromStorage(locals.session.info.sessionId)
 
 			// need to figure out what kinda Thing to make, want a good list for urls/names/params
 			// must have created date to check and get newest/oldest order
@@ -89,7 +87,7 @@ async function add({ locals, request, url }) {
 	const formUrl = formData.get('url')
 
 	//need util classes for abstraction
-	const webId = new URL(locals.info.webId)
+	const webId = new URL(locals.session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
@@ -169,14 +167,13 @@ export async function edit({ locals, request }) {
 	console.log(name)
 
 	//need util classes for abstraction
-	const session = await getSessionFromStorage(locals.info.sessionId)
-	const webId = new URL(session.info.webId)
+	const webId = new URL(locals.session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		rssDataSet = await getSolidDataset(listUrl, { fetch: locals.session.fetch })
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing

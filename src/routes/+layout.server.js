@@ -1,5 +1,7 @@
 export async function load({ locals }) {
+	console.log(locals.session)
+	if (!locals.session) return
 	return {
-		info: locals.info,
+		info: locals.session.info,
 	}
 }

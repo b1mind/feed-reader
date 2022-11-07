@@ -1,14 +1,11 @@
 <script>
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
-	export let items
-	export let title
+	export let data
 </script>
 
-<h1>{title}</h1>
+<h1>{data.rss.title}</h1>
 
 <ul>
-	{#each items as { title, link }}
+	{#each data.rss.items as { title, link }}
 		<a href={link}>
 			<li>{title}</li>
 		</a>
