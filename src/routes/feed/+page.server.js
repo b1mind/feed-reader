@@ -131,7 +131,7 @@ export async function remove({ locals, request }) {
 	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
-	const webId = new URL(locals.info.webId)
+	const webId = new URL(locals.session.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
