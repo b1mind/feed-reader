@@ -1,16 +1,16 @@
 <script>
-	import { page } from '$app/stores'
+	export let data
 </script>
 
-{#if !$page.data.user}
+{#if !data.user}
 	<p>not logged in</p>
 {:else}
 	<main>
-		<h1>{$page.data.user.name}: {$page.data.user.nick}</h1>
-		<img src={$page.data.user.img} width="300px" alt="profile" />
+		<h1>{data.user.name}: {data.user.nick}</h1>
+		<img src={data.user.img} width="300px" alt="profile" />
 		<p>
-			<i>{$page.data.user.note}</i>
-			<i>{$page.data.user.contacts}</i>
+			<i>{data.user.note}</i>
+			<i>{data.user.contacts}</i>
 		</p>
 	</main>
 {/if}
