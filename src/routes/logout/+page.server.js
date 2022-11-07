@@ -7,11 +7,9 @@ export async function load({ locals, cookies }) {
 
 export const actions = {
 	async default({ locals, cookies }) {
-		console.log(locals.info)
 		if (!locals.info.sessionId) return
 
-		const session = await getSessionFromStorage(locals.info.sessionId)
-		session.logout()
+		locals.logout()
 		cookies.set('session', '', {
 			path: '/',
 			expires: new Date(0),

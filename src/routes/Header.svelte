@@ -10,7 +10,7 @@
 		<a href="/login" rel="external">login</a>
 	{:else}
 		<a data-sveltekit-prefetch href="/profile">profile</a>
-		<a href="/friends">friends</a>
+		<a data-sveltekit-prefetch href="/friends">friends</a>
 		<a data-sveltekit-prefetch href="/feed">feed</a>
 
 		<form
