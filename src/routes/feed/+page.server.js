@@ -103,7 +103,9 @@ async function add({ locals, request, url }) {
 			.build()
 
 		rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: locals.fetch })
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
+			fetch: locals.session.fetch,
+		})
 		//should we return here or let it escape out to the main return?
 		//
 	} catch (error) {
@@ -141,7 +143,9 @@ export async function remove({ locals, request }) {
 		rssDataSet = removeThing(rssDataSet, rssThing)
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
-		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, { fetch: locals.fetch })
+		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
+			fetch: locals.session.fetch,
+		})
 		//should we return here or let it escape out to the main return?
 		console.log('deleted')
 	} catch (error) {
