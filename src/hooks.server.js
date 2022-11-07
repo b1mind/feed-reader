@@ -5,16 +5,17 @@ export async function handle({ event, resolve }) {
 	const sessionCookie = event.cookies.get('session')
 
 	if (!sessionCookie) {
-		console.log('bad cookie')
+		console.log('noz cookie')
+		//need to invalidate locals?
 		return await resolve(event)
 	}
-	console.log('good cookie')
+
+	console.log('haz cookie')
 
 	const session = await getSessionFromStorage(sessionCookie)
 	if (session) {
 		event.locals.session = session
-
-		console.log('set session')
+		console.log('sendit lets session')
 	}
 
 	return await resolve(event)

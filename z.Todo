@@ -1,12 +1,12 @@
 Todo:
   ☐ being able to pick a Pod provider 
   ☐ localStorage for remembering Pod Provider and other settings (persitant$store)
-  ☐ home page needs a introduction to SolidPods and how to use.
   ☐ make request util helpers (pretty wet get DRY)
   ☐ memoization for getThings (during refactor)
   ☐ try/catch for if logged in on requests redirect /login
   ☐ give some better styles for temp
   ☐ favicon(s)
+  ☐ home page needs a introduction to SolidPods and how to use.
   
 Features:
   ☐ suggested me/rssPod if no friends with feeds
