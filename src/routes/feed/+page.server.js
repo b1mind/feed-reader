@@ -123,7 +123,7 @@ async function add({ locals, request, url }) {
 	}
 
 	//all is good in the hood return
-	throw redirect(302, url)
+	// throw redirect(302, url)
 }
 
 export async function remove({ locals, request }) {
