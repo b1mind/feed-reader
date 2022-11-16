@@ -11,8 +11,6 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@inrupt/solid-client-authn-node": "^1.12.1",
-		"@inrupt/vocab-common-rdf": "^1.0.5",
 		"@playwright/test": "^1.22.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "next",
@@ -23,13 +21,15 @@
 		"postcss": "^8.4.14",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
-		"rdf-namespaces": "^1.9.2",
 		"sass": "^1.53.0",
 		"svelte": "^3.44.0",
 		"vite": "^3.0.0"
 	},
 	"dependencies": {
+		"@inrupt/solid-client-authn-node": "^1.12.1",
 		"@inrupt/solid-client": "^1.23.1",
+		"@inrupt/vocab-common-rdf": "^1.0.5",
+		"rdf-namespaces": "^1.9.2",
 		"rss-parser": "^3.12.0"
 	},
 	"type": "module"
