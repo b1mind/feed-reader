@@ -2,6 +2,7 @@ import { invalid, redirect } from '@sveltejs/kit'
 import { Session } from '@inrupt/solid-client-authn-node'
 
 export async function load({ locals, url, cookies }) {
+	console.log('login session')
 	let redirectUrl = ''
 	let solidSession = new Session()
 
