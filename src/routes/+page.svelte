@@ -2,7 +2,7 @@
 	export let data
 </script>
 
-{#if !data.info}
+{#if !data?.info?.isLoggedIn}
 	<h1>Solid RSS</h1>
 	<p>You need to login to use this app</p>
 {:else}

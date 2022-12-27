@@ -2,11 +2,12 @@
 	import { page } from '$app/stores'
 	import { applyAction, enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
+	console.log($page.data)
 </script>
 
 <nav>
 	<a href="/">home</a>
-	{#if !$page.data.info}
+	{#if !$page.data?.info?.isLoggedIn}
 		<a href="/login" rel="external">login</a>
 	{:else}
 		<a data-sveltekit-prefetch href="/profile">profile</a>

@@ -1,6 +1,7 @@
-export async function load({ locals }) {
-	if (!locals.session) return
+export async function load({ locals, cookies }) {
+	console.log('layout local')
 	return {
-		info: locals.session.info,
+		// session: await getSessionFromStorage(sessionCookie),
+		info: locals?.session?.info,
 	}
 }

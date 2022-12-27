@@ -6,7 +6,8 @@ export async function load({ locals, cookies }) {
 
 export const actions = {
 	async default({ locals, cookies }) {
-		if (!locals.session) return
+		console.log(locals)
+		if (!locals.session) throw redirect(302, '/')
 
 		locals.session.logout()
 		cookies.set('session', '', {

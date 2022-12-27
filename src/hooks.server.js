@@ -3,33 +3,44 @@ import {
 	getSessionIdFromStorageAll,
 } from '@inrupt/solid-client-authn-node'
 
-const excludedPaths = ['/redirected', '/login']
+const excludedPaths = ['/login']
 
 export async function handle({ event, resolve }) {
-	console.log(excludedPaths.includes(event.url.pathname))
 	if (excludedPaths.includes(event.url.pathname)) {
 		console.log('nope out hook')
 		return await resolve(event)
 	}
 
-	console.log('get cookie')
+	const allSession = await getSessionIdFromStorageAll()
 	const sessionCookie = await event.cookies.get('session')
 
-	if (!sessionCookie) {
-		console.log('noz cookie')
-		//need to invalidate locals?
-		return await resolve(event)
-	}
+	// if (allSession) {
+	// 	allSession.forEach(async (sesh) => {
+	// 		let user = await getSessionFromStorage(sesh)
+	// 		user.logout()
+	// 	})
+	// }
 
-	console.log('haz cookie')
-
+	console.log(allSession)
+	console.log('get session hook')
 	const session = await getSessionFromStorage(sessionCookie)
-	console.log(await getSessionIdFromStorageAll())
+	// await session.handleIncomingRedirect(`${event.url.href}`)
 
 	if (session) {
+		console.log(event.url.pathname)
+		// if (event.url.pathname === '/redirected') {
+		// 	console.log('redirected')
+		// 	await session.handleIncomingRedirect(`${event.url.href}`)
+		// 	console.log('handled')
+		// 	event.locals.session = session
+
+		// 	return Response.redirect(`${event.url.origin}`, 302)
+		// }
+
+		console.log('sendit hook session')
 		event.locals.session = session
-		console.log('sendit lets session')
 	}
 
-	return await resolve(event)
+	const response = await resolve(event)
+	return response
 }
