@@ -2,7 +2,6 @@
 	import { page } from '$app/stores'
 	import { applyAction, enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
-	console.log($page.data)
 </script>
 
 <nav>

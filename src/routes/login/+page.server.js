@@ -37,3 +37,11 @@ export async function load({ locals, url, cookies }) {
 	//can we set a cookie header with this redirect?
 	throw redirect(302, redirectUrl)
 }
+
+// export const actions = {
+// 	async default({ locals, cookies }) {
+// 		if (!locals.session) throw redirect(302, '/')
+
+// 		throw redirect(302, '/')
+// 	},
+// }

@@ -1,7 +1,12 @@
-export async function load({ locals, cookies }) {
-	console.log('layout local')
+export async function load({ locals, cookies, url }) {
+	if (url.pathname.includes('/redirected')) {
+		console.log('layout.redirected')
+		// console.log(locals)
+		// await locals.session.handleIncomingRedirect(`${url.href}`)
+		console.log('handled')
+	}
+
 	return {
-		// session: await getSessionFromStorage(sessionCookie),
 		info: locals?.session?.info,
 	}
 }
