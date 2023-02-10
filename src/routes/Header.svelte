@@ -7,7 +7,7 @@
 <nav>
 	<a href="/">home</a>
 	{#if !$page.data?.info?.isLoggedIn}
-		<a href="/login" rel="external">login</a>
+		<a href="/login">login</a>
 	{:else}
 		<a data-sveltekit-prefetch href="/profile">profile</a>
 		<a data-sveltekit-prefetch href="/friends">friends</a>

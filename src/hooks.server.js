@@ -6,14 +6,17 @@ import {
 const excludedPaths = ['/login']
 
 export async function handle({ event, resolve }) {
+	console.log('check cookie')
 	const sessionCookie = await event.cookies.get('session')
+	console.log(sessionCookie)
+	if (!sessionCookie) return await resolve(event)
+
 	if (excludedPaths.includes(event.url.pathname)) {
 		console.log('nope out hook')
 		return await resolve(event)
 	}
 
 	const allSession = await getSessionIdFromStorageAll()
-	console.log(sessionCookie)
 
 	// if (allSession) {
 	// 	allSession.forEach(async (sesh) => {
@@ -28,16 +31,14 @@ export async function handle({ event, resolve }) {
 	// await session.handleIncomingRedirect(`${event.url.href}`)
 
 	if (session) {
-		console.log(session)
-		console.log(event.url.pathname)
-		// if (event.url.pathname === '/redirected') {
-		// 	console.log('redirected')
-		// 	await session.handleIncomingRedirect(`${event.url.href}`)
-		// 	console.log('handled')
-		// 	event.locals.session = session
+		if (event.url.pathname === '/redirected') {
+			console.log('redirected')
+			await session.handleIncomingRedirect(`${event.url.href}`)
+			console.log('handled')
+			event.locals.session = session
 
-		// 	return Response.redirect(`${event.url.origin}`, 302)
-		// }
+			return Response.redirect(`${event.url.origin}`, 302)
+		}
 
 		event.locals.session = session
 		console.log('sendit hook session')

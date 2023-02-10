@@ -9,7 +9,7 @@ export async function load({ locals, url, cookies }) {
 	cookies.set('session', solidSession.info.sessionId, {
 		path: '/',
 		httpOnly: true,
-		sameSite: 'strict',
+		// sameSite: 'strict',
 		secure: process.env.NODE_ENV === 'production',
 		maxAge: 60 * 60 * 24 * 30,
 	})
