@@ -31,7 +31,7 @@ export async function handle({ event, resolve }) {
 	// await session.handleIncomingRedirect(`${event.url.href}`)
 
 	if (session) {
-		if (event.url.pathname === '/redirected') {
+		if (event.url.pathname === '/authorize') {
 			console.log('redirected')
 			await session.handleIncomingRedirect(`${event.url.href}`)
 			console.log('handled')
