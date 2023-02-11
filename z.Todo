@@ -1,8 +1,10 @@
 Todo:
   ☐ being able to pick a Pod provider 
   ☐ localStorage for remembering Pod Provider and other settings (persitant$store)
+  ☐ import OPML or another XML list of feeds
+  ☐ find out best schema if not OPML/XSD to save lists in pod
+  ☐ test a fetch from api route in kit to serve and possible cache data better?
   ☐ make request util helpers (pretty wet get DRY)
-  ☐ memoization for getThings (during refactor)
   ☐ try/catch for if logged in on requests redirect /login
   ☐ give some better styles for temp
   ☐ favicon(s)
@@ -17,7 +19,8 @@ Features:
 
 WishList:
   make dreams come true
-  ☐ better persistant auth and data
+  ☐ fetch api and away to store list/data unless changed?
+  ✔ better persistant auth and data @done
   ☐ login redirect to last page pass ?last=pagename param (this even needed?)
 
 Archive:
