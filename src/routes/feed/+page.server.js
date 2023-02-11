@@ -126,7 +126,7 @@ async function add({ locals, request, url }) {
 	// throw redirect(302, url)
 }
 
-export async function remove({ locals, request }) {
+async function remove({ locals, request }) {
 	const formData = await request.formData()
 	const name = safeSpace(formData.get('name'))
 
@@ -154,9 +154,7 @@ export async function remove({ locals, request }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
-			throw new Error(
-				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
-			)
+			//else something ..
 		}
 	}
 
@@ -164,7 +162,7 @@ export async function remove({ locals, request }) {
 	throw redirect(302, '/feed')
 }
 
-export async function edit({ locals, request }) {
+async function edit({ locals, request }) {
 	const formData = await request.formData()
 	const name = formData.get('name').replace(' ', '%20')
 	// const name = formData.get('name').split(' ').join('%20')
@@ -181,11 +179,8 @@ export async function edit({ locals, request }) {
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing
-		console.log(rssThing)
 		if (rssThing) {
-			throw new Error(
-				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
-			)
+			console.log(rssThing)
 		}
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
@@ -197,18 +192,11 @@ export async function edit({ locals, request }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
-			throw new Error(
-				'@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)'
-			)
-			return {
-				status: 400,
-				body: { error: error },
-			}
 		}
 	}
 
 	//all is good in the hood return
-	throw redirect(302, '/feed')
+	// throw redirect(302, '/feed')
 }
 
 export const actions = { add, remove, edit }
