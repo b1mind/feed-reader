@@ -1,31 +1,32 @@
 Todo:
-  ☐ being able to pick a Pod provider 
-  ☐ localStorage for remembering Pod Provider and other settings (persitant$store)
-  ☐ import OPML or another XML list of feeds
-  ☐ find out best schema if not OPML/XSD to save lists in pod
-  ☐ test a fetch from api route in kit to serve and possible cache data better?
-  ☐ make request util helpers (pretty wet get DRY)
-  ☐ try/catch for if logged in on requests redirect /login
-  ☐ give some better styles for temp
-  ☐ favicon(s)
-  ☐ home page needs a introduction to SolidPods and how to use.
-  
+	☐ being able to pick a Pod provider 
+	☐ localStorage for remembering Pod Provider and other settings (persitant$store)
+	☐ error template needed
+	☐ import OPML or another XML list of feeds
+	☐ find out best schema if not OPML/XSD to save lists in pod
+	☐ test a fetch from api route in kit to serve and possible cache data better?
+	☐ make request util helpers (pretty wet get DRY)
+	☐ try/catch for if logged in on requests redirect /login
+	☐ give some better styles for temp
+	☐ favicon(s)
+	☐ home page needs a introduction to SolidPods and how to use.
+	
 Features:
-  ☐ suggested me/rssPod if no friends with feeds
-  ☐ add a friend via webId
-  ☐ date added, and last updated props
-  ☐ refactor endpoint to handle multiple lists
-  ☐ better client enhancements i.e. transitions (logic in .svelte?)
+	☐ suggested me/rssPod if no friends with feeds
+	☐ add a friend via webId
+	☐ date added, and last updated props
+	☐ refactor endpoint to handle multiple lists
+	☐ better client enhancements i.e. transitions (logic in .svelte?)
 
 WishList:
-  make dreams come true
-  ☐ fetch api and away to store list/data unless changed?
-  ✔ better persistant auth and data @done
-  ☐ login redirect to last page pass ?last=pagename param (this even needed?)
+	make dreams come true
+	☐ fetch api and away to store list/data unless changed?
+	✔ better persistant auth and data @done
+	☐ login redirect to last page pass ?last=pagename param (this even needed?)
 
 Archive:
-  ✔ friends list + their public lists @done @project(Features)
-  ✔ auth check for non-public pages @done
-  ✔ utils for slug/spaces in names + any others @done
-  ✔ test a proper node deployment @done @project(Todo)
-  ✔ better progressive enhancement forms work no JS @done @project(Features)
+	✔ friends list + their public lists @done @project(Features)
+	✔ auth check for non-public pages @done
+	✔ utils for slug/spaces in names + any others @done
+	✔ test a proper node deployment @done @project(Todo)
+	✔ better progressive enhancement forms work no JS @done @project(Features)
