@@ -4,7 +4,6 @@
 </script>
 
 <Header />
-<!-- todo put a session check here or let the pages/routes handle it? -->
 
 <slot />
 
