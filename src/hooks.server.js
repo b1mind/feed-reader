@@ -1,7 +1,4 @@
-import {
-	getSessionFromStorage,
-	getSessionIdFromStorageAll,
-} from '@inrupt/solid-client-authn-node'
+import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
 const excludedPaths = ['/login']
 
@@ -11,15 +8,14 @@ export async function handle({ event, resolve }) {
 		return await resolve(event)
 	}
 
-	const allSession = await getSessionIdFromStorageAll()
+	// just for nuking session if needed during dev
+	// const allSession = await getSessionIdFromStorageAll()
 	// if (allSession) {
 	// 	allSession.forEach(async (sesh) => {
 	// 		let user = await getSessionFromStorage(sesh)
 	// 		user.logout()
 	// 	})
 	// }
-	console.log('sessions logged in')
-	console.log(allSession)
 
 	const sessionCookie = await event.cookies.get('session')
 	if (!sessionCookie) return await resolve(event)
@@ -28,6 +24,7 @@ export async function handle({ event, resolve }) {
 
 	if (session) {
 		event.locals.session = session
+		console.log('session and locals set')
 
 		if (event.url.pathname === '/authorize') {
 			await session.handleIncomingRedirect(`${event.url.href}`)
@@ -36,5 +33,6 @@ export async function handle({ event, resolve }) {
 	}
 
 	const response = await resolve(event)
+	//set headers?
 	return response
 }

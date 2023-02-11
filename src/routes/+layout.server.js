@@ -1,11 +1,5 @@
 export async function load({ locals, cookies, url }) {
-	// if (url.pathname.includes('/redirected')) {
-	// 	console.log('layout.redirected')
-	// 	// console.log(locals)
-	// 	// await locals.session.handleIncomingRedirect(`${url.href}`)
-	// 	console.log('handled')
-	// }
-
+	//do we need to pass this data down to pages or use locals in them?
 	return {
 		info: locals?.session?.info,
 	}
