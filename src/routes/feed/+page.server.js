@@ -17,10 +17,10 @@ import {
 } from '@inrupt/solid-client'
 
 //need to figure out if I need both or can just use namespaces
-// import { SCHEMA_INRUPT, XSD } from '@inrupt/vocab-common-rdf'
+import { XSD } from '@inrupt/vocab-common-rdf'
 import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(dc)
-// console.log(XSD)
+console.log(XSD)
 // console.log(rdf)
 
 export async function load({ locals }) {
