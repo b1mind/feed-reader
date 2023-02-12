@@ -6,8 +6,8 @@
 
 <nav>
 	<a href="/">home</a>
-	<a href="/fetch">fetch</a>
-	<a href="/public">public</a>
+	<a href="/fetch">fetchTest</a>
+	<a href="/public">404Test</a>
 	{#if !$page.data?.info?.isLoggedIn}
 		<a href="/login" rel="external">login</a>
 	{:else}
