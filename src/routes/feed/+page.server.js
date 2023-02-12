@@ -14,12 +14,10 @@ import {
 	buildThing,
 	setThing,
 	removeThing,
-	overwriteFile,
-	getSourceUrl,
 } from '@inrupt/solid-client'
 
 //need to figure out if I need both or can just use namespaces
-import { XSD } from '@inrupt/vocab-common-rdf'
+// import { RDF, SCHEMA_INRUPT, XSD } from '@inrupt/vocab-common-rdf'
 import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(dc)
 // console.log(XSD)
@@ -33,6 +31,8 @@ export async function load({ locals }) {
 	let rssList = []
 	let rssThing
 	let rssDataSet
+	let testDataSet
+	let testThing
 
 	// by not getting session to read public its way way faster
 	// but right now the hook gets session from cookie every server.js
@@ -48,16 +48,59 @@ export async function load({ locals }) {
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
 			let href = getUrl(thing, schema.url)
-			// let feedUrl = getUrl(thing, rdf.type)
 			rssList = [...rssList, { name, href }]
 		})
+
+		// const testThing2 = buildThing('https://joyofcode.xyz', {
+		// 	title: 'test',
+		// 	link: 'https://joyofcode.xyz/rss.xml',
+		// 	description: 'all your base are belong to us',
+		// 	type: 'http://purl.org/rss/1.0/channel',
+		// }).build()
+		// console.log(testThing2)
+
+		//fixme testing new way to save dataset for better rdf to json convertion
+
+		testDataSet = createSolidDataset()
+		testThing = buildThing(createThing({ name: 'testLink' }))
+			.addUrl(schema.url, 'https://joyofcode.xyz')
+			.addStringNoLocale(schema.title, 'testLink')
+			.addUrl(rdf.type, 'http://purl.org/rss/1.0/channel')
+			.build()
+		testDataSet = setThing(testDataSet, testThing)
+		console.log(testDataSet)
+
+		// const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+		// saveSolidDatasetAt(`${webId}/public/feedReader/testList.ttl`, testThing, {
+		// 	fetch: session.fetch,
+		// })
+
+		//note this is a test
+		//todo save .opml file this should probably be a form/action from button on feed
+		// let opmlList = ``
+		// rssList.forEach(({ name, href }) => {
+		// 	opmlList += `<outline text="${name}" type="rss" xmlUrl="${href}"/>`
+		// })
+
+		// const opml = `
+		// <?xml version="1.0"?>
+		// <opml version="2.0">
+		//   <head>
+		//     <title>My Feeds</title>
+		//   </head>
+		//   <body>
+		// 		<outline text="rssList">
+		// 			${opmlList}
+		// 		</outline>
+		//   </body>
+		// </opml>
+		// `
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			let name = 'RedditKeyboards'
 			let href = 'https://www.reddit.com/r/keyboards.rss'
 			//should this return an option to create vs just doing it?
 			rssDataSet = createSolidDataset()
-			const session = await getSessionFromStorage(locals.session.info.sessionId)
 
 			// need to figure out what kinda Thing to make, want a good list for urls/names/params
 			// must have created date to check and get newest/oldest order
@@ -68,6 +111,8 @@ export async function load({ locals }) {
 				.build()
 
 			rssDataSet = setThing(rssDataSet, rssThing)
+
+			const session = await getSessionFromStorage(locals.seshInfo.sessionId)
 			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 				fetch: session.fetch,
 			})
@@ -106,6 +151,7 @@ async function add({ locals, request, url }) {
 			.build()
 
 		rssDataSet = setThing(rssDataSet, rssThing)
+
 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 			fetch: session.fetch,
 		})
@@ -180,8 +226,8 @@ async function edit({ locals, request }) {
 	let rssThing
 
 	try {
-		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
-		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
+		// const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing

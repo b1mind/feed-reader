@@ -3,8 +3,9 @@
 	--clr-primary-bg: hsl(277, 16%, 16%);
 	--clr-light: #d3d3d3;
 }
+
 body {
-	color: var(--clr-light);
+	color: var(--clr-font-main, var(--clr-light));
 	background: var(--clr-primary-bg);
 }
 

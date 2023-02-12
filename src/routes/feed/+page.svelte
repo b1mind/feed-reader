@@ -20,7 +20,9 @@
 				animate:flip={{ duration: 350 }}
 				transition:fly|local={{ x: 150, duration: 350 }}
 			>
-				<a data-sveltekit-prefetch href="/feed/{slugify(name)}/?xml={href}">
+				<!-- to preload / client parse or what how taxing is it? -->
+				<!-- <a data-sveltekit-preload-data href="/feed/{slugify(name)}/?xml={href}"> -->
+				<a href="/feed/{slugify(name)}/?xml={href}">
 					{name}
 				</a>
 				<form action="/feed?/edit" method="POST" use:enhance>
