@@ -10,8 +10,9 @@ export async function load({ locals, url, cookies }) {
 		path: '/',
 		httpOnly: true,
 		// sameSite: 'strict',
-		secure: process.env.NODE_ENV === 'production',
-		maxAge: 60 * 60 * 24 * 30,
+		// secure: process.env.NODE_ENV === 'production',
+		secure: true,
+		maxAge: 60 * 60 * 24,
 	})
 
 	const handleSolidRedirect = (url) => {

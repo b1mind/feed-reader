@@ -14,17 +14,19 @@ import {
 	buildThing,
 	setThing,
 	removeThing,
+	overwriteFile,
+	getSourceUrl,
 } from '@inrupt/solid-client'
 
 //need to figure out if I need both or can just use namespaces
 import { XSD } from '@inrupt/vocab-common-rdf'
 import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(dc)
-console.log(XSD)
+// console.log(XSD)
 // console.log(rdf)
 
 export async function load({ locals }) {
-	if (!locals.session) {
+	if (!locals.seshInfo) {
 		throw redirect(302, '/')
 	}
 
@@ -37,7 +39,7 @@ export async function load({ locals }) {
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
-	const webId = new URL(locals.session.info.webId)
+	const webId = new URL(locals.seshInfo.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {

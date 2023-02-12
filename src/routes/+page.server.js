@@ -1,16 +1,9 @@
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
+import { fromRDF } from 'jsonld'
+import { redirect } from '@sveltejs/kit'
 
-export async function load({ locals }) {
-	if (!locals.session) return {}
+export async function load({}) {
 	const allSession = await getSessionIdFromStorageAll()
-
-	//playing with session.fetch.. what to do with it?
-	const url = new URL(locals.session.info.webId).origin
-	console.log(
-		await (
-			await locals.session.fetch(`${url}/public/feedReader/rssList.ttl`)
-		).text()
-	)
 
 	return {
 		allSession,

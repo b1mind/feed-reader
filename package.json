@@ -18,6 +18,7 @@
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"jsonld": "^8.1.0",
 		"postcss": "^8.4.14",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
@@ -26,8 +27,8 @@
 		"vite": "^4.0.0"
 	},
 	"dependencies": {
-		"@inrupt/solid-client-authn-node": "^1.12.1",
 		"@inrupt/solid-client": "^1.23.1",
+		"@inrupt/solid-client-authn-node": "^1.12.1",
 		"@inrupt/vocab-common-rdf": "^1.0.5",
 		"rdf-namespaces": "^1.9.2",
 		"rss-parser": "^3.12.0"
