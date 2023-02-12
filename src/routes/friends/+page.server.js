@@ -11,12 +11,12 @@ import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 export async function load({ locals }) {
-	if (!locals.session) {
+	if (!locals.seshInfo) {
 		throw redirect(302, '/')
 	}
 
 	let friends = []
-	const webId = locals.session.info.webId
+	const webId = locals.seshInfo.webId
 
 	try {
 		const profileDataSet = await getSolidDataset(`${webId}`)

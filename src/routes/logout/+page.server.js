@@ -11,7 +11,8 @@ export const actions = {
 		const sessionCookie = await cookies.get('session')
 		const session = await getSessionFromStorage(sessionCookie)
 
-		session.logout()
+		session?.logout()
+		//should I even keep this cookie or wipe when we created sesh
 		cookies.set('session', '', {
 			path: '/',
 			expires: new Date(0),

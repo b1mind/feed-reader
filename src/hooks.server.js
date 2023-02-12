@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit'
+import { error, redirect } from '@sveltejs/kit'
 
 import {
 	getSessionFromStorage,
@@ -18,17 +18,43 @@ export async function handle({ event, resolve }) {
 		return await resolve(event)
 	}
 
-	// const allSession = await getSessionIdFromStorageAll()
-	// console.log(allSession)
-	// just for nuking ghost sessions if needed during dev
-	// clearSessionFromStorageAll()
+	const allSession = await getSessionIdFromStorageAll()
+	console.log(allSession)
 
 	//testing away to not have to getSessionFromStorage everytime? or figure out if use is proper
 	const seshInfo = await event.cookies.get('seshInfo')
 	if (seshInfo) {
-		event.locals.seshInfo = JSON.parse(seshInfo)
+		const seshParsed = JSON.parse(seshInfo)
+		event.locals.seshInfo = seshParsed
+
+		//todo clean this mess up: if no matching session on sever clear cookies/logout
+		console.log('sessionOnServer:', allSession.includes(seshParsed.sessionId))
+		if (!allSession.includes(seshParsed.sessionId)) {
+			console.log('cookies need cleared')
+
+			//this is so garbo need to use form action from /logout? or have it handle it
+			event.cookies.set('session', '', {
+				path: '/',
+				expires: new Date(0),
+			})
+			event.cookies.set('seshInfo', '', {
+				path: '/',
+				expires: new Date(0),
+			})
+
+			// return new Response(null, {
+			// 	status: 302,
+			// 	headers: { location: '/' },
+			// })
+
+			return await resolve(event)
+		}
+
 		return await resolve(event)
 	}
+
+	// just for nuking ghost sessions if needed during dev
+	// clearSessionFromStorageAll()
 
 	const sessionCookie = await event.cookies.get('session')
 	if (!sessionCookie) return await resolve(event)

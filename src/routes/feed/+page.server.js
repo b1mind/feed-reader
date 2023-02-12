@@ -89,12 +89,13 @@ async function add({ locals, request, url }) {
 	const formUrl = formData.get('url')
 
 	//need util classes for abstraction
-	const webId = new URL(locals.session.info.webId)
+	const webId = new URL(locals.seshInfo.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
+		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = buildThing(createThing({ name: name }))
@@ -106,7 +107,7 @@ async function add({ locals, request, url }) {
 
 		rssDataSet = setThing(rssDataSet, rssThing)
 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
-			fetch: locals.session.fetch,
+			fetch: session.fetch,
 		})
 		//should we return here or let it escape out to the main return?
 		//
@@ -133,12 +134,13 @@ async function remove({ locals, request }) {
 	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
-	const webId = new URL(locals.session.info.webId)
+	const webId = new URL(locals.seshInfo.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
+		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
@@ -146,7 +148,7 @@ async function remove({ locals, request }) {
 
 		// rssDataSet = setThing(rssDataSet, rssThing)
 		await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
-			fetch: locals.session.fetch,
+			fetch: session.fetch,
 		})
 		//should we return here or let it escape out to the main return?
 		console.log('deleted')
@@ -164,6 +166,7 @@ async function remove({ locals, request }) {
 	throw redirect(302, '/feed')
 }
 
+//todo proper edit this is just the request
 async function edit({ locals, request }) {
 	const formData = await request.formData()
 	const name = formData.get('name').replace(' ', '%20')
@@ -171,13 +174,14 @@ async function edit({ locals, request }) {
 	console.log(name)
 
 	//need util classes for abstraction
-	const webId = new URL(locals.session.info.webId)
+	const webId = new URL(locals.seshInfo.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		rssDataSet = await getSolidDataset(listUrl, { fetch: locals.session.fetch })
+		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+		rssDataSet = await getSolidDataset(listUrl, { fetch: session.fetch })
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
 		//update Thing
