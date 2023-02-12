@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<!-- todo bring in global styles? -->
+		<title>%sveltekit.error.message%</title>
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+
+			body {
+				margin: 0;
+				display: grid;
+				place-items: center;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>custom error page</h1>
+			<p>Status: %sveltekit.status%</p>
+			<p>Message: %sveltekit.error.message%</p>
+		</main>
+	</body>
+</html>
