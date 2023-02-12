@@ -6,14 +6,14 @@
 
 <nav>
 	<a href="/">home</a>
-	<a href="/fetch">fetchTest</a>
 	<a href="/public">404Test</a>
 	{#if !$page.data?.info?.isLoggedIn}
 		<a href="/login" rel="external">login</a>
 	{:else}
-		<a data-sveltekit-prefetch href="/profile">profile</a>
-		<a data-sveltekit-prefetch href="/friends">friends</a>
-		<a data-sveltekit-prefetch href="/feed">feed</a>
+		<a href="/fetch">fetchTest</a>
+		<a data-sveltekit-preload-data href="/profile">profile</a>
+		<a data-sveltekit-preload-data href="/friends">friends</a>
+		<a data-sveltekit-preload-data href="/feed">feed</a>
 
 		<form
 			action="/logout"
