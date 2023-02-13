@@ -1,5 +1,5 @@
 <script>
-	import { fly, slide } from 'svelte/transition'
+	import { fade, fly, slide } from 'svelte/transition'
 	import { page } from '$app/stores'
 	import { beforeNavigate, afterNavigate } from '$app/navigation'
 
@@ -29,7 +29,7 @@
 
 <!-- todo animate page/loader -->
 {#if loading}
-	<div in:slide={{ y: 200 }}>loading</div>
+	<div class:loading in:fade out:fade>.</div>
 {/if}
 
 <!-- {#key loading}
@@ -37,3 +37,9 @@
 {/key} -->
 
 <!-- todo need a footer yo or how can the page walk -->
+<style>
+	/* just an example how the same var we can hook into a style even css animate here */
+	.loading {
+		background-color: var(--clr-primary);
+	}
+</style>
