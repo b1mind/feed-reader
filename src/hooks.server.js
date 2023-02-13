@@ -6,17 +6,17 @@ import {
 	clearSessionFromStorageAll,
 } from '@inrupt/solid-client-authn-node'
 
-const excludedPaths = ['/login']
+// const excludedPaths = ['/login']
 
 export async function handle({ event, resolve }) {
 	if (event.url.href.includes('test')) {
 		throw error(404, { message: 'hook level' })
 	}
 
-	if (excludedPaths.includes(event.url.pathname)) {
-		console.log('nope out hook')
-		return await resolve(event)
-	}
+	// if (excludedPaths.includes(event.url.pathname)) {
+	// 	console.log('nope out hook')
+	// 	return await resolve(event)
+	// }
 
 	const allSession = await getSessionIdFromStorageAll()
 	console.log(allSession)

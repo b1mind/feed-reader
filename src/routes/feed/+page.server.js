@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
+import { Blob } from 'buffer'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
@@ -14,6 +15,7 @@ import {
 	buildThing,
 	setThing,
 	removeThing,
+	overwriteFile,
 } from '@inrupt/solid-client'
 
 //need to figure out if I need both or can just use namespaces
@@ -51,29 +53,14 @@ export async function load({ locals }) {
 			rssList = [...rssList, { name, href }]
 		})
 
-		// const testThing2 = buildThing('https://joyofcode.xyz', {
-		// 	title: 'test',
-		// 	link: 'https://joyofcode.xyz/rss.xml',
-		// 	description: 'all your base are belong to us',
-		// 	type: 'http://purl.org/rss/1.0/channel',
-		// }).build()
-		// console.log(testThing2)
-
-		//fixme testing new way to save dataset for better rdf to json convertion
-
-		testDataSet = createSolidDataset()
-		testThing = buildThing(createThing({ name: 'testLink' }))
-			.addUrl(schema.url, 'https://joyofcode.xyz')
-			.addStringNoLocale(schema.title, 'testLink')
-			.addUrl(rdf.type, 'http://purl.org/rss/1.0/channel')
-			.build()
-		testDataSet = setThing(testDataSet, testThing)
-		console.log(testDataSet)
-
+		// //fixme cleanup: testing new way to save dataset for better rdf to json convertion
+		// const listJSON = JSON.stringify(rssList)
+		// const blob = new Blob([listJSON], { type: 'application/json' })
+		// console.log(blob)
 		// const session = await getSessionFromStorage(locals.seshInfo.sessionId)
-		// saveSolidDatasetAt(`${webId}/public/feedReader/testList.ttl`, testThing, {
+		// overwriteFile(`${webId}/public/feedReader/testList.json`, blob, {
 		// 	fetch: session.fetch,
-		// })
+		// }).catch((err) => console.log(err))
 
 		//note this is a test
 		//todo save .opml file this should probably be a form/action from button on feed
@@ -248,7 +235,7 @@ async function edit({ locals, request }) {
 	}
 
 	//all is good in the hood return
-	// throw redirect(302, '/feed')
+	throw redirect(302, '/feed')
 }
 
 export const actions = { add, remove, edit }

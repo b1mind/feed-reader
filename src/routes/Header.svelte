@@ -8,9 +8,10 @@
 	<a href="/">home</a>
 	<a href="/public">404Test</a>
 	{#if !$page.data?.info?.isLoggedIn}
-		<a href="/login" rel="external">login</a>
+		<!-- <a href="/login" rel="external">login</a> -->
+		<a href="/login">login</a>
 	{:else}
-		<a href="/fetch">fetchTest</a>
+		<a href="/fetch">apiTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/friends">friends</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
