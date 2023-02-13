@@ -8,15 +8,12 @@ export async function load({ locals, cookies }) {
 
 export const actions = {
 	async default({ locals, cookies }) {
-		const sessionCookie = await cookies.get('session')
-		const session = await getSessionFromStorage(sessionCookie)
+		const sessionCookie = await cookies.get('seshInfo')
+		const sessionId = JSON.parse(sessionCookie).sessionId
+		const session = await getSessionFromStorage(sessionId)
 
 		session?.logout()
 		//should I even keep this cookie or wipe when we created sesh
-		cookies.set('session', '', {
-			path: '/',
-			expires: new Date(0),
-		})
 
 		cookies.set('seshInfo', '', {
 			path: '/',

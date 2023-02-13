@@ -19,7 +19,7 @@
 
 <svelte:head>
 	<title>
-		Pod RSS Reader {$page.url.pathname.replace('/', '- ').toUpperCase}
+		{$page.url.pathname.replace('/', '')} - Pod RSS Reader
 	</title>
 </svelte:head>
 
@@ -27,9 +27,9 @@
 
 <slot />
 
-<!-- todo animate page/loader -->
+<!-- todo animate page/loader proper -->
 {#if loading}
-	<div class:loading in:fade out:fade>.</div>
+	<div class:loading in:fade out:fade />
 {/if}
 
 <!-- {#key loading}
