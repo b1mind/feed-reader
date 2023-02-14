@@ -6,34 +6,38 @@
 
 <main>
 	<h1>Friends</h1>
-	<ul>
-		{#each data.friends as friend}
-			<li>
-				<a href={friend.webId}> {friend.nick} </a>
-				<ul>
-					{#each friend.rssList as list}
-						<li>
-							<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
-							<form
-								data-loading="false"
-								action="/feed?/add"
-								method="POST"
-								use:enhance
-							>
-								<input type="hidden" name="feed" bind:value={list.name} />
-								<input type="hidden" name="url" bind:value={list.href} />
-								<button type="submit">➕</button>
-							</form>
-						</li>
-					{/each}
-				</ul>
-			</li>
-		{/each}
-	</ul>
+	{#if data.friends.length > 0}
+		<ul>
+			{#each data.friends as friend}
+				<li>
+					<a href={friend.webId}> {friend.nick} </a>
+					<ul>
+						{#each friend.rssList as list}
+							<li>
+								<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
+								<form
+									data-loading="false"
+									action="/feed?/add"
+									method="POST"
+									use:enhance
+								>
+									<input type="hidden" name="feed" value={list.name} />
+									<input type="hidden" name="url" value={list.href} />
+									<button type="submit">➕</button>
+								</form>
+							</li>
+						{/each}
+					</ul>
+				</li>
+			{/each}
+		</ul>
+	{:else}
+		<p>you have no friends with RSS feed lists</p>
+	{/if}
 </main>
 
 <style lang="scss">
-	:root {
+	main {
 		--color: var(--clr-primary);
 	}
 

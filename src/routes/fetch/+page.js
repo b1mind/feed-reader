@@ -1,16 +1,15 @@
-export async function load({ locals, fetch }) {
-	// const webId = new URL(locals.seshInfo.webId)
-	// const response = await fetch(`${webId.origin}/public/test.json`)
-	const response = await fetch('/api/json')
-	let data
-	// console.log(`${webId.origin}/public/test.json`)
-	if (response.status !== 404) {
-		data = await response.json()
-	}
+// import { error } from '@sveltejs/kit'
 
-	//todo figure out how to retrun json from RDF (might require a better save state to pod)
-	//we can also save json files but is that really how we going to cop out? no RDF! learn!
+export async function load({ locals, fetch }) {
+	const response = await fetch('/api/json')
+
+	//need to figure out code to send and respond to with msg from endpoint
+	if (!response.ok) return {}
+
+	//we bypass this for now just return blank object
+	// throw error(response.status, { message: 'Data not found in Pod' })
+
 	return {
-		list: data,
+		list: await response.json(),
 	}
 }

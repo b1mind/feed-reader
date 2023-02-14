@@ -27,9 +27,9 @@
 
 <slot />
 
-<!-- todo animate page/loader proper -->
+<!-- todo animate page/loader -->
 {#if loading}
-	<div class:loading in:fade out:fade />
+	<div class:loading in:fade out:fade>.</div>
 {/if}
 
 <!-- {#key loading}
