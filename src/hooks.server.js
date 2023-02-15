@@ -6,22 +6,21 @@ import {
 } from '@inrupt/solid-client-authn-node'
 
 export async function handle({ event, resolve }) {
-	const excludedPaths = ['/hookOut', '/login']
-	if (excludedPaths.includes(event.url.pathname)) {
-		console.log('nope out hook')
-
-		// throw or just return the event with no hooks the choice is yours
-		return await resolve(event)
-		// throw error(404, { message: 'hook level out' })
-	}
-
-	//testing away to not have to getSessionFromStorage everytime? or figure out if use is proper
+	//todo refactor logic for (protected) and routes (auth) routes
 	const sesh = await event.cookies.get('seshInfo')
-
 	//nope out no cookies here
 	if (!sesh) return await resolve(event)
 	const seshInfo = JSON.parse(sesh)
 
+	const excludedPaths = ['/hookOut', '/login', '/logout']
+	if (excludedPaths.includes(event.url.pathname)) {
+		console.log('nope out hook')
+
+		return await resolve(event)
+		// throw error(418, { message: 'hook level out' })
+	}
+
+	//checks server sessions
 	const allSessions = await getSessionIdFromStorageAll()
 	event.locals.allSessions = allSessions
 	console.log(allSessions)
@@ -52,29 +51,12 @@ export async function handle({ event, resolve }) {
 
 	if (!seshInfo.isLoggedIn) {
 		console.log('not logged in')
-		const session = await getSessionFromStorage(seshInfo.sessionId)
 
-		if (session) {
-			//is this needed still?
-			event.locals.seshInfo = session.info
-
-			//reset cookie to reflect login and set sameSite
-			event.cookies.set('seshInfo', JSON.stringify(session.info), {
-				path: '/',
-				sameSite: 'strict',
-				httpOnly: true,
-				secure: true,
-				maxAge: 60 * 60 * 24,
-			})
-			console.log('first session and cookie set')
-
-			if (event.url.pathname === '/authorize') {
-				await session.handleIncomingRedirect(`${event.url.href}`)
-				console.log('handled redirect')
-
-				throw redirect(302, `${event.url.origin}`)
-			}
-		}
+		// const session = await getSessionFromStorage(seshInfo.sessionId)
+		// if (session) {
+		// 	//is this needed still?
+		// 	event.locals.seshInfo = session.info
+		// }
 	}
 
 	//fixme learn sequencing or clean up all these await resolves

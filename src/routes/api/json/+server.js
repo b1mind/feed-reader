@@ -26,7 +26,7 @@ export async function GET(event) {
 
 	return json(data, {
 		headers: {
-			'Cache-Control': 'maxage=1, stale-while-revalidate=59',
+			'Cache-Control': 's-maxage=1, stale-while-revalidate=59',
 		},
 	})
 }
