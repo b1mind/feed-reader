@@ -25,16 +25,12 @@
 				<a href="/feed/{slugify(name)}/?xml={href}">
 					{name}
 				</a>
-				<form action="/feed?/edit" method="POST" use:enhance>
+				<form method="POST" use:enhance>
 					<input type="hidden" name="name" value={name} />
 					<input type="hidden" name="url" value={href} />
 
-					<button type="submit" title="edit">📝</button>
-				</form>
-
-				<form action="/feed?/remove" method="POST" use:enhance>
-					<input type="hidden" name="name" value={name} />
-					<button type="submit" title="remove">❌</button>
+					<button formaction="/feed?/edit" title="edit"> 📝 </button>
+					<button formaction="/feed?/remove" title="remove"> ❌ </button>
 				</form>
 			</li>
 		{/each}
