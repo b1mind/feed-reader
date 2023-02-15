@@ -4,7 +4,7 @@
 </script>
 
 <br />
-<form method="POST" action="/login?/sendIt">
+<form method="POST" action="/auth/login?/sendIt">
 	<label for="provider">
 		Pod provider
 		<input

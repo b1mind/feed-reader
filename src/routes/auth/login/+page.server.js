@@ -23,7 +23,7 @@ export const actions = {
 		}
 
 		await solidSession.login({
-			redirectUrl: `${url.origin}/authorize`,
+			redirectUrl: `${url.origin}/auth`,
 			// Set to the user's Solid Identity Provider; e.g., "https://inrupt.net/"
 			oidcIssuer: formData.get('provider') || 'https://inrupt.net/',
 			clientName: 'Feed Reader',

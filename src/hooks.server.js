@@ -11,8 +11,11 @@ export async function handle({ event, resolve }) {
 	//nope out no cookies here
 	if (!sesh) return await resolve(event)
 	const seshInfo = JSON.parse(sesh)
+	event.locals.seshInfo = seshInfo
+	console.log('locals set')
 
-	const excludedPaths = ['/hookOut', '/login', '/logout']
+	const excludedPaths = ['/hookOut', '/auth', '/auth/logout']
+	console.log(event.url.pathname)
 	if (excludedPaths.includes(event.url.pathname)) {
 		console.log('nope out hook')
 
@@ -20,7 +23,13 @@ export async function handle({ event, resolve }) {
 		// throw error(418, { message: 'hook level out' })
 	}
 
-	//checks server sessions
+	if (!seshInfo.isLoggedIn) {
+		console.log('not logged in')
+		//could also check for (protected) path and redirect here
+	}
+
+	// server sessions
+	// clearSessionFromStorageAll()
 	const allSessions = await getSessionIdFromStorageAll()
 	event.locals.allSessions = allSessions
 	console.log(allSessions)
@@ -40,27 +49,11 @@ export async function handle({ event, resolve }) {
 			return await resolve(event)
 		}
 
-		event.locals.seshInfo = seshInfo
-		console.log('session and locals set')
-
+		console.log('all checks good')
 		return await resolve(event)
-	}
-
-	// just for nuking ghost sessions if needed during dev
-	// clearSessionFromStorageAll()
-
-	if (!seshInfo.isLoggedIn) {
-		console.log('not logged in')
-
-		// const session = await getSessionFromStorage(seshInfo.sessionId)
-		// if (session) {
-		// 	//is this needed still?
-		// 	event.locals.seshInfo = session.info
-		// }
 	}
 
 	//fixme learn sequencing or clean up all these await resolves
 	const response = await resolve(event)
-	//set headers?
 	return response
 }

@@ -9,7 +9,7 @@
 	<a href="/public">404Test</a>
 	{#if !$page.data?.info?.isLoggedIn}
 		<!-- <a href="/login" rel="external">login</a> -->
-		<a href="/login">login</a>
+		<a href="/auth/login">login</a>
 	{:else}
 		<a href="/fetch">apiTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
@@ -17,7 +17,7 @@
 		<a data-sveltekit-preload-data href="/feed">feed</a>
 
 		<form
-			action="/logout"
+			action="/auth/logout"
 			method="POST"
 			use:enhance={() => {
 				return async ({ result }) => {
