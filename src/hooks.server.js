@@ -3,18 +3,16 @@ import { error, redirect } from '@sveltejs/kit'
 import {
 	getSessionFromStorage,
 	getSessionIdFromStorageAll,
-	clearSessionFromStorageAll,
 } from '@inrupt/solid-client-authn-node'
 
-const excludedPaths = ['/hookOut']
-
 export async function handle({ event, resolve }) {
+	const excludedPaths = ['/hookOut', '/login']
 	if (excludedPaths.includes(event.url.pathname)) {
 		console.log('nope out hook')
 
 		// throw or just return the event with no hooks the choice is yours
-		// return await resolve(event)
-		throw error(404, { message: 'hook level out' })
+		return await resolve(event)
+		// throw error(404, { message: 'hook level out' })
 	}
 
 	//testing away to not have to getSessionFromStorage everytime? or figure out if use is proper
@@ -24,15 +22,15 @@ export async function handle({ event, resolve }) {
 	if (!sesh) return await resolve(event)
 	const seshInfo = JSON.parse(sesh)
 
+	const allSessions = await getSessionIdFromStorageAll()
+	event.locals.allSessions = allSessions
+	console.log(allSessions)
+	console.log('sessionOnServer:', allSessions.includes(seshInfo.sessionId))
+
 	if (seshInfo.isLoggedIn) {
-		event.locals.seshInfo = seshInfo
-
 		//todo clean this mess up: if no matching session on sever clear cookies/logout
-		const allSession = await getSessionIdFromStorageAll()
-		console.log(allSession)
-		console.log('sessionOnServer:', allSession.includes(seshInfo.sessionId))
 
-		if (!allSession.includes(seshInfo.sessionId)) {
+		if (!allSessions.includes(seshInfo.sessionId)) {
 			console.log('cookies need cleared')
 
 			//this is so garbo need to use form action from /logout? or have it handle it
@@ -40,9 +38,11 @@ export async function handle({ event, resolve }) {
 				path: '/',
 				expires: new Date(0),
 			})
-
 			return await resolve(event)
 		}
+
+		event.locals.seshInfo = seshInfo
+		console.log('session and locals set')
 
 		return await resolve(event)
 	}
@@ -57,7 +57,6 @@ export async function handle({ event, resolve }) {
 		if (session) {
 			//is this needed still?
 			event.locals.seshInfo = session.info
-			console.log('session and locals set')
 
 			//reset cookie to reflect login and set sameSite
 			event.cookies.set('seshInfo', JSON.stringify(session.info), {
@@ -67,13 +66,13 @@ export async function handle({ event, resolve }) {
 				secure: true,
 				maxAge: 60 * 60 * 24,
 			})
+			console.log('first session and cookie set')
 
 			if (event.url.pathname === '/authorize') {
-				console.log('redirected')
 				await session.handleIncomingRedirect(`${event.url.href}`)
-				console.log('handled')
+				console.log('handled redirect')
 
-				return Response.redirect(`${event.url.origin}`, 302)
+				throw redirect(302, `${event.url.origin}`)
 			}
 		}
 	}
