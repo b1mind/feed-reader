@@ -26,10 +26,6 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(rdf)
 
 export async function load({ locals }) {
-	if (!locals.seshInfo) {
-		throw redirect(302, '/')
-	}
-
 	let rssList = []
 	let rssThing
 	let rssDataSet
