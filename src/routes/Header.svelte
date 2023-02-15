@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores'
-	import { applyAction, enhance } from '$app/forms'
-	import { invalidateAll } from '$app/navigation'
+	// import { applyAction, enhance } from '$app/forms'
+	// import { invalidateAll } from '$app/navigation'
 </script>
 
 <nav>
@@ -16,16 +16,17 @@
 		<a data-sveltekit-preload-data href="/friends">friends</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
 
-		<form
-			action="/auth/logout"
-			method="POST"
+		<!-- do I need to enhance the logout? animate some feedback if used -->
+		<!--
 			use:enhance={() => {
 				return async ({ result }) => {
 					invalidateAll()
 					await applyAction(result)
 				}
 			}}
-		>
+		-->
+
+		<form action="/auth/logout" method="POST">
 			<button type="submit">logout</button>
 			<button formaction="/api/feed?/test">test</button>
 		</form>

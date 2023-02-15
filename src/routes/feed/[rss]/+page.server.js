@@ -8,6 +8,10 @@ let parser = new Parser()
 // 	const allowedExtensions = /\.(jpe?g|png|gif)$/i
 // 	if (url.match(allowedExtensions)) return true
 // }
+function shorten(str, maxLen, separator = ' ') {
+	if (str.length <= maxLen) return str
+	return str.substr(0, str.lastIndexOf(separator, maxLen))
+}
 
 export async function load({ url, params }) {
 	const xmlUrl = url.searchParams.has('xml')
@@ -21,7 +25,24 @@ export async function load({ url, params }) {
 	let items = []
 
 	feed.items.forEach((item) => {
-		let newItem = { title: item.title, link: item.link }
+		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 250) : ''
+		//fixme regex to match data
+		// const matchDate = /^((?:\S+\s+){3}\S+)*/g
+		// const published = item?.pubDate.match(matchDate)
+
+		// this is so much more readable than regex lol
+		const published = item?.pubDate.split(' ').slice(0, 4).join(' ')
+
+		let newItem = {
+			title: item.title,
+			link: item.link,
+			published,
+			// .replace('00:00', '')
+			// .replace(':', '')
+			// .replace('00', '')
+			// .replace('GMT', ''),
+			snippet,
+		}
 
 		// // would love to grab an img each item or least the list
 		// const imgElement = /src\s*=\s*"(.+?)"/g
