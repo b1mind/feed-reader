@@ -14,6 +14,7 @@ export async function load({ url, params }) {
 		? url.searchParams.get('xml')
 		: false
 
+	//todo XMLparser with options for RSS or better limit and blob options
 	const feed = await parser.parseURL(xmlUrl)
 
 	// is there away to check against build and return updated?

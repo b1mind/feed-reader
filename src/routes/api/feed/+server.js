@@ -2,6 +2,7 @@
 // import { rdf, schema } from 'rdf-namespaces'
 // import { json } from '@sveltejs/kit'
 
+//todo test getting pod data with endpoint / RDF converter
 export async function GET(event) {
 	const webId = new URL(event.locals.seshInfo.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
@@ -12,3 +13,7 @@ export async function GET(event) {
 	// return json(data)
 	return new Response(data)
 }
+
+// export async function POST(event) {
+// 	console.log('default POST')
+// }

@@ -1,7 +1,8 @@
 import { invalid, redirect } from '@sveltejs/kit'
 import { Session } from '@inrupt/solid-client-authn-node'
 
-export async function load({ locals, url, cookies }) {}
+//do we even need a load? can this page be a +server?
+// export async function load({ locals, url, cookies }) {}
 
 export const actions = {
 	sendIt: async ({ url, cookies, request }) => {

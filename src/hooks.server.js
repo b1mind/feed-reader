@@ -47,7 +47,7 @@ export async function handle({ event, resolve }) {
 		}
 	}
 
-	//fixme sequencing or clean up all these await resolves
+	//todo sequencing or clean up all these await resolves
 	console.log('all checks good')
 	const response = await resolve(event)
 	return response

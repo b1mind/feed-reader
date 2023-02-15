@@ -6,12 +6,12 @@
 
 <nav>
 	<a href="/">home</a>
-	<a href="/public">404Test</a>
+	<a href="/api/feed">apiTest</a>
 	{#if !$page.data?.info?.isLoggedIn}
 		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}
-		<a href="/fetch">apiTest</a>
+		<a href="/fetch">cacheTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/friends">friends</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
@@ -27,6 +27,7 @@
 			}}
 		>
 			<button type="submit">logout</button>
+			<button formaction="/api/feed?/test">test</button>
 		</form>
 	{/if}
 </nav>
