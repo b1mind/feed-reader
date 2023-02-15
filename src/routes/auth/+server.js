@@ -4,10 +4,13 @@ import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 export async function GET({ locals, url, cookies }) {
 	const seshCookie = await cookies.get('seshInfo')
 	const seshInfo = JSON.parse(seshCookie)
+
+	//fixme storage for session
 	const session = await getSessionFromStorage(seshInfo.sessionId)
 	await session.handleIncomingRedirect(`${url.href}`)
-	console.log('handled redirect')
 	// console.log(session.info)
+	console.log('handled redirect')
+
 	//reset cookie to reflect login and set sameSite
 	cookies.set('seshInfo', JSON.stringify(session.info), {
 		path: '/',
@@ -16,8 +19,6 @@ export async function GET({ locals, url, cookies }) {
 		secure: true,
 		maxAge: 60 * 60 * 24,
 	})
-
-	// console.log(cookies.get('seshInfo'))
 
 	locals.seshInfo = session.info
 	console.log('first session and cookie set')
