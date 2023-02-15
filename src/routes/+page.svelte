@@ -7,5 +7,5 @@
 	<p>You need to login to use this app</p>
 {:else}
 	<h1>Welcome</h1>
-	{data.allSession?.length} users logged in
+	{data?.allSessions?.length} users logged in
 {/if}
