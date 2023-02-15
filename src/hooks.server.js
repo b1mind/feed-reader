@@ -40,7 +40,10 @@ export async function handle({ event, resolve }) {
 				path: '/',
 				expires: new Date(0),
 			})
-			return await resolve(event)
+
+			//how to return the event cookie with a redirect or set header ourself?
+			// throw redirect(302, '/auth/login')
+			// return Response.redirect(`${event.url.origin}/auth/login`, 302)
 		}
 	}
 
