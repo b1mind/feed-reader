@@ -6,7 +6,8 @@ export async function GET(event) {
 	//we should return Respose.redirect({}, 302)?
 	// if (!sesh) return json({ error: 'not logged in' })
 
-	const webId = new URL(sesh.webId)
+	// const webId = new URL(sesh.webId)
+	const webId = { origin: 'https://b1mind.inrupt.net' }
 	const response = await event.fetch(`${webId.origin}/public/test.json`)
 	let data
 
