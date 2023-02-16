@@ -2,9 +2,9 @@ import { json, error } from '@sveltejs/kit'
 // import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
 export async function GET(event) {
-	const sesh = event.locals?.seshInfo
+	// const sesh = event.locals?.seshInfo
 	//we should return Respose.redirect({}, 302)?
-	if (!sesh) return json({ error: 'not logged in' })
+	// if (!sesh) return json({ error: 'not logged in' })
 
 	const webId = new URL(sesh.webId)
 	const response = await event.fetch(`${webId.origin}/public/test.json`)
