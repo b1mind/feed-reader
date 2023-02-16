@@ -1,6 +1,5 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
-import { Blob } from 'buffer'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
@@ -17,10 +16,10 @@ import {
 	removeThing,
 	overwriteFile,
 } from '@inrupt/solid-client'
-
-//need to figure out if I need both or can just use namespaces
+// import { Blob } from 'buffer'
 // import { RDF, SCHEMA_INRUPT, XSD } from '@inrupt/vocab-common-rdf'
 import { schema, dc, rdf } from 'rdf-namespaces'
+//need to figure out if I need both or can just use namespaces
 // console.log(dc)
 // console.log(XSD)
 // console.log(rdf)
@@ -29,8 +28,8 @@ export async function load({ locals }) {
 	let rssList = []
 	let rssThing
 	let rssDataSet
-	let testDataSet
-	let testThing
+	// let testDataSet
+	// let testThing
 
 	// by not getting session to read public its way way faster
 	// but right now the hook gets session from cookie every server.js
