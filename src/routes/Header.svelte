@@ -6,12 +6,12 @@
 
 <nav>
 	<a href="/">home</a>
-	<a href="/api/feed">apiTest</a>
+	<a href="/fetch">cacheTest</a>
 	{#if !$page.data?.info?.isLoggedIn}
 		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}
-		<a href="/fetch">cacheTest</a>
+		<a href="/api/feed">apiTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/friends">friends</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
