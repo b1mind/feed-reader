@@ -1,11 +1,12 @@
 Todo:
-	☐ update styles for error.html and +error.svelte
 	☐ find out best schema if not OPML/XSD to save lists in pod
 	☐ login checks need refactored and improved for logout and per page
 	☐ give some better styles for prototype (people like shiny things)
 	☐ favicon(s)
 	☐ home page needs a introduction to SolidPods and how to use.
-	☐ localStorage for remembering Pod Provider and other settings (persitant$store)
+	☐ update styles for error.html and +error.svelte
+	☐ localStorage for remembering Pod Provider and other settings (persitant$store with server;)
+		//https://stackblitz.com/edit/sveltejs-kit-template-default-ddli26?file=src%2Froutes%2F%2Blayout.server.ts
 	☐ make request util helpers (pretty wet get DRY)
 	
 Features:
