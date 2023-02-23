@@ -6,6 +6,10 @@
 	import Header from './Header.svelte'
 	import '$lib/scss/global.scss'
 
+	//needs work
+	$: pathname = $page.url.pathname.replace('/', '')
+	$: pageTile = pathname ? pathname : 'Home'
+
 	//use this logic to animate some how in a {#if} or {#key} block
 	let loading = false
 	beforeNavigate(() => {
@@ -19,7 +23,7 @@
 
 <svelte:head>
 	<title>
-		{$page.url.pathname.replace('/', '')} - Pod RSS Reader
+		{pageTile} - Pod RSS Reader
 	</title>
 </svelte:head>
 
