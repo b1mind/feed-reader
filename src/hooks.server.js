@@ -22,8 +22,11 @@ export async function handle({ event, resolve }) {
 		//could also check for (protected) path and redirect here
 	}
 
-	// server sessions
-	// clearSessionFromStorageAll()
+	// console.time('hook sesh')
+	// const sessionTest = await getSessionFromStorage(seshInfo.sessionId)
+	// console.log(sessionTest)
+	// console.timeEnd('hook sesh')
+
 	const allSessions = await getSessionIdFromStorageAll()
 	const sessionOnServer = allSessions.includes(seshInfo.sessionId)
 

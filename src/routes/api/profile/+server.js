@@ -7,6 +7,7 @@ import {
 	getStringNoLocale,
 } from '@inrupt/solid-client'
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
+// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
 export async function GET({ locals }) {
 	// do we need to use fetch to get the benifits of catching?

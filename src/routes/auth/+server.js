@@ -6,7 +6,9 @@ export async function GET({ locals, url, cookies }) {
 	const seshInfo = JSON.parse(seshCookie)
 
 	//fixme storage for session
+	console.time('redirected getSesh')
 	const session = await getSessionFromStorage(seshInfo.sessionId)
+	console.timeEnd('redirected getSesh')
 	await session.handleIncomingRedirect(`${url.href}`)
 	// console.log(session.info)
 	console.log('handled redirect')
@@ -14,7 +16,7 @@ export async function GET({ locals, url, cookies }) {
 	//reset cookie to reflect login and set sameSite
 	cookies.set('seshInfo', JSON.stringify(session.info), {
 		path: '/',
-		// sameSite: 'strict',
+		sameSite: 'strict',
 		httpOnly: true,
 		secure: true,
 		maxAge: 60 * 60 * 24,

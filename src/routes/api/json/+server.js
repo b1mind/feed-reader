@@ -1,5 +1,5 @@
 import { json, error } from '@sveltejs/kit'
-// import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
 export async function GET(event) {
 	// const sesh = event.locals?.seshInfo
@@ -8,8 +8,15 @@ export async function GET(event) {
 
 	// fixme change back this is for testing publicly atm
 	// const webId = new URL(sesh.webId)
+	console.time('Fetch getSesh')
+	const session = await getSessionFromStorage(event.locals.seshInfo.sessionId)
+	console.timeEnd('Fetch getSesh')
+
 	const webId = { origin: 'https://b1mind.inrupt.net' }
-	const response = await event.fetch(`${webId.origin}/public/test.json`)
+	const response = await event.fetch(`${webId.origin}/public/test.json`, {
+		fetch: session.fetch,
+	})
+
 	let data
 
 	// console.log(response.headers)
