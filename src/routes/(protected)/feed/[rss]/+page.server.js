@@ -24,29 +24,31 @@ export async function load({ url, params }) {
 	// is there away to check against build and return updated?
 	let items = []
 
-	feed.items.forEach((item) => {
-		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 250) : ''
+	for (const item of feed.items.slice(0, 15)) {
+		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 		//fixme regex to match data
 		// const matchDate = /^((?:\S+\s+){3}\S+)*/g
 		// const published = item?.pubDate.match(matchDate)
 
 		// this is so much more readable than regex lol
-		const published = item?.pubDate.split(' ').slice(0, 4).join(' ')
+		// const published = item?.pubDate.split(' ').slice(0, 4).join(' ')
+		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		})
 
 		let newItem = {
 			title: item.title,
 			link: item.link,
+			categories: item.categories,
 			published,
-			// .replace('00:00', '')
-			// .replace(':', '')
-			// .replace('00', '')
-			// .replace('GMT', ''),
 			snippet,
 		}
 
 		// // would love to grab an img each item or least the list
 		// const imgElement = /src\s*=\s*"(.+?)"/g
-		// if (!item.content.includes('img')) return
+		// if (!item?.content?.includes('img')) return
 		// let imgs = item.content.match(imgElement)
 		// imgs = imgs.filter((img) => {
 		// 	if (!isValidImageUrl(img)) {
@@ -58,7 +60,7 @@ export async function load({ url, params }) {
 		// // newItem = { ...newItem, img: img }
 
 		items = [...items, newItem]
-	})
+	}
 
-	return { rss: { title: feed.title, items } }
+	return { rss: { title: feed.title, description: feed.description, items } }
 }

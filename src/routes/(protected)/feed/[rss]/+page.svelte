@@ -2,7 +2,10 @@
 	export let data
 </script>
 
-<h1>{data.rss.title}</h1>
+<hgroup>
+	<h1>{data.rss.title}</h1>
+	<p>{data.rss?.description || 'no description'}</p>
+</hgroup>
 
 <ul>
 	{#each data.rss.items as { title, link, snippet, published }}
