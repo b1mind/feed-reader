@@ -5,19 +5,22 @@ import { Session } from '@inrupt/solid-client-authn-node'
 // export async function load({ locals, url, cookies }) {}
 
 export const actions = {
-	sendIt: async ({ url, cookies, request }) => {
+	sendIt: async ({ locals, url, cookies, request }) => {
 		const formData = await request.formData()
 
 		console.log('login session')
 		let redirectUrl = ''
 		let solidSession = new Session()
 
-		cookies.set('seshInfo', JSON.stringify(solidSession.info), {
-			path: '/',
-			httpOnly: true,
-			secure: true,
-			maxAge: 60 * 60 * 24,
-		})
+		// cookies.set('seshInfo', JSON.stringify(solidSession.info), {
+		// 	path: '/',
+		// 	httpOnly: true,
+		// 	secure: true,
+		// 	maxAge: 60 * 60 * 24,
+		// })
+
+		await locals.session.set({ info: solidSession.info })
+		console.log(await locals.session.data)
 
 		const handleSolidRedirect = (url) => {
 			return (redirectUrl = url)
