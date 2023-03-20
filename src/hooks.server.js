@@ -1,22 +1,23 @@
 import { handleSession } from 'svelte-kit-cookie-session'
+import { COOKIE_SECRET } from '$env/static/private'
 
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 
 export const handle = handleSession(
 	{
-		secret: 'SOME_COMPLEX_SECRET_AT_LEAST_32_CHARS',
+		secret: COOKIE_SECRET,
 	},
 	async ({ event, resolve }) => {
-		// event.locals is populated with the session `event.locals.session`
-		console.log('hook:', event.locals.session.data)
+		// console.log('hook:', event.locals.session.data)
 		const allSessions = await getSessionIdFromStorageAll()
-		// const sessionOnServer = allSessions.includes(
-		// 	event.locals.session.data?.info?.sessionId
-		// )
+		const sessionOnServer = allSessions.includes(
+			event.locals.session.data?.info?.sessionId
+		)
 
 		event.locals.allSessions = allSessions
-		console.log(allSessions)
+		console.log({ sessions: allSessions, loggedIn: sessionOnServer })
 
+		//todo refactor logic for (protected) and routes (auth) routes
 		// const excludedPaths = ['/hookOut', '/auth', '/auth/logout']
 		// if (excludedPaths.includes(event.url.pathname)) {
 		// 	console.log('nope out hook')
@@ -24,13 +25,11 @@ export const handle = handleSession(
 		// 	// throw error(418, { message: 'hook level out' })
 		// }
 
-		// Do anything you want here
 		return resolve(event)
 	}
 )
 
 // export async function handle({ event, resolve }) {
-// 	//todo refactor logic for (protected) and routes (auth) routes
 // 	const sesh = event.cookies.get('seshInfo')
 // 	//nope out no cookies here
 // 	if (!sesh) return await resolve(event)
@@ -58,12 +57,6 @@ export const handle = handleSession(
 // 	if (seshInfo.isLoggedIn) {
 // 		if (!sessionOnServer) {
 // 			console.log('cookies need cleared')
-
-// 			//todo refactor this to be better?
-// 			event.cookies.set('seshInfo', '', {
-// 				path: '/',
-// 				expires: new Date(0),
-// 			})
 
 // 			//how to return the event cookie with a redirect or set header ourself?
 // 			// throw redirect(302, '/auth/login')

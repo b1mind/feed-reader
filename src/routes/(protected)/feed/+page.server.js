@@ -116,13 +116,15 @@ async function add({ locals, request, url }) {
 	const formUrl = formData.get('url')
 
 	//need util classes for abstraction
-	const webId = new URL(locals.seshInfo.webId)
+	const webId = new URL(locals.session.data?.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+		const session = await getSessionFromStorage(
+			locals.session.data?.info.sessionId
+		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = buildThing(createThing({ name: name }))
@@ -162,13 +164,15 @@ async function remove({ locals, request }) {
 	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
-	const webId = new URL(locals.seshInfo.webId)
+	const webId = new URL(locals.session.data?.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
-		const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+		const session = await getSessionFromStorage(
+			locals.session.data?.info.sessionId
+		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
@@ -202,7 +206,7 @@ async function edit({ locals, request }) {
 	console.log(name)
 
 	//need util classes for abstraction
-	const webId = new URL(locals.seshInfo.webId)
+	const webId = new URL(locals.session.data?.info.webId)
 	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 	let rssDataSet
 	let rssThing
