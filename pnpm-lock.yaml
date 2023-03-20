@@ -20,6 +20,7 @@ specifiers:
   rss-parser: ^3.12.0
   sass: ^1.53.0
   svelte: ^3.44.0
+  svelte-kit-cookie-session: ^3.3.2
   vite: ^4.0.0
 
 dependencies:
@@ -28,6 +29,7 @@ dependencies:
   '@inrupt/vocab-common-rdf': 1.0.5
   rdf-namespaces: 1.9.2
   rss-parser: 3.12.0
+  svelte-kit-cookie-session: 3.3.2
 
 devDependencies:
   '@playwright/test': 1.29.1
@@ -923,7 +925,6 @@ packages:
 
   /esm-env/1.0.0:
     resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
-    dev: true
 
   /esm/3.2.25:
     resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
@@ -1779,6 +1780,13 @@ packages:
       svelte: 3.55.0
     dev: true
 
+  /svelte-kit-cookie-session/3.3.2:
+    resolution: {integrity: sha512-gezrXK2kIA4mwANYjvsCkUd+z0aP0wWlz7/VFCkX8op99kTJjoqTSEdgLfgdGpbS48A77BQH4oJBEtX2QJbpSA==}
+    dependencies:
+      esm-env: 1.0.0
+      zencrypt: 0.0.7
+    dev: false
+
   /svelte/3.55.0:
     resolution: {integrity: sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA==}
     engines: {node: '>= 8'}
@@ -1943,3 +1951,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zencrypt/0.0.7:
+    resolution: {integrity: sha512-UGqj7MySefAgoD8E17cJEsTNhYmjeYnT2Pp++2eC4Vgmc4S1fliFxSn6uAcLqkuPJ7YhD0Un/CW2ZYxrOlpJxw==}
+    dev: false
