@@ -11,7 +11,7 @@
 		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}
-		<a href="/api/feed">apiTest</a>
+		<a href="/api/feed?xml='test'">apiTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/friends">friends</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
