@@ -9,6 +9,13 @@ export const handle = handleSession(
 	async ({ event, resolve }) => {
 		// event.locals is populated with the session `event.locals.session`
 		console.log('hook:', event.locals.session.data)
+		const allSessions = await getSessionIdFromStorageAll()
+		// const sessionOnServer = allSessions.includes(
+		// 	event.locals.session.data?.info?.sessionId
+		// )
+
+		event.locals.allSessions = allSessions
+		console.log(allSessions)
 
 		// const excludedPaths = ['/hookOut', '/auth', '/auth/logout']
 		// if (excludedPaths.includes(event.url.pathname)) {

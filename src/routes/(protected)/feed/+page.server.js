@@ -36,7 +36,7 @@ export async function load({ locals }) {
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
-	const webId = new URL(locals.seshInfo.webId)
+	const webId = new URL(locals.session.data.info.webId)
 	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
 
 	try {
