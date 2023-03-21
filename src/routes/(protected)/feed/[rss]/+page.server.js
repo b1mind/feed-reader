@@ -1,37 +1,29 @@
-import Parser from 'rss-parser'
-
-let parser = new Parser()
-
 // const isValidImageUrl = (url) => {
 // 	if ((!url && typeof url !== 'string') || url.length === 0) return
 
 // 	const allowedExtensions = /\.(jpe?g|png|gif)$/i
 // 	if (url.match(allowedExtensions)) return true
 // }
+
 function shorten(str, maxLen, separator = ' ') {
 	if (str.length <= maxLen) return str
 	return str.substr(0, str.lastIndexOf(separator, maxLen))
 }
 
-export async function load({ url, params }) {
-	const xmlUrl = url.searchParams.has('xml')
-		? url.searchParams.get('xml')
-		: false
+export async function load({ url, fetch }) {
+	// const xmlURL = url.searchParams.get('xml')
+	const res = await fetch(`/api/feed${url.search}`)
+	const rss = await res.json()
+	// console.log(rss.items[0])
 
-	//todo XMLparser with options for RSS or better limit and blob options
-	const feed = await parser.parseURL(xmlUrl)
-
-	// is there away to check against build and return updated?
 	let items = []
 
-	for (const item of feed.items.slice(0, 15)) {
+	for (const item of rss.items.slice(0, 15)) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 		//fixme regex to match data
 		// const matchDate = /^((?:\S+\s+){3}\S+)*/g
 		// const published = item?.pubDate.match(matchDate)
 
-		// this is so much more readable than regex lol
-		// const published = item?.pubDate.split(' ').slice(0, 4).join(' ')
 		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
 			year: 'numeric',
 			month: 'long',
@@ -62,5 +54,14 @@ export async function load({ url, params }) {
 		items = [...items, newItem]
 	}
 
-	return { rss: { title: feed.title, description: feed.description, items } }
+	// 		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
+	// 			year: 'numeric',
+	// 			month: 'long',
+	// 			day: 'numeric',
+	// 		})
+
+	// console.log(dataJSON)
+	return {
+		rss: { title: rss.title, description: rss.description, items },
+	}
 }
