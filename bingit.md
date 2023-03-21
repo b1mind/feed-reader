@@ -1,17 +1,44 @@
-This is probably better than what bing told me but lets keep it
+# using
+
+This is what I am using bingChat gave bad code but decent examples
 https://github.com/linkeddata/rdflib.js
 https://linkeddata.github.io/rdflib.js/Documentation/webapp-intro.html
 http://linkeddata.github.io/rdflib.js/doc/
 
 ## bingit
 
-Here's how you can write the code using an import statement ESM instead of CJS:
+Here is an example of saving a list using rdflib.js to a solid pod.
 
 ```javascript
-import * as $rdf from 'rdflib'
-import { solidNamespace } from 'rdflib'
-const ns = solidNamespace($rdf)
+const store = $rdf.graph()
+const subject = $rdf.sym('https://example.com/list')
+const predicate = $rdf.sym('https://example.com/hasItem')
+const object = $rdf.sym('https://example.com/item1')
+store.add(subject, predicate, object)
+
+const updater = new $rdf.UpdateManager(store)
+updater.update([], [], store, (uri, ok, message) => {
+	if (ok) {
+		console.log(`Saved ${uri}`)
+	} else {
+		console.error(`Failed to save ${uri}: ${message}`)
+	}
+})
 ```
+
+This code creates a new graph, adds a subject, predicate, and object to the graph, and then saves the graph to a solid pod using the `UpdateManager` class from rdflib.js. The `update` method takes four arguments: an array of triples to add, an array of triples to delete, the graph to update, and a callback function that is called when the update is complete. The callback function takes three arguments: the URI of the resource that was updated, a boolean indicating whether the update was successful, and a message string that provides more information about the update status. ⁴
+
+Source: Conversation with Bing, 3/20/2023(1) RDFLIB documentation - Instructions - Solid Community Forum. https://forum.solidproject.org/t/rdflib-documentation/585 Accessed 3/20/2023.
+(2) GitHub - linkeddata/rdflib.js: Linked Data API for JavaScript. https://github.com/linkeddata/rdflib.js/ Accessed 3/20/2023.
+(3) solid-contrib/solid-node-client: a nodejs client for Solid - GitHub. https://github.com/solid-contrib/solid-node-client Accessed 3/20/2023.
+(4) javascript - rdflib.js Load data into the store from a buffer/string .... https://stackoverflow.com/questions/70907346/rdflib-js-load-data-into-the-store-from-a-buffer-string Accessed 3/20/2023.
+(5) How can my app handle data from a Solid pod?. https://forum.solidproject.org/t/how-can-my-app-handle-data-from-a-solid-pod/1787 Accessed 3/20/2023.
+(6) rdflib examples - CodeSandbox. https://codesandbox.io/examples/package/rdflib Accessed 3/20/2023.
+(7) javascript - Save file on a solid POD - Stack Overflow. https://stackoverflow.com/questions/53933744/save-file-on-a-solid-pod Accessed 3/20/2023.
+(8) solid-contrib/solid-node-client: a nodejs client for Solid - GitHub. https://github.com/solid-contrib/solid-node-client Accessed 3/20/2023.
+(9) GitHub - linkeddata/rdflib.js: Linked Data API for JavaScript. https://github.com/linkeddata/rdflib.js/ Accessed 3/20/2023.
+
+### xml list
 
 Here's an example using JavaScript to create an RDF/XML file with a list of RSS links:
 
@@ -33,6 +60,7 @@ const items = [
 	{ title: 'Item 3', link: 'http://example.com/item3' },
 ]
 
+//ALL WRONG METHODS BUT KINDA AN EXAMPLE
 graph.add(
 	rss,
 	rdf.createNamedNode('http://purl.org/dc/elements/1.1/title'),
@@ -110,6 +138,10 @@ const xml = serializer.serialize(graph)
 
 fs.writeFileSync('rss.rdf', xml)
 ```
+
+### rdf with pods
+
+<!-- this example is so wrong -->
 
 This example uses the `rdf` library to create a graph, add statements, and serialize the graph to an RDF/XML file. The `rdf` library is a JavaScript library for working with RDF data. You can install it using `npm install rdf`.
 
