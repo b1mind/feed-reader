@@ -6,16 +6,12 @@ const options = {}
 export async function GET({ url, fetch }) {
 	const xmlURL = url.searchParams.get('xml')
 	const parser = new Parser()
-	// bingChat told me to use this.. not in node but alternative on client?
-	// const parser = new DOMParser()
-	// const data = parser.parseFromString(xmlData, 'application/xml')
 
 	//todo testing if fetch can cache the res
-	const res = await fetch(xmlURL)
-	const xmlData = await res.text()
-	// console.log(xmlData)
-	const data = await parser.parseString(xmlData)
-	// console.log(data)
+	// const res = await fetch(xmlURL)
+	// const xmlData = await res.text()
+	// const data = await parser.parseString(xmlData)
+	const data = await parser.parseURL(xmlURL)
 
 	return json(data, {
 		headers: {
@@ -25,9 +21,6 @@ export async function GET({ url, fetch }) {
 		},
 	})
 }
-
-// import { graph, parse } from 'rdflib'
-// import { rdf, schema } from 'rdf-namespaces'
 
 export async function POST(event) {
 	console.log('default POST')
