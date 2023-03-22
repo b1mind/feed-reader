@@ -3,8 +3,6 @@ import solidNamespace from 'solid-namespace'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
 const ns = solidNamespace(rdflib)
-const store = rdflib.graph()
-const updater = new rdflib.UpdateManager(store)
 
 // not working?
 // function list(folder, indent) {
@@ -34,18 +32,20 @@ export async function load({ locals }) {
 	// )
 	// console.timeEnd('rdf getSesh')
 
+	const store = rdflib.graph()
 	// const fetcher = new rdflib.Fetcher(store, { fetch: session.fetch })
 	const fetcher = new rdflib.Fetcher(store)
+	const updater = new rdflib.UpdateManager(store)
 
 	const webId = locals.session.data?.info.webId
 	const userUrl = new URL(webId)
 
 	const user = store.sym(`${webId}`)
 	const profile = user.doc()
-	const publicFolder = `${userUrl.origin}/public`
+	const publicFolder = `${userUrl.origin}/public/`
 	const privateFolder = `${userUrl.origin}/private`
-	let allFriends = []
-	const channel = store.sym(`${publicFolder}/socialFeed`)
+	const channel = store.sym(`${publicFolder}socialFeed`)
+	const feedFolder = store.sym(`${publicFolder}feedReader/rssList.ttl`)
 
 	const items = [
 		{ title: 'Item1', link: 'http://example.com/item1' },
@@ -74,30 +74,53 @@ export async function load({ locals }) {
 	// 	else console.log(message)
 	// })
 
-	const res = await fetcher.load(user).then(
-		(response) => {
-			// let friends = store.statementsMatching(
-			let rssFeeds = store.each(publicFolder, ns.schema('url'), undefined)
-			console.log(rssFeeds)
+	// testing creating a container (works, need to figure out how to build in it)
+	// const req = await fetcher.createContainer(publicFolder, 'socialFeed')
 
-			let friends = store.each(user, ns.foaf('knows'), undefined)
-			for (const friend of friends) {
-				// console.log(friend.object.uri)
-				allFriends = [...allFriends, friend.uri]
+	//working test of getting feeds (slower than solid libs?)
+	let feeds = []
+	const req = await fetcher.load(feedFolder).then((response) => {
+		// console.log(response)
+		const socialFeeds = store.each(null, ns.schema('name'))
+		for (const feed of socialFeeds) {
+			const url = store.any(feed, ns.schema('url'))
+			const name = store.any(feed, ns.schema('name'))
+			let saveFeed = {
+				name: name.value,
+				url: url.uri,
 			}
-
-			let name = store.any(user, ns.vcard('fn'))
-			console.log(`You are ${name || 'nothing'}`)
-
-			return response
-		},
-		(err) => {
-			console.log('Load failed ' + err)
+			feeds = [...feeds, saveFeed]
 		}
-	)
+		console.log(feeds)
+		return response
+	})
+
+	let allFriends = []
+	// const req = await fetcher.load(user).then(
+	// 	async (response) => {
+	// 		let friends = store.each(user, ns.foaf('knows'), null)
+	// 		for (const friend of friends) {
+	// 			const feedUrl = new URL(friend.uri)
+	// 			console.log(feedUrl.origin)
+	// 			const list = store.each(`${feedUrl.origin}/public/`, ns.ldp('contains'))
+	// 			console.log(list)
+	// 			// console.log(friend.object.uri)
+	// 			store.any(friend)
+	// 			allFriends = [...allFriends, friend.uri]
+	// 		}
+
+	// 		let name = store.any(user, ns.vcard('fn'))
+	// 		console.log(`You are ${name || 'nothing'}`)
+
+	// 		return response
+	// 	},
+	// 	(err) => {
+	// 		console.log('Load failed ' + err)
+	// 	}
+	// )
 
 	// console.log(rssNode())
 	// console.log(ns.ldp())
 
-	return { rdf: res.responseText, friends: allFriends }
+	return { rdf: req.responseText, friends: allFriends }
 }
