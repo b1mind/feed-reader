@@ -16,3 +16,6 @@
 		{/each}
 	</ul>
 </article>
+
+<style lang="scss">
+</style>

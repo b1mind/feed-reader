@@ -7,12 +7,12 @@ export async function POST({ locals, cookies }) {
 	// const sessionId = JSON.parse(sessionCookie).sessionId
 	console.time('logout getSesh')
 	const session = await getSessionFromStorage(
-		locals.session.data.info.sessionId
+		locals.session.data?.info?.sessionId
 	)
 	console.timeEnd('logout getSesh')
 
 	await locals.session.destroy()
-	session.logout()
+	if (session) session.logout()
 	//should I even keep this cookie or wipe when we created sesh
 
 	// cookies.set('seshInfo', '', {
