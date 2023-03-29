@@ -78,49 +78,58 @@ export async function load({ locals }) {
 	// const req = await fetcher.createContainer(publicFolder, 'socialFeed')
 
 	//working test of getting feeds (slower than solid libs?)
-	let feeds = []
-	const req = await fetcher.load(feedFolder).then((response) => {
-		// console.log(response)
-		const socialFeeds = store.each(null, ns.schema('name'))
-		for (const feed of socialFeeds) {
-			const url = store.any(feed, ns.schema('url'))
-			const name = store.any(feed, ns.schema('name'))
-			let saveFeed = {
-				name: name.value,
-				url: url.uri,
-			}
-			feeds = [...feeds, saveFeed]
-		}
-		console.log(feeds)
-		return response
-	})
+	// let feeds = []
+	// const req = await fetcher.load(feedFolder).then((response) => {
+	// 	// console.log(response)
+	// 	const socialFeeds = store.each(null, ns.schema('name'))
+	// 	for (const feed of socialFeeds) {
+	// 		const url = store.any(feed, ns.schema('url'))
+	// 		const name = store.any(feed, ns.schema('name'))
+	// 		let saveFeed = {
+	// 			name: name.value,
+	// 			url: url.uri,
+	// 		}
+	// 		feeds = [...feeds, saveFeed]
+	// 	}
+	// 	console.log(feeds)
+	// 	return response
+	// })
 
 	let allFriends = []
-	// const req = await fetcher.load(user).then(
-	// 	async (response) => {
-	// 		let friends = store.each(user, ns.foaf('knows'), null)
-	// 		for (const friend of friends) {
-	// 			const feedUrl = new URL(friend.uri)
-	// 			console.log(feedUrl.origin)
-	// 			const list = store.each(`${feedUrl.origin}/public/`, ns.ldp('contains'))
-	// 			console.log(list)
-	// 			// console.log(friend.object.uri)
-	// 			store.any(friend)
-	// 			allFriends = [...allFriends, friend.uri]
-	// 		}
+	const allFriendsData = await fetcher.load(user).then(
+		async (response) => {
+			let friends = store.each(user, ns.foaf('knows'), null)
+			for (const friend of friends) {
+				const friendUrl = new URL(friend.uri)
+				const friendsWithFeeds = await fetcher
+					.load(`${friendUrl.origin}/public/feedReader/`)
+					.then(
+						(response) => {
+							const hasFeeds = store.each(null, ns.ldp('contains'))
+							for (let feed of hasFeeds) {
+								console.log(feed.uri)
+							}
 
-	// 		let name = store.any(user, ns.vcard('fn'))
-	// 		console.log(`You are ${name || 'nothing'}`)
+							allFriends = [...allFriends, friend.uri]
+						},
+						(err) => {}
+					)
 
-	// 		return response
-	// 	},
-	// 	(err) => {
-	// 		console.log('Load failed ' + err)
-	// 	}
-	// )
+				// console.log(friend.object.uri)
+			}
+
+			let name = store.any(user, ns.vcard('fn'))
+			console.log(`You are ${name || 'nothing'}`)
+
+			return response
+		},
+		(err) => {
+			console.log('Load failed ' + err)
+		}
+	)
 
 	// console.log(rssNode())
 	// console.log(ns.ldp())
 
-	return { rdf: req.responseText, friends: allFriends }
+	return { rdf: allFriendsData.responseText, friends: allFriends }
 }
