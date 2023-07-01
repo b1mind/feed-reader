@@ -18,7 +18,7 @@ export const handle = handleSession(
 		console.log({ sessions: allSessions, loggedIn: sessionOnServer })
 		if (!sessionOnServer) {
 			// session notLogged in server remove cookie
-			await locals.session.destroy()
+			await event.locals.session.destroy()
 		}
 
 		//todo refactor logic for (protected) and routes (auth) routes

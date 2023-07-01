@@ -17,7 +17,7 @@ export async function GET({ url, fetch }) {
 		headers: {
 			//note learn more about cache-control
 			//stale-while is not supported in safari/opera (fallback needed?)
-			'Cache-Control': 's-maxage=1, stale-while-revalidate=100',
+			'Cache-Control': 'maxage=1, stale-while-revalidate=100',
 		},
 	})
 }

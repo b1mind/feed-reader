@@ -94,17 +94,17 @@ export async function load({ locals }) {
 	// 	console.log(feeds)
 	// 	return response
 	// })
-
 	let allFriends = []
+
 	const allFriendsData = await fetcher.load(user).then(
 		async (response) => {
 			let friends = store.each(user, ns.foaf('knows'), null)
 			for (const friend of friends) {
 				const friendUrl = new URL(friend.uri)
 				const friendsWithFeeds = await fetcher
-					.load(`${friendUrl.origin}/public/feedReader/`)
+					.load(`${friendUrl.origin}/public/feedReader`)
 					.then(
-						(response) => {
+						async (response) => {
 							const hasFeeds = store.each(null, ns.ldp('contains'))
 							for (let feed of hasFeeds) {
 								console.log(feed.uri)
@@ -117,9 +117,6 @@ export async function load({ locals }) {
 
 				// console.log(friend.object.uri)
 			}
-
-			let name = store.any(user, ns.vcard('fn'))
-			console.log(`You are ${name || 'nothing'}`)
 
 			return response
 		},
