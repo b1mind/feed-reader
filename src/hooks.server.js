@@ -1,11 +1,10 @@
 import { handleSession } from 'svelte-kit-cookie-session'
-import { COOKIE_SECRET } from '$env/static/private'
 
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 
 export const handle = handleSession(
 	{
-		secret: COOKIE_SECRET,
+		secret: 'noUseForASecret',
 	},
 	async ({ event, resolve }) => {
 		// console.log('hook:', event.locals.session.data)
