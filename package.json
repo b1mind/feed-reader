@@ -34,7 +34,7 @@
 		"@inrupt/solid-client-authn-node": "^1.12.1",
 		"@inrupt/vocab-common-rdf": "^1.0.5",
 		"rdf-namespaces": "^1.9.2",
-		"svelte-kit-cookie-session": "^3.3.2"
+		"svelte-kit-cookie-session": "3.3.2"
 	},
 	"type": "module"
 }

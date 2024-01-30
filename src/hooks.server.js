@@ -4,7 +4,7 @@ import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 
 export const handle = handleSession(
 	{
-		secret: 'noUseForASecret',
+		secret: 'SOME_COMPLEX_SECRET_32_CHARSLONG',
 		expires: 24,
 		expires_in: 'hours',
 	},

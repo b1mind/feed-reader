@@ -2,20 +2,39 @@ import { redirect } from '@sveltejs/kit'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 
+// /** @type {import('@sveltejs/kit').Actions} */
+// export const actions = {
+// 	default: async ({ locals }) => {
+// 		const session = await getSessionFromStorage(
+// 			await locals.session.data?.info?.sessionId
+// 		)
+// 		console.log(await locals.session.data)
+
+// 		if (session) {
+// 			session.logout()
+// 		}
+
+// 		await locals.session.destroy()
+
+// 		return {}
+// 	},
+// }
+
 export async function POST({ locals, cookies }) {
 	// const sessionCookie = await cookies.get('seshInfo')
 	// const sessionId = JSON.parse(sessionCookie).sessionId
 	console.time('logout getSesh')
 	const session = await getSessionFromStorage(
-		locals.session.data?.info?.sessionId
+		await locals.session.data?.info?.sessionId
 	)
-	console.log(session)
+	console.log(await locals.session.data)
 	console.timeEnd('logout getSesh')
 
 	if (session) {
 		session.logout()
-		await locals.session.destroy()
 	}
+
+	await locals.session.destroy({})
 	//should I even keep this cookie or wipe when we created sesh
 
 	// cookies.set('seshInfo', '', {
