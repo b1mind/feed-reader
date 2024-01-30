@@ -5,6 +5,8 @@ import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 export const handle = handleSession(
 	{
 		secret: 'noUseForASecret',
+		expires: 24,
+		expires_in: 'hours',
 	},
 	async ({ event, resolve }) => {
 		// console.log('hook:', event.locals.session.data)
