@@ -11,8 +11,8 @@ export async function POST({ locals, cookies }) {
 	)
 	console.timeEnd('logout getSesh')
 
-	await locals.session.destroy()
 	if (session) session.logout()
+	await locals.session.destroy()
 	//should I even keep this cookie or wipe when we created sesh
 
 	// cookies.set('seshInfo', '', {
