@@ -8,17 +8,18 @@
 </hgroup>
 
 <ul>
-	{#each data.rss.items as { title, link, snippet, published }}
+	{#each data.rss.items as { title, link, snippet, published, ogImage }}
 		<li>
 			<a href={link}>
 				{title}
 			</a>
-		</li>
-		<time>{published}</time>
+			<time>{published}</time>
 
-		{#if snippet}
-			<p>{snippet}</p>
-		{/if}
+			{#if snippet}
+				<p>{snippet}</p>
+			{/if}
+			<img src={ogImage} alt={title} loading="lazy" />
+		</li>
 	{/each}
 </ul>
 
@@ -29,5 +30,9 @@
 
 	time {
 		font-size: 0.9rem;
+	}
+
+	img {
+		max-width: 300px;
 	}
 </style>
