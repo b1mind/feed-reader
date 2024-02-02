@@ -58,6 +58,7 @@ export async function GET({ url, fetch }) {
 	)
 }
 
+//testing error templates
 export async function POST(event) {
 	console.log('default POST')
 	// return json({ message: 'butt' }, 418)
