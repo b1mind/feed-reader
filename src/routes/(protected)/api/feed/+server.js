@@ -9,7 +9,7 @@ function shorten(str, maxLen, separator = ' ') {
 	return str.substr(0, str.lastIndexOf(separator, maxLen))
 }
 
-export async function GET({ url, fetch }) {
+export async function GET({ url, setHeaders, fetch }) {
 	const xmlURL = url.searchParams.get('xml')
 	const parser = new Parser()
 
@@ -46,16 +46,14 @@ export async function GET({ url, fetch }) {
 		items = [...items, newItem]
 	}
 
-	return json(
-		{ data, items },
-		{
-			headers: {
-				//note learn more about cache-control
-				//stale-while is not supported in safari/opera (fallback needed?)
-				'Cache-Control': 's-maxage=60, stale-while-revalidate=100',
-			},
-		}
-	)
+	setHeaders({
+		//note learn more about cache-control
+		//stale-while is not supported in safari/opera (fallback needed?)
+		// 'Cache-Control': 's-maxage=60, stale-while-revalidate=100',
+		'Cache-Control': 's-maxage=6000, maxage=6000',
+	})
+
+	return json({ data, items })
 }
 
 //testing error templates
