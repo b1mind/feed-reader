@@ -48,8 +48,8 @@ export async function GET({ url, setHeaders, fetch }) {
 	setHeaders({
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
-		'Cache-Control': 's-maxage=60, stale-while-revalidate=1000',
-		// 'Cache-Control': 's-maxage=6000, maxage=6000',
+		// 'Cache-Control': 's-maxage=60, stale-while-revalidate=1000',
+		'Cache-Control': 'public, max-age=0, s-maxage=6000',
 	})
 
 	return json({ data, items })
