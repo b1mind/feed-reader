@@ -1,5 +1,6 @@
 import { handleSession } from 'svelte-kit-cookie-session'
 
+// import {getSessionFromStorage, getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 
 export const handle = handleSession(
@@ -14,6 +15,11 @@ export const handle = handleSession(
 		const sessionOnServer = allSessions.includes(
 			event.locals.session.data?.info?.sessionId
 		)
+		
+		// console.time('seshFromStorage')
+		// const session = await getSessionFromStorage(event.locals.session.data?.info?.sessionId)
+		// console.log(session)
+		// console.timeEnd('seshFromStorage')
 
 		event.locals.allSessions = allSessions
 		console.log({ sessions: allSessions, loggedIn: sessionOnServer })
