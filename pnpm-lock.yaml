@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.9.2
     version: 1.12.0
   svelte-kit-cookie-session:
-    specifier: 3.3.2
-    version: 3.3.2
+    specifier: ^4.0.0
+    version: 4.0.0
 
 devDependencies:
   '@playwright/test':
@@ -458,6 +458,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
+
+  /@noble/ciphers@0.2.0:
+    resolution: {integrity: sha512-6YBxJDAapHSdd3bLDv6x2wRPwq4QFMUaB3HvljNBUTThDd12eSm7/3F+2lnfzx2jvM+S6Nsy0jEt9QbPqSwqRw==}
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1689,6 +1693,7 @@ packages:
 
   /esm-env@1.0.0:
     resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
+    dev: true
 
   /espree@9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
@@ -3369,11 +3374,10 @@ packages:
       svelte: 4.2.9
     dev: true
 
-  /svelte-kit-cookie-session@3.3.2:
-    resolution: {integrity: sha512-gezrXK2kIA4mwANYjvsCkUd+z0aP0wWlz7/VFCkX8op99kTJjoqTSEdgLfgdGpbS48A77BQH4oJBEtX2QJbpSA==}
+  /svelte-kit-cookie-session@4.0.0:
+    resolution: {integrity: sha512-P7Og9z+cpwitS8JN9bBMxIFvX7kBM/Vrx4gDYbodO7qtT5C+EMJnNFpruvQgomL2UthzHYWLN/4aEgAGDgPTDA==}
     dependencies:
-      esm-env: 1.0.0
-      zencrypt: 0.0.7
+      '@noble/ciphers': 0.2.0
     dev: false
 
   /svelte@4.2.9:
@@ -3689,7 +3693,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /zencrypt@0.0.7:
-    resolution: {integrity: sha512-UGqj7MySefAgoD8E17cJEsTNhYmjeYnT2Pp++2eC4Vgmc4S1fliFxSn6uAcLqkuPJ7YhD0Un/CW2ZYxrOlpJxw==}
-    dev: false
