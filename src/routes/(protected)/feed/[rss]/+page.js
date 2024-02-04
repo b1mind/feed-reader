@@ -4,8 +4,8 @@ export async function load({ url, fetch }) {
 
 	return {
 		rss: {
-			title: rss.data.title,
-			description: rss.data.description,
+			title: rss.title,
+			description: rss.description,
 			items: rss.items,
 		},
 	}

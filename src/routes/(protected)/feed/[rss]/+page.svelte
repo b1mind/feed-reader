@@ -11,6 +11,7 @@
 	{#each data.rss.items as { title, link, snippet, published, ogImage }}
 		<li>
 			<a href={link}>
+				<!-- <a href="/feed/read/?link={link}"> -->
 				{title}
 			</a>
 			<time>{published}</time>

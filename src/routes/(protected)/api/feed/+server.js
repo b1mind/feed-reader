@@ -8,17 +8,36 @@ function shorten(str, maxLen, separator = ' ') {
 	return str.substr(0, str.lastIndexOf(separator, maxLen))
 }
 
+function sortByDateDescending(feedItemA, feedItemB) {
+	const itemADate = new Date(feedItemA.isoDate)
+	const itemBDate = new Date(feedItemB.isoDate)
+	return itemBDate - itemADate
+}
+
 export async function GET({ url, setHeaders, fetch }) {
 	console.log('fresh GET')
 	const xmlURL = url.searchParams.get('xml')
 	const parser = new Parser()
 
-	//todo testing if fetch can cache the res
-	const data = await parser.parseURL(xmlURL)
+	//todo refactor for faster res/mutations
+	//order items in the fetch/parser like https://benmyers.dev/blog/eleventy-blogroll/
+	const data = await parser
+		.parseURL(xmlURL)
+		.catch((err) => console.log(err))
+		.then((feed) => {
+			if (!feed || !feed.items || !feed.items.length) {
+				return null
+			}
+
+			let orderedItems = [...feed.items].sort(sortByDateDescending).slice(0, 15)
+			// orderedItems = orderedItems
+
+			return { feed, items: orderedItems }
+		})
 
 	let items = []
 
-	for (const item of data.items.slice(0, 15)) {
+	for (const item of data.items) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 
 		const options = { url: item.link }
@@ -49,11 +68,15 @@ export async function GET({ url, setHeaders, fetch }) {
 	setHeaders({
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
-		'Cache-Control': 's-maxage=60, stale-while-revalidate=1000',
+		'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
 		// 'Cache-Control': 'public, s-maxage=6000, maxage=6000',
 	})
 
-	return json({ data, items })
+	return json({
+		title: data.feed.title,
+		description: data.feed.description,
+		items,
+	})
 }
 
 //testing error templates
