@@ -24,7 +24,7 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 // console.log(XSD)
 // console.log(rdf)
 
-export async function load({ locals }) {
+export async function load({ locals, params }) {
 	let rssList = []
 	let rssThing
 	let rssDataSet
@@ -37,7 +37,7 @@ export async function load({ locals }) {
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
 	const webId = new URL(locals.session.data.info.webId)
-	let listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+	let listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl)
@@ -94,7 +94,9 @@ export async function load({ locals }) {
 
 			rssDataSet = setThing(rssDataSet, rssThing)
 
-			const session = await getSessionFromStorage(locals.seshInfo.sessionId)
+			const session = await getSessionFromStorage(
+				locals.session.data.info.sessionId,
+			)
 			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 				fetch: session.fetch,
 			})
@@ -106,24 +108,25 @@ export async function load({ locals }) {
 
 	return {
 		rssList,
+		listName: params.list,
 		// error: '',
 	}
 }
 
-async function add({ locals, request, url }) {
+async function add({ locals, request, params }) {
 	const formData = await request.formData()
 	const name = formData.get('feed')
 	const formUrl = formData.get('url')
 
 	//need util classes for abstraction
 	const webId = new URL(locals.session.data?.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+	const listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
 		const session = await getSessionFromStorage(
-			locals.session.data?.info.sessionId
+			locals.session.data?.info.sessionId,
 		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
@@ -159,19 +162,19 @@ async function add({ locals, request, url }) {
 	// throw redirect(302, url)
 }
 
-async function remove({ locals, request }) {
+async function remove({ locals, request, params }) {
 	const formData = await request.formData()
 	const name = safeSpace(formData.get('name'))
 
 	//need util classes for abstraction
 	const webId = new URL(locals.session.data?.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/rssList.ttl`
+	const listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
 	let rssDataSet
 	let rssThing
 
 	try {
 		const session = await getSessionFromStorage(
-			locals.session.data?.info.sessionId
+			locals.session.data?.info.sessionId,
 		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
@@ -195,7 +198,7 @@ async function remove({ locals, request }) {
 	}
 
 	//all is good in the hood return
-	throw redirect(302, '/feed')
+	throw redirect(302, '/feed/' + params.list)
 }
 
 //todo proper edit this is just the request
