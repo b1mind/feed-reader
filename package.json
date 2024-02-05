@@ -36,7 +36,8 @@
 		"formidable": "^3.5.1",
 		"open-graph-scraper": "^6.3.3",
 		"rdf-namespaces": "^1.9.2",
-		"svelte-kit-cookie-session": "^4.0.0"
+		"svelte-kit-cookie-session": "^4.0.0",
+		"xml2js": "^0.6.2"
 	},
 	"type": "module"
 }

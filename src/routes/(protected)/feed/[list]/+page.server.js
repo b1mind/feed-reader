@@ -1,8 +1,8 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
 
-import formidable from 'formidable'
-import FileReader from 'filereader'
+import Parser from 'rss-parser'
+import xml2js from 'xml2js'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
@@ -104,6 +104,31 @@ async function addList({ locals, request, params }) {
 	const href = formData.get('url')
 	const OPML = formData.get('xmlString')
 
+	if (OPML) {
+		let parser = new xml2js.Parser()
+		parser.parseString(OPML, function (err, result) {
+			if (err) {
+				return console.log(err)
+			}
+			console.log('Title:', result.opml.head[0].title[0])
+			const outlines = result.opml.body[0].outline[0].outline
+			outlines.forEach((outline) => {
+				if (outline.$.type === 'rss') {
+					//todo solidDataset with things
+					//really need to make a helper function for this
+					console.log('RSS Feed:', {
+						url: outline.$.xmlUrl,
+						name: encodeURI(outline.$.title),
+					})
+				} else {
+					console.log('unknown:', outline.$.name)
+				}
+			})
+		})
+
+		return null
+	}
+
 	// const form = formidable({ multiples: true })
 	// form.parse(request, (error, fields, files) => {
 	// 	if (error) {
@@ -114,7 +139,6 @@ async function addList({ locals, request, params }) {
 	// })
 	// console.log(form)
 
-	if (OPML) return
 	//should this return an option to create vs just doing it?
 	let rssDataSet = createSolidDataset()
 

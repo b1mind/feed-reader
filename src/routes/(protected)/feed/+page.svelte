@@ -1,5 +1,7 @@
 <script>
 	import { enhance } from '$app/forms'
+	import { slugify } from '$lib/utils'
+
 	export let data
 
 	const names = []
@@ -33,12 +35,14 @@
 			'load',
 			() => {
 				xmlString = reader.result
+				console.log(xmlString)
 				newListName = parseTitle(xmlString)
 			},
 			false,
 		)
 	}
 
+	$: routeListName = newListName ? slugify(newListName) : null
 	$: required = !files ? true : null
 </script>
 
@@ -53,7 +57,7 @@
 </ul>
 
 <form
-	action="/feed/{newListName}?/addList"
+	action="/feed/{routeListName}?/addList"
 	method="POST"
 	autocomplete="off"
 	enctype="multipart/form-data"
@@ -61,7 +65,12 @@
 >
 	<label for="newListName">
 		New List Name
-		<input type="text" bind:value={newListName} {required} />
+		<input
+			type="textarea"
+			bind:value={newListName}
+			name="listName"
+			{required}
+		/>
 	</label>
 
 	<label>
@@ -100,7 +109,7 @@
 	</label>
 
 	<button type="submit">create</button>
-	<input type="text" value={xmlString || null} name="xmlString" />
+	<input type="textarea" value={xmlString || null} name="xmlString" />
 </form>
 
 <style lang="scss">
