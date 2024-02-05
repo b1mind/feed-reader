@@ -12,7 +12,7 @@
 </script>
 
 <main>
-	<h1>RssList</h1>
+	<h1>{data.listName}</h1>
 
 	<ul>
 		{#each data.rssList as { name, href } (name)}

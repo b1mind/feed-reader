@@ -14,7 +14,9 @@
 					<ul>
 						{#each friend.rssList as list}
 							<li>
-								<a href="/feed/{list.name}?xml={list.href}"> {list.name} </a>
+								<a href="/feed/friend/{list.name}?xml={list.href}">
+									{list.name}
+								</a>
 								<form
 									data-loading="false"
 									action="/feed?/add"
@@ -23,7 +25,8 @@
 								>
 									<input type="hidden" name="feed" value={list.name} />
 									<input type="hidden" name="url" value={list.href} />
-									<button type="submit">➕</button>
+									<!-- todo need away to pick list -->
+									<button type="submit" disabled>➕</button>
 								</form>
 							</li>
 						{/each}

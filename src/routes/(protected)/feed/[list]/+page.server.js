@@ -1,6 +1,9 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
 
+import formidable from 'formidable'
+import FileReader from 'filereader'
+
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
 	getSolidDataset,
@@ -79,28 +82,7 @@ export async function load({ locals, params }) {
 		// `
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
-			let name = 'RedditKeyboards'
-			let href = 'https://www.reddit.com/r/keyboards.rss'
-			//should this return an option to create vs just doing it?
-			rssDataSet = createSolidDataset()
-
-			// need to figure out what kinda Thing to make, want a good list for urls/names/params
-			// must have created date to check and get newest/oldest order
-			rssThing = buildThing(createThing({ name: name }))
-				.addUrl(rdf.type, schema.DataFeed)
-				.addStringNoLocale(schema.name, name)
-				.addUrl(schema.url, href)
-				.build()
-
-			rssDataSet = setThing(rssDataSet, rssThing)
-
-			const session = await getSessionFromStorage(
-				locals.session.data.info.sessionId,
-			)
-			await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
-				fetch: session.fetch,
-			})
-			rssList = [...rssList, { name, href }]
+			return { listName: 'No list by that name' }
 		} else {
 			console.error(error.message)
 		}
@@ -111,6 +93,47 @@ export async function load({ locals, params }) {
 		listName: params.list,
 		// error: '',
 	}
+}
+
+async function addList({ locals, request, params }) {
+	const webId = new URL(locals.session.data.info.webId)
+	let listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
+
+	const formData = await request.formData()
+	const name = formData.get('feed')
+	const href = formData.get('url')
+	const OPML = formData.get('xmlString')
+
+	// const form = formidable({ multiples: true })
+	// form.parse(request, (error, fields, files) => {
+	// 	if (error) {
+	// 		reject(error)
+	// 		return
+	// 	}
+	// 	resolve({ ...fields, ...files })
+	// })
+	// console.log(form)
+
+	if (OPML) return
+	//should this return an option to create vs just doing it?
+	let rssDataSet = createSolidDataset()
+
+	// need to figure out what kinda Thing to make, want a good list for urls/names/params
+	// must have created date to check and get newest/oldest order
+	let rssThing = buildThing(createThing({ name: name }))
+		.addUrl(rdf.type, schema.DataFeed)
+		.addStringNoLocale(schema.name, name)
+		.addUrl(schema.url, href)
+		.build()
+
+	rssDataSet = setThing(rssDataSet, rssThing)
+
+	const session = await getSessionFromStorage(
+		locals.session.data.info.sessionId,
+	)
+	await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
+		fetch: session.fetch,
+	})
 }
 
 async function add({ locals, request, params }) {
@@ -240,4 +263,4 @@ async function edit({ locals, request }) {
 	throw redirect(302, '/feed')
 }
 
-export const actions = { add, remove, edit }
+export const actions = { add, addList, remove, edit }
