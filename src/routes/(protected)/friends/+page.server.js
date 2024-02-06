@@ -6,6 +6,7 @@ import {
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
+	isContainer,
 } from '@inrupt/solid-client'
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
@@ -23,16 +24,17 @@ export async function load({ locals }) {
 			let rssList = []
 
 			contact = new URL(contact)
-			let listUrl = `${contact.origin}/public/feedReader/rssList.ttl`
+			let listUrl = `${contact.origin}/public/feedReader/`
 			//check if friend has feedReader
-			const friendListDataSet = await getSolidDataset(listUrl)
-			let things = getThingAll(friendListDataSet)
-			things.forEach((thing) => {
-				let name = getStringNoLocale(thing, schema.name)
-				let href = getUrl(thing, schema.url)
-				// let feedUrl = getUrl(thing, rdf.type)
-				rssList = [...rssList, { name, href }]
-			})
+			// const friendListDataSet = await getSolidDataset(listUrl)
+			const friendListDataSet = isContainer(listUrl)
+			// let things = getThingAll(friendListDataSet)
+			// things.forEach((thing) => {
+			// 	let name = getStringNoLocale(thing, schema.name)
+			// 	let href = getUrl(thing, schema.url)
+			// 	// let feedUrl = getUrl(thing, rdf.type)
+			// 	rssList = [...rssList, { name, href }]
+			// })
 
 			if (friendListDataSet) {
 				const friendUserDataSet = await getSolidDataset(contact.href)
