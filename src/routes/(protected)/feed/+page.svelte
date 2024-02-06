@@ -4,9 +4,11 @@
 
 	export let data
 
-	const names = []
+	let names = []
+
 	data.lists.forEach((list) => {
-		names.push(list.split('/').pop().split('.').shift())
+		names = [...names, list.split('/').pop().split('.').shift()]
+		// names.push(list.split('/').pop().split('.').shift())
 	})
 
 	let newListName
@@ -84,6 +86,7 @@
 			accept=".xml, .opml"
 		/>
 	</label>
+	<input type="textarea" hidden value={xmlString || null} name="xmlString" />
 
 	<br />
 
@@ -109,11 +112,11 @@
 	</label>
 
 	<button type="submit">create</button>
-	<input type="textarea" value={xmlString || null} name="xmlString" />
 </form>
 
 <style lang="scss">
 	label {
+		max-width: max-content;
 		display: block;
 	}
 </style>

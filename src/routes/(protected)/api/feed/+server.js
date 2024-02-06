@@ -3,6 +3,11 @@ import { error, json } from '@sveltejs/kit'
 import Parser from 'rss-parser'
 import ogs from 'open-graph-scraper'
 
+const cleanUrl = function (link) {
+	const url = new URL(link)
+	return url.origin + url.pathname
+}
+
 function shorten(str, maxLen, separator = ' ') {
 	if (str.length <= maxLen) return str
 	return str.substr(0, str.lastIndexOf(separator, maxLen))
@@ -41,7 +46,14 @@ export async function GET({ url, setHeaders, fetch }) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 
 		const options = { url: item.link }
-		const meta = await ogs(options).then((data) => data.result)
+		const meta = await ogs(options)
+			.catch((err) => {
+				console.error(err)
+				return null
+			})
+			.then((data) => {
+				if (data) return data.result
+			})
 
 		//fixme regex to match data
 		// const matchDate = /^((?:\S+\s+){3}\S+)*/g
@@ -57,7 +69,7 @@ export async function GET({ url, setHeaders, fetch }) {
 			title: item.title,
 			link: item.link,
 			categories: item.categories,
-			ogImage: meta.ogImage ? meta.ogImage[0].url : '',
+			ogImage: meta?.ogImage ? meta.ogImage[0].url : '',
 			published,
 			snippet,
 		}

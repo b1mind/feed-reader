@@ -1,7 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { safeSpace } from '$lib/utils'
 
-import Parser from 'rss-parser'
 import xml2js from 'xml2js'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
