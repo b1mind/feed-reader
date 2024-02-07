@@ -1,6 +1,5 @@
 <script>
 	import { enhance } from '$app/forms'
-	import { slugify } from '$lib/utils'
 
 	export let data
 
@@ -44,7 +43,6 @@
 		)
 	}
 
-	$: routeListName = newListName ? slugify(newListName) : null
 	$: required = !files ? true : null
 </script>
 
@@ -59,7 +57,7 @@
 </ul>
 
 <form
-	action="/feed/{routeListName}?/addList"
+	action="/feed?/addList"
 	method="POST"
 	autocomplete="off"
 	enctype="multipart/form-data"

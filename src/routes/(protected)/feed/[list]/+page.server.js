@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit'
-import { safeSpace } from '$lib/utils'
 
-import xml2js from 'xml2js'
+// import rdfExt from 'rdf-ext'
+import $rdf from 'rdflib'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import {
@@ -10,6 +10,7 @@ import {
 	getThingAll,
 	getUrl,
 	getStringNoLocale,
+	addStringNoLocale,
 	createSolidDataset,
 	saveSolidDatasetAt,
 	createThing,
@@ -17,9 +18,9 @@ import {
 	setThing,
 	removeThing,
 	overwriteFile,
+	addUrl,
 } from '@inrupt/solid-client'
 // import { Blob } from 'buffer'
-// import { RDF, SCHEMA_INRUPT, XSD } from '@inrupt/vocab-common-rdf'
 import { schema, dc, rdf } from 'rdf-namespaces'
 //need to figure out if I need both or can just use namespaces
 // console.log(dc)
@@ -38,8 +39,9 @@ export async function load({ locals, params }) {
 	// look into using a api /fetch/ from server.fetch()
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
+	//todo how to store the data.. not .ttl?
 	const webId = new URL(locals.session.data.info.webId)
-	let listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
+	let listUrl = `${webId.origin}/public/feedReader/${params.list}`
 
 	try {
 		rssDataSet = await getSolidDataset(listUrl)
@@ -47,7 +49,7 @@ export async function load({ locals, params }) {
 		things.forEach((thing) => {
 			let name = getStringNoLocale(thing, schema.name)
 			let href = getUrl(thing, schema.url)
-			rssList = [...rssList, { name, href }]
+			rssList.push({ name, href })
 		})
 
 		// //fixme cleanup: testing new way to save dataset for better rdf to json convertion
@@ -94,71 +96,6 @@ export async function load({ locals, params }) {
 	}
 }
 
-async function addList({ locals, request, params }) {
-	const webId = new URL(locals.session.data.info.webId)
-	let listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
-
-	const formData = await request.formData()
-	const name = formData.get('feed')
-	const href = formData.get('url')
-	const OPML = formData.get('xmlString')
-
-	if (OPML) {
-		let parser = new xml2js.Parser()
-		parser.parseString(OPML, function (err, result) {
-			if (err) {
-				return console.log(err)
-			}
-			console.log('Title:', result.opml.head[0].title[0])
-			const outlines = result.opml.body[0].outline[0].outline
-			outlines.forEach((outline) => {
-				if (outline.$.type === 'rss') {
-					//todo solidDataset with things
-					//really need to make a helper function for this
-					console.log('RSS Feed:', {
-						url: outline.$.xmlUrl,
-						name: encodeURI(outline.$.title),
-					})
-				} else {
-					console.log('unknown:', outline.$.name)
-				}
-			})
-		})
-
-		return null
-	}
-
-	// const form = formidable({ multiples: true })
-	// form.parse(request, (error, fields, files) => {
-	// 	if (error) {
-	// 		reject(error)
-	// 		return
-	// 	}
-	// 	resolve({ ...fields, ...files })
-	// })
-	// console.log(form)
-
-	//should this return an option to create vs just doing it?
-	let rssDataSet = createSolidDataset()
-
-	// need to figure out what kinda Thing to make, want a good list for urls/names/params
-	// must have created date to check and get newest/oldest order
-	let rssThing = buildThing(createThing({ name: name }))
-		.addUrl(rdf.type, schema.DataFeed)
-		.addStringNoLocale(schema.name, name)
-		.addUrl(schema.url, href)
-		.build()
-
-	rssDataSet = setThing(rssDataSet, rssThing)
-
-	const session = await getSessionFromStorage(
-		locals.session.data.info.sessionId,
-	)
-	await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
-		fetch: session.fetch,
-	})
-}
-
 async function add({ locals, request, params }) {
 	const formData = await request.formData()
 	const name = formData.get('feed')
@@ -166,7 +103,7 @@ async function add({ locals, request, params }) {
 
 	//need util classes for abstraction
 	const webId = new URL(locals.session.data?.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
+	const listUrl = `${webId.origin}/public/feedReader/${params.list}`
 	let rssDataSet
 	let rssThing
 
@@ -210,11 +147,11 @@ async function add({ locals, request, params }) {
 
 async function remove({ locals, request, params }) {
 	const formData = await request.formData()
-	const name = safeSpace(formData.get('name'))
+	const name = formData.get('name')
 
 	//need util classes for abstraction
 	const webId = new URL(locals.session.data?.info.webId)
-	const listUrl = `${webId.origin}/public/feedReader/${params.list}.ttl`
+	const listUrl = `${webId.origin}/public/feedReader/${params.list}`
 	let rssDataSet
 	let rssThing
 
@@ -248,7 +185,7 @@ async function remove({ locals, request, params }) {
 }
 
 //todo proper edit this is just the request
-async function edit({ locals, request }) {
+async function edit({ locals, request, params }) {
 	const formData = await request.formData()
 	const name = formData.get('name').replace(' ', '%20')
 	// const name = formData.get('name').split(' ').join('%20')
@@ -276,14 +213,14 @@ async function edit({ locals, request }) {
 		//
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
-			console.log('no Thing to del')
+			console.log('no Thing to edit')
 			//need a proper return
 		} else {
 		}
 	}
 
 	//all is good in the hood return
-	throw redirect(302, '/feed')
+	throw redirect(302, '/feed/' + params.list)
 }
 
-export const actions = { add, addList, remove, edit }
+export const actions = { add, remove, edit }

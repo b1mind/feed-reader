@@ -23,7 +23,6 @@ export async function GET({ locals }) {
 	const listDataSet = await getSolidDataset(`${url.origin}/public/feedReader`)
 
 	const data = getContainedResourceUrlAll(listDataSet)
-	console.log(data)
 
 	return json(data, {
 		headers: {

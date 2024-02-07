@@ -7,6 +7,7 @@ import {
 	getUrlAll,
 	getStringNoLocale,
 	isContainer,
+	addUrl,
 } from '@inrupt/solid-client'
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
@@ -56,3 +57,17 @@ export async function load({ locals }) {
 
 	return { friends }
 }
+
+async function addFriend({ locals, request }) {
+	const formData = await request.formData()
+	const friendWebId = formData.get('friend')
+
+	const webId = locals.session.data?.info.webId
+	const myDataSet = await getSolidDataset(webId)
+	let profile = getThing(myDataSet, webId)
+
+	profile = addUrl(profile, FOAF.knows, friendWebId)
+	//todo actually add to back to pod
+}
+
+export const actions = { addFriend }

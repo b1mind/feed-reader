@@ -37,6 +37,17 @@
 	{:else}
 		<p>you have no friends with RSS feed lists</p>
 	{/if}
+	<form action="/friends?/addFriend" method="POST">
+		<label for="friend">
+			Add full webId
+			<input
+				type="text"
+				name="friend"
+				placeholder="friend.host/profile.card#me"
+			/>
+		</label>
+		<button>add</button>
+	</form>
 </main>
 
 <style lang="scss">
