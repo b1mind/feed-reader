@@ -7,7 +7,7 @@ import sqlite from 'better-sqlite3'
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 
-const sqliteDB = sqlite('session.db')
+const sqliteDB = sqlite(':memory:')
 const db = drizzle(sqliteDB)
 
 const userTable = sqliteTable('user', {
