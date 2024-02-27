@@ -44,7 +44,7 @@ async function addList({ locals, request }) {
 	let listName = slugify(formData.get('listName'))
 	const xmlString = formData.get('xmlString')
 
-	const webId = new URL(locals.session.data.info.webId)
+	const webId = new URL(locals.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/${listName}`
 	let rssDataSet = createSolidDataset()
 
@@ -87,9 +87,8 @@ async function addList({ locals, request }) {
 			})
 		})
 
-		const session = await getSessionFromStorage(
-			locals.session.data.info.sessionId,
-		)
+		const session = await getSessionFromStorage(locals.session.id)
+		console.log(session)
 		await saveSolidDatasetAt(listUrl, rssDataSet, { fetch: session.fetch })
 		console.log('success')
 
@@ -116,9 +115,7 @@ async function addList({ locals, request }) {
 
 	rssDataSet = setThing(rssDataSet, rssThing)
 
-	const session = await getSessionFromStorage(
-		locals.session.data.info.sessionId,
-	)
+	const session = await getSessionFromStorage(locals.session.id)
 	await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 		fetch: session.fetch,
 	})

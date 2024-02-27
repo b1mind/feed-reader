@@ -60,27 +60,6 @@ export async function load({ locals, params }) {
 		// overwriteFile(`${webId}/public/feedReader/testList.json`, blob, {
 		// 	fetch: session.fetch,
 		// }).catch((err) => console.log(err))
-
-		//note this is a test
-		//todo save .opml file this should probably be a form/action from button on feed
-		// let opmlList = ``
-		// rssList.forEach(({ name, href }) => {
-		// 	opmlList += `<outline text="${name}" type="rss" xmlUrl="${href}"/>`
-		// })
-
-		// const opml = `
-		// <?xml version="1.0"?>
-		// <opml version="2.0">
-		//   <head>
-		//     <title>My Feeds</title>
-		//   </head>
-		//   <body>
-		// 		<outline text="rssList">
-		// 			${opmlList}
-		// 		</outline>
-		//   </body>
-		// </opml>
-		// `
 	} catch (error) {
 		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
 			return { listName: 'No list by that name' }

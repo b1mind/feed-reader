@@ -20,7 +20,6 @@ export async function GET({ locals, url, cookies }) {
 		const solidSession = await getSessionFromStorage(locals.sessionId)
 
 		console.timeEnd('redirected getSesh')
-
 		await solidSession.handleIncomingRedirect(`${url.href}`)
 		// console.log(session.info)
 		console.log('handled redirect')

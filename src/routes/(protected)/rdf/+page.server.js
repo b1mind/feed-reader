@@ -91,9 +91,30 @@ export async function load({ locals }) {
 			}
 			feeds = [...feeds, saveFeed]
 		}
-		console.log(feeds)
 		return response
 	})
+
+	//note this is a test
+	let opmlList = ``
+	feeds.forEach(({ name, url }) => {
+		opmlList += `<outline text="${name}" type="rss" xmlUrl="${url}"/>`
+	})
+
+	const opml = `
+		<?xml version="1.0"?>
+		<opml version="2.0">
+		  <head>
+		    <title>My Feeds</title>
+		  </head>
+		  <body>
+				<outline text="rssList">
+					${opmlList}
+				</outline>
+		  </body>
+		</opml>
+		`
+
+	console.log(opml)
 
 	let allFriends = []
 	// const req = await fetcher.load(user).then(
@@ -122,5 +143,5 @@ export async function load({ locals }) {
 	// console.log(rssNode())
 	// console.log(ns.ldp())
 
-	return { rdf: req.responseText, friends: allFriends }
+	return { rdf: req.responseText, friends: allFriends, opml }
 }
