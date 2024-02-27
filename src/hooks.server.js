@@ -14,7 +14,7 @@ export const handle = async ({ event, resolve }) => {
 	event.locals.sessionId = sessionId
 
 	const { session, user } = await lucia.validateSession(sessionId)
-	console.log('luciaValidate', session, user)
+	console.log('lucia', session, user)
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id)
 		// sveltekit types deviates from the de-facto standard

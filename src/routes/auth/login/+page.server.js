@@ -12,7 +12,8 @@ export const actions = {
 
 		console.log('login session')
 		let redirectUrl = ''
-		let solidSession = new Session()
+
+		const solidSession = new Session()
 
 		// cookies.set('seshInfo', JSON.stringify(solidSession.info), {
 		// 	path: '/',
