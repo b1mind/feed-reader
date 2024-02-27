@@ -1,4 +1,6 @@
 import { invalid, redirect } from '@sveltejs/kit'
+
+import { lucia } from '$lib/server/auth'
 import { Session } from '@inrupt/solid-client-authn-node'
 
 //do we even need a load? can this page be a +server?
@@ -19,8 +21,15 @@ export const actions = {
 		// 	maxAge: 60 * 60 * 24,
 		// })
 
-		await locals.session.set({ info: solidSession.info })
-		console.log(await locals.session.data)
+		const sessionCookie = lucia.createSessionCookie(solidSession.info.sessionId)
+
+		cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: '.',
+			...sessionCookie.attributes,
+		})
+
+		// await locals.session.set({ info: solidSession.info })
+		// console.log(await locals.session.data)
 
 		const handleSolidRedirect = (url) => {
 			return (redirectUrl = url)

@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { lucia } from '$lib/server/auth'
 
 export async function GET({ locals, url, cookies }) {
 	// const seshCookie = await cookies.get('seshInfo')
@@ -7,9 +8,9 @@ export async function GET({ locals, url, cookies }) {
 
 	//fixme storage for session
 	console.time('redirected getSesh')
-	const session = await getSessionFromStorage(
-		locals.session.data.info.sessionId,
-	)
+	console.log(locals.sessionId)
+	const session = await getSessionFromStorage(locals.sessionId)
+
 	console.timeEnd('redirected getSesh')
 	await session.handleIncomingRedirect(`${url.href}`)
 	// console.log(session.info)
@@ -24,7 +25,9 @@ export async function GET({ locals, url, cookies }) {
 	// 	maxAge: 60 * 60 * 24,
 	// })
 
-	await locals.session.set({ info: session.info })
+	console.log(session.info)
+	// await locals.session.set({ info: session.info })
+	await lucia.createSession(session.info.webId, {})
 	console.log('first session and cookie set')
 
 	// return Response.redirect('/', 302)
