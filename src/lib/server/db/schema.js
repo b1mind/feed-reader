@@ -12,3 +12,5 @@ export const sessionTable = sqliteTable('session', {
 		.references(() => userTable.id),
 	expiresAt: integer('expires_at').notNull(),
 })
+
+//note need Key for Oauth info?

@@ -7,7 +7,7 @@
 <nav>
 	<a href="/">home</a>
 	<a href="/fetch">cacheTest</a>
-	{#if !$page.data?.info?.isLoggedIn}
+	{#if !$page.data?.info}
 		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}

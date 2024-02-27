@@ -1,6 +1,7 @@
 import { redirect } from '@sveltejs/kit'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { lucia } from '$lib/server/auth'
 
 // /** @type {import('@sveltejs/kit').Actions} */
 // export const actions = {
@@ -24,17 +25,19 @@ export async function POST({ locals, cookies }) {
 	// const sessionCookie = await cookies.get('seshInfo')
 	// const sessionId = JSON.parse(sessionCookie).sessionId
 	console.time('logout getSesh')
-	const session = await getSessionFromStorage(
-		await locals.session.data?.info?.sessionId
-	)
-	console.log(await locals.session.data)
+	const sessionId = locals.session.id
+	const session = await getSessionFromStorage(await sessionId)
+	console.log(await locals.session)
 	console.timeEnd('logout getSesh')
 
 	if (session) {
 		session.logout()
 	}
 
-	await locals.session.destroy()
+	if (sessionId) {
+		await lucia.invalidateSession(sessionId)
+	}
+
 	//should I even keep this cookie or wipe when we created sesh
 
 	// cookies.set('seshInfo', '', {

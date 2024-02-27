@@ -37,7 +37,7 @@ export async function load({ locals }) {
 	const fetcher = new rdflib.Fetcher(store)
 	const updater = new rdflib.UpdateManager(store)
 
-	const webId = locals.session.data?.info.webId
+	const webId = locals.user.webId
 	const userUrl = new URL(webId)
 
 	const user = store.sym(`${webId}`)

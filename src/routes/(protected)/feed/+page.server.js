@@ -15,9 +15,10 @@ import { slugify, keepOnlyLetters } from '$lib/utils'
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ locals, url, fetch }) {
-	const { webId, sessionId } = locals.session?.data?.info
+	const webId = locals.user.webId
 	const urlWebId = new URL(webId)
 
+	// const sessionId = locals.session.id
 	// console.time('profile')
 	// const session = await getSessionFromStorage(sessionId)
 	// console.log(session)

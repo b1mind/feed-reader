@@ -40,7 +40,7 @@ export async function load({ locals, params }) {
 	// const session = await getSessionFromStorage(locals.session.data.sessionId)
 	// const webId = new URL(locals.info.webId)
 	//todo how to store the data.. not .ttl?
-	const webId = new URL(locals.session.data.info.webId)
+	const webId = new URL(locals.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/${params.list}`
 
 	try {

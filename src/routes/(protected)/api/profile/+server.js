@@ -12,7 +12,7 @@ import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
 export async function GET({ locals }) {
 	// do we need to use fetch to get the benifits of catching?
 	// session.fetch() is a thing too but would need to getSessionFromStorage
-	const { webId, sessionId } = locals.session?.data?.info
+	const { webId, sessionId } = locals?.user
 
 	// console.time('profile')
 	// const session = await getSessionFromStorage(sessionId)
@@ -38,7 +38,7 @@ export async function GET({ locals }) {
 			headers: {
 				'Cache-Control': 'maxage=1, stale-while-revalidate=59',
 			},
-		}
+		},
 	)
 }
 

@@ -14,7 +14,7 @@ import { schema } from 'rdf-namespaces'
 
 export async function load({ locals }) {
 	let friends = []
-	const webId = locals.session.data?.info.webId
+	const webId = locals.user.webId
 
 	try {
 		const profileDataSet = await getSolidDataset(`${webId}`)
