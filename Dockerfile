@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY . /usr/src/app
 RUN npm install
+RUN npm run push
 RUN rm -f .npmrc
 # might have to change this cause vite3 update
 EXPOSE 3000
