@@ -62,7 +62,7 @@ async function addFriend({ locals, request }) {
 	const formData = await request.formData()
 	const friendWebId = formData.get('friend')
 
-	const webId = locals.session.data?.info.webId
+	const webId = locals.user.webId
 	const myDataSet = await getSolidDataset(webId)
 	let profile = getThing(myDataSet, webId)
 

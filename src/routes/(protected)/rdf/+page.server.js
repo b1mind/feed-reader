@@ -28,7 +28,7 @@ export async function load({ locals }) {
 	//fixme auth fetch still takes forever...
 	// console.time('rdf getSesh')
 	// const session = await getSessionFromStorage(
-	// 	locals.session.data?.info.sessionId
+	// 	locals.session.id
 	// )
 	// console.timeEnd('rdf getSesh')
 

@@ -1,17 +1,13 @@
-import { redirect } from '@sveltejs/kit'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+
 import { generateId } from 'lucia'
+import { lucia } from '$lib/server/auth'
 import { db } from '$lib/server/db'
 import { userTable, sessionTable } from '$lib/server/db/schema'
-
-import { lucia } from '$lib/server/auth'
 
 //note oauth lucia https://lucia-auth.com/guides/oauth/basics
 
 export async function GET({ locals, url, cookies }) {
-	// const seshCookie = await cookies.get('seshInfo')
-	// const seshInfo = JSON.parse(seshCookie)
-
 	//fixme storage for session
 	console.time('redirected getSesh')
 	console.log(locals.sessionId)
@@ -25,6 +21,7 @@ export async function GET({ locals, url, cookies }) {
 		console.log('handled redirect')
 		console.log(solidSession.info)
 
+		//fixme check existing user
 		// const existingUser = await db
 		// 	.select()
 		// 	.from('user')
@@ -87,21 +84,4 @@ export async function GET({ locals, url, cookies }) {
 			status: 500,
 		})
 	}
-
-	//reset cookie to reflect login and set sameSite
-	// cookies.set('seshInfo', JSON.stringify(session.info), {
-	// 	path: '/',
-	// 	sameSite: 'strict',
-	// 	httpOnly: true,
-	// 	secure: true,
-	// 	maxAge: 60 * 60 * 24,
-	// })
-
-	console.log(session.info)
-	// await locals.session.set({ info: session.info })
-	await lucia.createSession(session.info.webId, {})
-	console.log('first session and cookie set')
-
-	// return Response.redirect('/', 302)
-	throw redirect(302, `${url.origin}`)
 }
