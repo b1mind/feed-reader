@@ -1,6 +1,6 @@
 import { dev } from '$app/environment'
 
-import { Lucia } from 'lucia'
+import { Lucia, TimeSpan } from 'lucia'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 
 import sqlite from 'better-sqlite3'
@@ -31,6 +31,7 @@ export const lucia = new Lucia(adapter, {
 			secure: !dev,
 		},
 	},
+	sessionExpiresIn: new TimeSpan(2, 'd'), // 2 days
 })
 
 declare module 'lucia' {

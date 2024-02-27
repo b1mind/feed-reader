@@ -37,8 +37,4 @@ export const actions = {
 		//should we set a header with this redirect?
 		throw redirect(302, redirectUrl)
 	},
-
-	bawls: async () => {
-		//testing ground
-	},
 }

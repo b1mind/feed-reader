@@ -8,7 +8,7 @@ export async function GET({ locals, url, cookies }) {
 	//fixme storage for session
 	console.time('redirected getSesh')
 	const session = await getSessionFromStorage(
-		locals.session.data.info.sessionId
+		locals.session.data.info.sessionId,
 	)
 	console.timeEnd('redirected getSesh')
 	await session.handleIncomingRedirect(`${url.href}`)
