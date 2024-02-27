@@ -15,17 +15,16 @@ export const lucia = new Lucia(adapter, {
 			secure: !dev,
 		},
 	},
-	// getUserAttributes: (attributes) => {
-	// 	return {
-	// 		webId: attributes.webId,
-	// 		username: attributes.username
-	// 	};
-	// },
+	getUserAttributes: (attributes) => {
+		return {
+			webId: attributes.webId,
+		}
+	},
 	sessionExpiresIn: new TimeSpan(2, 'd'), // 2 days
 })
 
-declare module 'lucia' {
-	interface Register {
-		Lucia: typeof lucia
-	}
-}
+// declare module 'lucia' {
+// 	interface Register {
+// 		Lucia: typeof lucia
+// 	}
+// }

@@ -10,6 +10,6 @@ export async function load({ locals, cookies, url }) {
 	return {
 		session: locals.session?.data,
 		// allSessions: locals?.allSessions,
-		info: locals?.session?.data?.info || locals?.seshInfo,
+		info: locals?.user,
 	}
 }

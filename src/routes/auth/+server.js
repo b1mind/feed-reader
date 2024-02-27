@@ -2,6 +2,7 @@ import { redirect } from '@sveltejs/kit'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import { generateId } from 'lucia'
 import { db } from '$lib/server/db'
+import { userTable, sessionTable } from '$lib/server/db/schema'
 
 import { lucia } from '$lib/server/auth'
 
@@ -24,7 +25,6 @@ export async function GET({ locals, url, cookies }) {
 		// console.log(session.info)
 		console.log('handled redirect')
 		console.log(solidSession.info)
-		console.log(db)
 
 		// const existingUser = await db
 		// 	.select()
@@ -44,14 +44,28 @@ export async function GET({ locals, url, cookies }) {
 		// }
 
 		const userId = generateId(15)
-		await db.insert('user').values({
+		await db.insert(userTable).values({
 			id: userId,
-			web_id: solidSession.info.webId,
+			webId: solidSession.info.webId,
 		})
 
-		const session = await lucia.createSession(userId, {})
-		const sessionCookie = lucia.createSessionCookie(solidSession.info.sessionId)
-		console.log(session)
+		const session = await lucia.createSession(
+			userId,
+			{
+				webId: solidSession.info.webId,
+			},
+			{
+				sessionId: solidSession.info.sessionId,
+			},
+		)
+
+		const sessionCookie = await lucia.createSessionCookie(session.id)
+		console.log(session, sessionCookie)
+
+		cookies.set(sessionCookie.name, sessionCookie.value, {
+			path: '.',
+			...sessionCookie.attributes,
+		})
 
 		console.log('first session and cookie set')
 
@@ -59,7 +73,7 @@ export async function GET({ locals, url, cookies }) {
 			status: 302,
 			headers: {
 				Location: '/',
-				'Set-Cookie': sessionCookie.serialize(),
+				// 'Set-Cookie': sessionCookie.serialize(),
 			},
 		})
 	} catch (e) {

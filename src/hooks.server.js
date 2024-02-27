@@ -3,7 +3,7 @@ import { handle } from '@sveltejs/kit'
 
 export const handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(lucia.sessionCookieName)
-	console.log(sessionId)
+	console.log('seshId', sessionId)
 	if (!sessionId) {
 		event.locals.user = null
 		event.locals.session = null
@@ -25,6 +25,7 @@ export const handle = async ({ event, resolve }) => {
 		})
 	}
 	if (!session) {
+		console.log('noSession', session)
 		const sessionCookie = lucia.createBlankSessionCookie()
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',
