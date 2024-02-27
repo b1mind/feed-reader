@@ -38,9 +38,6 @@ dependencies:
   rdf-namespaces:
     specifier: ^1.9.2
     version: 1.12.0
-  svelte-kit-cookie-session:
-    specifier: ^4.0.0
-    version: 4.0.0
   xml2js:
     specifier: ^0.6.2
     version: 0.6.2
@@ -750,10 +747,6 @@ packages:
       '@tybys/wasm-util': 0.8.1
     dev: false
     optional: true
-
-  /@noble/ciphers@0.2.0:
-    resolution: {integrity: sha512-6YBxJDAapHSdd3bLDv6x2wRPwq4QFMUaB3HvljNBUTThDd12eSm7/3F+2lnfzx2jvM+S6Nsy0jEt9QbPqSwqRw==}
-    dev: false
 
   /@node-rs/argon2-android-arm-eabi@1.7.0:
     resolution: {integrity: sha512-udDqkr5P9E+wYX1SZwAVPdyfYvaF4ry9Tm+R9LkfSHbzWH0uhU6zjIwNRp7m+n4gx691rk+lqqDAIP8RLKwbhg==}
@@ -5140,12 +5133,6 @@ packages:
     dependencies:
       svelte: 4.2.9
     dev: true
-
-  /svelte-kit-cookie-session@4.0.0:
-    resolution: {integrity: sha512-P7Og9z+cpwitS8JN9bBMxIFvX7kBM/Vrx4gDYbodO7qtT5C+EMJnNFpruvQgomL2UthzHYWLN/4aEgAGDgPTDA==}
-    dependencies:
-      '@noble/ciphers': 0.2.0
-    dev: false
 
   /svelte@4.2.9:
     resolution: {integrity: sha512-hsoB/WZGEPFXeRRLPhPrbRz67PhP6sqYgvwcAs+gWdSQSvNDw+/lTeUJSWe5h2xC97Fz/8QxAOqItwBzNJPU8w==}
