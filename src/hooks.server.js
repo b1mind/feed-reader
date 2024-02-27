@@ -1,7 +1,6 @@
 import { lucia } from '$lib/server/auth'
-import { handle } from '@sveltejs/kit'
 
-export const handle = async ({ event, resolve }) => {
+export async function handle({ event, resolve }) {
 	const sessionId = event.cookies.get(lucia.sessionCookieName)
 	console.log('seshId', sessionId)
 	if (!sessionId) {
