@@ -5,7 +5,6 @@ import ogs from 'open-graph-scraper'
 
 const cleanUrl = function (link, origin) {
 	const isUrl = link.includes('http')
-	console.log(isUrl)
 
 	if (isUrl) {
 		return link
@@ -62,10 +61,7 @@ export async function GET({ url, setHeaders }) {
 						/<img[^>]*src="([^"]*)"[^>]*>/i,
 					)
 					if (imgTag && imgTag[1]) {
-						console.log(imgTag[1])
-						//todo validate that it has url.origin if not add
 						images.push(cleanUrl(imgTag[1], xmlURL))
-						// images.push(imgTag[1])
 					}
 				}
 			}
