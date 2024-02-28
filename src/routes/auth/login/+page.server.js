@@ -1,7 +1,9 @@
 import { invalid, redirect } from '@sveltejs/kit'
+import { assets } from '$app/paths'
 
 import { lucia } from '$lib/server/auth'
 import { Session } from '@inrupt/solid-client-authn-node'
+import { FileStorage } from '$lib/utils/FileStorage'
 
 //do we even need a load? can this page be a +server?
 // export async function load({ locals, url, cookies }) {}
@@ -13,7 +15,9 @@ export const actions = {
 		console.log('login session')
 		let redirectUrl = ''
 
-		const solidSession = new Session()
+		const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+
+		const solidSession = new Session({ storage: sessionStorage })
 
 		// cookies.set('seshInfo', JSON.stringify(solidSession.info), {
 		// 	path: '/',

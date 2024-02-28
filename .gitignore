@@ -8,3 +8,4 @@ node_modules
 !.env.example
 /bucket
 *session.db
+*session*

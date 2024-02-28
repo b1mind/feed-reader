@@ -1,9 +1,12 @@
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { assets } from '$app/paths'
 
+import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import { generateId } from 'lucia'
+
 import { lucia } from '$lib/server/auth'
 import { db } from '$lib/server/db'
 import { userTable, sessionTable } from '$lib/server/db/schema'
+import { FileStorage } from '$lib/utils/FileStorage'
 
 //note oauth lucia https://lucia-auth.com/guides/oauth/basics
 
@@ -12,8 +15,13 @@ export async function GET({ locals, url, cookies }) {
 	console.time('redirected getSesh')
 	console.log(locals.sessionId)
 
+	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+
 	try {
-		const solidSession = await getSessionFromStorage(locals.sessionId)
+		const solidSession = await getSessionFromStorage(
+			locals.sessionId,
+			sessionStorage,
+		)
 
 		console.timeEnd('redirected getSesh')
 		await solidSession.handleIncomingRedirect(`${url.href}`)

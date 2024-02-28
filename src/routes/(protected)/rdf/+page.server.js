@@ -1,6 +1,9 @@
+import { assets } from '$app/paths'
+
 import * as rdflib from 'rdflib'
 import solidNamespace from 'solid-namespace'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { FileStorage } from '$lib/utils/FileStorage'
 
 const ns = solidNamespace(rdflib)
 
@@ -26,11 +29,11 @@ const ns = solidNamespace(rdflib)
 
 export async function load({ locals }) {
 	//fixme auth fetch still takes forever...
-	// console.time('rdf getSesh')
-	// const session = await getSessionFromStorage(
-	// 	locals.session.id
-	// )
-	// console.timeEnd('rdf getSesh')
+	console.time('rdf getSesh')
+	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	const session = await getSessionFromStorage(locals.session.id, sessionStorage)
+	console.log(session)
+	console.timeEnd('rdf getSesh')
 
 	const store = rdflib.graph()
 	// const fetcher = new rdflib.Fetcher(store, { fetch: session.fetch })

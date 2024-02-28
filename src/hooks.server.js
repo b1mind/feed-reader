@@ -1,6 +1,12 @@
+import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 import { lucia } from '$lib/server/auth'
+import { FileStorage } from '$lib/utils/FileStorage'
 
 export async function handle({ event, resolve }) {
+	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	const allSessions = await getSessionIdFromStorageAll(sessionStorage)
+	event.locals.allSessions = allSessions
+
 	const sessionId = event.cookies.get(lucia.sessionCookieName)
 	console.log('seshId', sessionId)
 	if (!sessionId) {

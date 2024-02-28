@@ -9,6 +9,35 @@
 
 	let feed = ''
 	let url = ''
+
+	let opmlList = ``
+	data.rssList.forEach(({ name, href }) => {
+		opmlList += `<outline text="${name}" type="rss" xmlUrl="${href}"/>`
+	})
+
+	const opml = `
+		<?xml version="1.0"?>
+		<opml version="2.0">
+		  <head>
+		    <title>My Feeds</title>
+		  </head>
+		  <body>
+				<outline text="rssList">
+					${opmlList}
+				</outline>
+		  </body>
+		</opml>
+		`
+
+	function saveFile() {
+		const blob = new Blob([opml], { type: 'text/plain;charset=utf-8' })
+		const url = URL.createObjectURL(blob)
+		const link = document.createElement('a')
+		link.href = url
+		link.download = 'data.opml' // Name of the file to be saved
+		link.click()
+		URL.revokeObjectURL(url)
+	}
 </script>
 
 <main>
@@ -56,6 +85,8 @@
 		</label>
 		<button type="submit">add</button>
 	</form>
+
+	<button on:click={saveFile}>Save Opml</button>
 </main>
 
 <style lang="scss">

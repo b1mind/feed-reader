@@ -1,6 +1,8 @@
 import { redirect } from '@sveltejs/kit'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+
+import { FileStorage } from '$lib/utils/FileStorage'
 import { lucia } from '$lib/server/auth'
 
 // /** @type {import('@sveltejs/kit').Actions} */
@@ -26,8 +28,9 @@ export async function POST({ locals, cookies }) {
 	// const sessionId = JSON.parse(sessionCookie).sessionId
 	console.time('logout getSesh')
 	const sessionId = locals.session.id
-	const session = await getSessionFromStorage(await sessionId)
-	console.log(await locals.session)
+	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	const session = await getSessionFromStorage(sessionId, sessionStorage)
+	console.log(session)
 	console.timeEnd('logout getSesh')
 
 	if (session) {
