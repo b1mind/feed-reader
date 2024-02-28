@@ -22,6 +22,7 @@ function sortByDateDescending(feedItemA, feedItemB) {
 export async function GET({ url, setHeaders, fetch }) {
 	console.log('fresh GET')
 	const xmlURL = url.searchParams.get('xml')
+	const limit = url.searchParams.get('limit')
 	const parser = new Parser()
 
 	//todo refactor for faster res/mutations
@@ -34,11 +35,14 @@ export async function GET({ url, setHeaders, fetch }) {
 				return null
 			}
 
-			let orderedItems = [...feed.items].sort(sortByDateDescending).slice(0, 15)
+			let orderedItems = [...feed.items]
+				.sort(sortByDateDescending)
+				.slice(0, limit)
 
 			//note faster images but not everyone has <img> in content
 			let images = []
 
+			//todo refactor this ugly shit
 			for (let item of orderedItems) {
 				if (
 					item['content:encoded'] &&
@@ -60,6 +64,7 @@ export async function GET({ url, setHeaders, fetch }) {
 
 	for (const [i, item] of data.items.entries()) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
+		const content = item.contentSnippet ? item.contentSnippet : ''
 
 		//fixme faster Images...
 		// const options = { url: item.link }
@@ -87,6 +92,7 @@ export async function GET({ url, setHeaders, fetch }) {
 			// ogImage: meta?.ogImage ? meta.ogImage[0].url : '',
 			published,
 			snippet,
+			content,
 		}
 
 		items.push(newItem)

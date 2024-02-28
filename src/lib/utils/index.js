@@ -25,3 +25,13 @@ export function keepOnlyLetters(str) {
 	}
 	return result
 }
+
+export function getRandomItems(sourceArray, numberOfItems) {
+	const result = []
+	for (var i = 0; i < numberOfItems; i++) {
+		const index = Math.floor(Math.random() * sourceArray.length)
+		result.push(sourceArray[index])
+		sourceArray.splice(index, 1)
+	}
+	return result
+}

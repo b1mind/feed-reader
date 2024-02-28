@@ -3,7 +3,7 @@
 </script>
 
 <hgroup>
-	<h1>{data.rss.title}</h1>
+	<h2>{data.rss.title}</h2>
 	<p>{data.rss?.description || 'no description'}</p>
 </hgroup>
 
