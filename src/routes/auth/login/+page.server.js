@@ -15,9 +15,10 @@ export const actions = {
 		console.log('login session')
 		let redirectUrl = ''
 
-		const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+		// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+		// const solidSession = new Session({ storage: sessionStorage })
 
-		const solidSession = new Session({ storage: sessionStorage })
+		const solidSession = new Session()
 
 		// cookies.set('seshInfo', JSON.stringify(solidSession.info), {
 		// 	path: '/',

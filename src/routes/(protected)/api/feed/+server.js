@@ -35,29 +35,43 @@ export async function GET({ url, setHeaders, fetch }) {
 			}
 
 			let orderedItems = [...feed.items].sort(sortByDateDescending).slice(0, 15)
-			// orderedItems = orderedItems
 
-			return { feed, items: orderedItems }
+			//note faster images but not everyone has <img> in content
+			let images = []
+
+			for (let item of orderedItems) {
+				if (
+					item['content:encoded'] &&
+					item['content:encoded'].includes('<img')
+				) {
+					const imgTag = item['content:encoded'].match(
+						/<img[^>]*src="([^"]*)"[^>]*>/i,
+					)
+					if (imgTag && imgTag[1]) {
+						images.push(imgTag[1])
+					}
+				}
+			}
+
+			return { feed, items: orderedItems, images }
 		})
 
 	let items = []
 
-	for (const item of data.items) {
+	for (const [i, item] of data.items.entries()) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 
-		const options = { url: item.link }
-		const meta = await ogs(options)
-			.catch((err) => {
-				console.error(err)
-				return null
-			})
-			.then((data) => {
-				if (data) return data.result
-			})
-
-		//fixme regex to match data
-		// const matchDate = /^((?:\S+\s+){3}\S+)*/g
-		// const published = item?.pubDate.match(matchDate)
+		//fixme faster Images...
+		// const options = { url: item.link }
+		// const meta = await ogs(options)
+		// 	.catch((err) => {
+		// 		console.error(err)
+		// 		return null
+		// 	})
+		// 	.then((data) => {
+		// 		if (data) return data.result
+		// 	})
+		const meta = ''
 
 		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
 			year: 'numeric',
@@ -69,12 +83,13 @@ export async function GET({ url, setHeaders, fetch }) {
 			title: item.title,
 			link: item.link,
 			categories: item.categories,
-			ogImage: meta?.ogImage ? meta.ogImage[0].url : '',
+			ogImage: data.images[i] || '',
+			// ogImage: meta?.ogImage ? meta.ogImage[0].url : '',
 			published,
 			snippet,
 		}
 
-		items = [...items, newItem]
+		items.push(newItem)
 	}
 
 	setHeaders({

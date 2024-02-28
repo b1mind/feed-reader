@@ -1,9 +1,6 @@
-import { assets } from '$app/paths'
-
 import * as rdflib from 'rdflib'
 import solidNamespace from 'solid-namespace'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
-import { FileStorage } from '$lib/utils/FileStorage'
 
 const ns = solidNamespace(rdflib)
 
@@ -30,9 +27,8 @@ const ns = solidNamespace(rdflib)
 export async function load({ locals }) {
 	//fixme auth fetch still takes forever...
 	console.time('rdf getSesh')
-	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
-	const session = await getSessionFromStorage(locals.session.id, sessionStorage)
-	console.log(session)
+	const session = await getSessionFromStorage(locals.session.id)
+	console.log(session, locals.session.id)
 	console.timeEnd('rdf getSesh')
 
 	const store = rdflib.graph()
@@ -48,7 +44,7 @@ export async function load({ locals }) {
 	const publicFolder = `${userUrl.origin}/public/`
 	const privateFolder = `${userUrl.origin}/private`
 	const channel = store.sym(`${publicFolder}socialFeed`)
-	const feedFolder = store.sym(`${publicFolder}feedReader/rsslist.ttl`)
+	const feedFolder = store.sym(`${publicFolder}feedReader/my-feeds`)
 
 	const items = [
 		{ title: 'Item1', link: 'http://example.com/item1' },

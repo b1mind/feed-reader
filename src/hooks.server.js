@@ -3,12 +3,13 @@ import { lucia } from '$lib/server/auth'
 import { FileStorage } from '$lib/utils/FileStorage'
 
 export async function handle({ event, resolve }) {
-	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
-	const allSessions = await getSessionIdFromStorageAll(sessionStorage)
+	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	const allSessions = await getSessionIdFromStorageAll()
 	event.locals.allSessions = allSessions
 
 	const sessionId = event.cookies.get(lucia.sessionCookieName)
 	console.log('seshId', sessionId)
+	console.log('allSessions', allSessions)
 	if (!sessionId) {
 		event.locals.user = null
 		event.locals.session = null
@@ -29,6 +30,7 @@ export async function handle({ event, resolve }) {
 			...sessionCookie.attributes,
 		})
 	}
+
 	if (!session) {
 		console.log('noSession', session)
 		const sessionCookie = lucia.createBlankSessionCookie()
@@ -37,6 +39,7 @@ export async function handle({ event, resolve }) {
 			...sessionCookie.attributes,
 		})
 	}
+
 	event.locals.user = user
 	event.locals.session = session
 	return resolve(event)

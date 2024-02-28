@@ -12,15 +12,17 @@ import { FileStorage } from '$lib/utils/FileStorage'
 
 export async function GET({ locals, url, cookies }) {
 	//fixme storage for session
+	const sessionId = cookies.get(lucia.sessionCookieName)
+	console.log(sessionId)
 	console.time('redirected getSesh')
-	console.log(locals.sessionId)
 
-	const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
 
 	try {
 		const solidSession = await getSessionFromStorage(
+			// sessionId,
 			locals.sessionId,
-			sessionStorage,
+			// sessionStorage,
 		)
 
 		console.timeEnd('redirected getSesh')
@@ -64,7 +66,6 @@ export async function GET({ locals, url, cookies }) {
 		)
 
 		const sessionCookie = await lucia.createSessionCookie(session.id)
-		console.log(session, sessionCookie)
 
 		cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',
