@@ -64,19 +64,19 @@ const items = [
 graph.add(
 	rss,
 	rdf.createNamedNode('http://purl.org/dc/elements/1.1/title'),
-	'RSS Feed'
+	'RSS Feed',
 )
 // channel = list title?
 graph.add(
 	channel,
 	rdf.createNamedNode('http://purl.org/dc/elements/1.1/title'),
-	'Channel Title'
+	'Channel Title',
 )
 // list description
 graph.add(
 	channel,
 	rdf.createNamedNode('http://purl.org/dc/elements/1.1/description'),
-	'Channel Description'
+	'Channel Description',
 )
 
 items.forEach((item, index) => {
@@ -84,52 +84,52 @@ items.forEach((item, index) => {
 	graph.add(
 		channel,
 		rdf.createNamedNode('http://purl.org/rss/1.0/items'),
-		itemNode
+		itemNode,
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/title'),
-		item.title
+		item.title,
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/description'),
-		item.title
+		item.title,
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/creator'),
-		'John Doe'
+		'John Doe',
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/date'),
-		new Date().toISOString()
+		new Date().toISOString(),
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/publisher'),
-		'Example.com'
+		'Example.com',
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/subject'),
-		'Example'
+		'Example',
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/type'),
-		'text/html'
+		'text/html',
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/format'),
-		'text/html'
+		'text/html',
 	)
 	graph.add(
 		itemNode,
 		rdf.createNamedNode('http://purl.org/dc/elements/1.1/identifier'),
-		item.link
+		item.link,
 	)
 })
 
@@ -186,3 +186,59 @@ Source: Conversation with Bing, 3/19/2023(1) How to save PDF file from jsPDF on 
 (4) javascript - Save file on a solid POD - Stack Overflow. https://stackoverflow.com/questions/53933744/save-file-on-a-solid-pod Accessed 3/19/2023.
 (5) solid-contrib/solid-node-client: a nodejs client for Solid - GitHub. https://github.com/solid-contrib/solid-node-client Accessed 3/19/2023.
 (6) solid-client — Inrupt JavaScript Client Libraries. https://docs.inrupt.com/developer-tools/javascript/client-libraries/reference/solid-client/ Accessed 3/19/2023.
+
+# phind on parsing one post
+
+Certainly! If you prefer not to use `axios` and would like to use the native `fetch` API available in modern browsers and Node.js environments (with the `node-fetch` package for Node.js), you can achieve a similar result. Here's how you can fetch an RSS feed as XML and parse only the first post using `fetch` and `xml2js`.
+
+### Step 1: Install `xml2js` and `node-fetch`
+
+First, ensure you have `xml2js` and `node-fetch` installed in your project. If you're working in a Node.js environment, you'll need `node-fetch` to use `fetch`.
+
+```bash
+npm install xml2js node-fetch
+```
+
+### Step 2: Fetch and Parse the First Post
+
+Here's how you can fetch the RSS feed as XML and parse only the first post using `fetch` and `xml2js`:
+
+```javascript
+const fetch = require('node-fetch') // Use 'fetch' in the browser
+const xml2js = require('xml2js')
+
+async function parseFirstPost(url) {
+	try {
+		// Fetch the RSS feed as XML
+		const response = await fetch(url)
+		const xml = await response.text()
+
+		// Parse the XML to a JavaScript object
+		xml2js.parseString(xml, { explicitArray: false }, (err, result) => {
+			if (err) {
+				console.error('Error parsing XML:', err)
+				return
+			}
+
+			// Access the first post
+			const firstPost = result.rss.channel.item
+			console.log(firstPost.title) // Example: Log the title of the first post
+			// You can access other properties of the first post here, such as link, description, etc.
+		})
+	} catch (error) {
+		console.error('Error fetching RSS feed:', error)
+	}
+}
+
+// Example usage
+const url = 'https://example.com/rss' // Replace with your RSS feed URL
+parseFirstPost(url)
+```
+
+### Note:
+
+- This example uses `fetch` to make the HTTP request and retrieve the RSS feed as XML. The `response.text()` method is used to read the response body as text, which is then parsed by `xml2js`.
+- The `xml2js.parseString` method is used to parse the XML to a JavaScript object. The `explicitArray: false` option is used to simplify the resulting object structure.
+- After parsing the XML, you can access the first post directly from the parsed object. This approach allows you to stop parsing after the first post, as you're manually controlling the parsing process.
+
+This method provides a way to fetch and parse an RSS feed without using `axios`, using the native `fetch` API and `xml2js` for parsing.

@@ -1,5 +1,5 @@
 export async function load({ url, fetch }) {
-	const res = await fetch(`/api/feed${url.search}&limit=15`)
+	const res = await fetch(`/api/feed${url.search}&limit=99`)
 	console.log(res)
 	const rss = await res.json()
 

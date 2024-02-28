@@ -3,9 +3,17 @@ import { error, json } from '@sveltejs/kit'
 import Parser from 'rss-parser'
 import ogs from 'open-graph-scraper'
 
-const cleanUrl = function (link) {
-	const url = new URL(link)
-	return url.origin + url.pathname
+const cleanUrl = function (link, origin) {
+	const isUrl = link.includes('http')
+	console.log(isUrl)
+
+	if (isUrl) {
+		const url = new URL(link)
+		return url.origin + url.pathname
+	} else {
+		const newUrl = new URL(origin)
+		return newUrl.origin + link
+	}
 }
 
 function shorten(str, maxLen, separator = ' ') {
@@ -55,7 +63,9 @@ export async function GET({ url, setHeaders }) {
 						/<img[^>]*src="([^"]*)"[^>]*>/i,
 					)
 					if (imgTag && imgTag[1]) {
-						images.push(imgTag[1])
+						console.log(imgTag[1])
+						//todo validate that it has url.origin if not add
+						images.push(cleanUrl(imgTag[1], xmlURL))
 					}
 				}
 			}
