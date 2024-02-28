@@ -6,37 +6,42 @@
 
 <main>
 	<h1>Friends</h1>
-	{#if data.friends.length > 0}
-		<ul>
-			{#each data.friends as friend}
-				<li>
-					<a href={friend.webId}> {friend.nick} </a>
-					<ul>
-						{#each friend.rssList as list}
-							<li>
-								<a href="/feed/friend/{list.name}?xml={list.href}">
-									{list.name}
-								</a>
-								<form
-									data-loading="false"
-									action="/feed?/add"
-									method="POST"
-									use:enhance
-								>
-									<input type="hidden" name="feed" value={list.name} />
-									<input type="hidden" name="url" value={list.href} />
-									<!-- todo need away to pick list -->
-									<button type="submit" disabled>➕</button>
-								</form>
-							</li>
-						{/each}
-					</ul>
-				</li>
-			{/each}
-		</ul>
-	{:else}
-		<p>you have no friends with RSS feed lists</p>
-	{/if}
+	{#await data.friends}
+		looking for friends with lists
+	{:then friends}
+		{#if friends.length > 0}
+			<ul>
+				{#each friends as friend}
+					<li>
+						<a href={friend.webId}> {friend.nick || friend.name} </a>
+						<ul>
+							{#each friend.rssList as list}
+								<li>
+									<a href="/feed/friend/{list.name}?xml={list.href}">
+										{list.name}
+									</a>
+									<form
+										data-loading="false"
+										action="/feed?/add"
+										method="POST"
+										use:enhance
+									>
+										<input type="hidden" name="feed" value={list.name} />
+										<input type="hidden" name="url" value={list.href} />
+										<!-- todo need away to pick list -->
+										<button type="submit" disabled>➕</button>
+									</form>
+								</li>
+							{/each}
+						</ul>
+					</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>you have no friends with RSS feed lists</p>
+		{/if}
+	{/await}
+
 	<form action="/friends?/addFriend" method="POST">
 		<label for="friend">
 			Add full webId

@@ -44,9 +44,9 @@ export async function load({ parent, fetch, setHeaders }) {
 			console.error('Error fetching data:', error)
 		})
 
-	const feed = 'some shit'
+	const msg = 'some shit'
 	return {
-		feed,
+		msg,
 		feedStream,
 	}
 }
