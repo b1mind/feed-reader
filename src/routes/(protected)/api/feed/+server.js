@@ -19,7 +19,7 @@ function sortByDateDescending(feedItemA, feedItemB) {
 	return itemBDate - itemADate
 }
 
-export async function GET({ url, setHeaders, fetch }) {
+export async function GET({ url, setHeaders }) {
 	console.log('fresh GET')
 	const xmlURL = url.searchParams.get('xml')
 	const limit = url.searchParams.get('limit')
@@ -29,7 +29,10 @@ export async function GET({ url, setHeaders, fetch }) {
 	//order items in the fetch/parser like https://benmyers.dev/blog/eleventy-blogroll/
 	const data = await parser
 		.parseURL(xmlURL)
-		.catch((err) => console.log(err))
+		.catch((err) => {
+			console.error(err)
+			return { feed: 'none', items: 'none', images: 'none' }
+		})
 		.then((feed) => {
 			if (!feed || !feed.items || !feed.items.length) {
 				return null

@@ -14,7 +14,8 @@
 				{#each friends as friend}
 					<li>
 						<a href={friend.webId}> {friend.nick || friend.name} </a>
-						<ul>
+						<!-- todo need away to pick list -->
+						<!-- <ul>
 							{#each friend.rssList as list}
 								<li>
 									<a href="/feed/friend/{list.name}?xml={list.href}">
@@ -28,12 +29,11 @@
 									>
 										<input type="hidden" name="feed" value={list.name} />
 										<input type="hidden" name="url" value={list.href} />
-										<!-- todo need away to pick list -->
 										<button type="submit" disabled>➕</button>
 									</form>
 								</li>
 							{/each}
-						</ul>
+						</ul> -->
 					</li>
 				{/each}
 			</ul>

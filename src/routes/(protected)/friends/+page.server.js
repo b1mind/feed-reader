@@ -36,22 +36,22 @@ export async function load({ locals }) {
 				const name = getStringNoLocale(friendThing, VCARD.fn)
 				const nick = getStringNoLocale(friendThing, FOAF.nick)
 
-				// 	let rssList = []
-				//check if friend has feedReader
-				// const friendListDataSet = await getSolidDataset(listUrl)
-				// let things = getThingAll(friendListDataSet)
-				// things.forEach((thing) => {
-				// 	let name = getStringNoLocale(thing, schema.name)
-				// 	let href = getUrl(thing, schema.url)
-				// 	// let feedUrl = getUrl(thing, rdf.type)
-				// 	rssList = [...rssList, { name, href }]
-				// })
-
-				return { img, name, nick, webId: contact.href, rssList: [] }
+				return { img, name, nick, webId: contact.href }
 			}
 		})
 
 		const friends = Promise.all(friendPromises)
+
+		// 	let rssList = []
+		//check if friend has feedReader
+		// const friendListDataSet = await getSolidDataset(listUrl)
+		// let things = getThingAll(friendListDataSet)
+		// things.forEach((thing) => {
+		// 	let name = getStringNoLocale(thing, schema.name)
+		// 	let href = getUrl(thing, schema.url)
+		// 	// let feedUrl = getUrl(thing, rdf.type)
+		// 	rssList = [...rssList, { name, href }]
+		// })
 
 		return { friends }
 	} catch (error) {
