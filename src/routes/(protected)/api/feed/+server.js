@@ -8,8 +8,7 @@ const cleanUrl = function (link, origin) {
 	console.log(isUrl)
 
 	if (isUrl) {
-		const url = new URL(link)
-		return url.origin + url.pathname
+		return link
 	} else {
 		const newUrl = new URL(origin)
 		return newUrl.origin + link
@@ -66,6 +65,7 @@ export async function GET({ url, setHeaders }) {
 						console.log(imgTag[1])
 						//todo validate that it has url.origin if not add
 						images.push(cleanUrl(imgTag[1], xmlURL))
+						// images.push(imgTag[1])
 					}
 				}
 			}
