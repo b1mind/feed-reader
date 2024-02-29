@@ -26,14 +26,18 @@ export async function load({ locals, url, fetch }) {
 
 	if (!webId) return json({ message: 'not logged in' })
 
-	const listDataSet = await getSolidDataset(
-		`${urlWebId.origin}/public/feedReader`,
-	)
+	try {
+		const listDataSet = await getSolidDataset(
+			`${urlWebId.origin}/public/feedReader`,
+		)
 
-	const lists = getContainedResourceUrlAll(listDataSet)
+		const lists = getContainedResourceUrlAll(listDataSet)
 
-	return {
-		lists,
+		return {
+			lists,
+		}
+	} catch {
+		return { lists: null }
 	}
 }
 

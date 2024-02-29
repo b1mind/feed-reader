@@ -98,7 +98,7 @@
 <style lang="scss">
 	main {
 		display: grid;
-		grid-template-columns: [aside] 1fr [content] 5fr;
+		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
 	}
 
 	li > form {

@@ -5,7 +5,6 @@ import ogs from 'open-graph-scraper'
 
 const cleanUrl = function (link, origin) {
 	const isUrl = link.includes('http')
-
 	if (isUrl) {
 		return link
 	} else {
@@ -63,6 +62,8 @@ export async function GET({ url, setHeaders }) {
 					if (imgTag && imgTag[1]) {
 						images.push(cleanUrl(imgTag[1], xmlURL))
 					}
+				} else {
+					//find away to return meta:ogImage if no img in content
 				}
 			}
 
@@ -110,8 +111,8 @@ export async function GET({ url, setHeaders }) {
 	setHeaders({
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
-		'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
-		// 'Cache-Control': 'public, s-maxage=6000, maxage=6000',
+		// 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
+		'Cache-Control': 'public, max-age=6000',
 	})
 
 	return json({

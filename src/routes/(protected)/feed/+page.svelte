@@ -5,10 +5,12 @@
 
 	let names = []
 
-	data.lists.forEach((list) => {
-		names = [...names, list.split('/').pop().split('.').shift()]
-		// names.push(list.split('/').pop().split('.').shift())
-	})
+	if (data.lists) {
+		data.lists.forEach((list) => {
+			names = [...names, list.split('/').pop().split('.').shift()]
+			// names.push(list.split('/').pop().split('.').shift())
+		})
+	}
 
 	let newListName
 	let feedName
@@ -46,15 +48,19 @@
 	$: required = !files ? true : null
 </script>
 
-<ul>
-	{#each names as name}
-		<li>
-			<a href="/feed/{name}">
-				{name}
-			</a>
-		</li>
-	{/each}
-</ul>
+{#if data.lists}
+	<ul>
+		{#each names as name}
+			<li>
+				<a href="/feed/{name}">
+					{name}
+				</a>
+			</li>
+		{/each}
+	</ul>
+{:else}
+	no lists, try making one
+{/if}
 
 <form
 	action="/feed?/addList"

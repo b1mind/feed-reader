@@ -1,3 +1,29 @@
+export function compareDates(a, b) {
+	const dateA = new Date(a.published)
+	const dateB = new Date(b.published)
+	return dateB - dateA // This will sort in descending order
+}
+
+export function flattenItemsIntoObjects(posts) {
+	let newObjects = []
+	posts.forEach((post) => {
+		post.items.forEach((item) => {
+			const newObject = {
+				title: item.title,
+				published: item.published,
+				link: item.link,
+				snippet: item.snippet,
+				ogImage: item.ogImage,
+				feedTitle: post.title,
+			}
+
+			newObjects.push(newObject)
+		})
+	})
+
+	return newObjects
+}
+
 export const nameSort = (a, b) => {
 	let nameA = a.name.toLowerCase()
 	let nameB = b.name.toLowerCase()

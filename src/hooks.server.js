@@ -3,6 +3,10 @@ import { lucia } from '$lib/server/auth'
 import { FileStorage } from '$lib/utils/FileStorage'
 
 export async function handle({ event, resolve }) {
+	//remove auth for api routes?
+	if (event.route.id === '/(protected)/api/feed') {
+		return resolve(event)
+	}
 	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
 	const allSessions = await getSessionIdFromStorageAll()
 	event.locals.allSessions = allSessions

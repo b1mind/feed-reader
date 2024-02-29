@@ -31,7 +31,7 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 export async function load({ parent, fetch, setHeaders }) {
 	const feeds = await parent()
 	const urls = feeds.rssList.map((obj) => obj.href)
-	const randomUrls = getRandomItems(urls, 12)
+	const randomUrls = getRandomItems(urls, 5)
 
 	const feedStream = Promise.all(
 		randomUrls.map((url) =>
@@ -46,9 +46,11 @@ export async function load({ parent, fetch, setHeaders }) {
 			console.error('Error fetching data:', error)
 		})
 
-	const msg = 'some shit'
+	setHeaders({
+		'Cache-Control': 'private, s-maxage=600, max-age=600',
+	})
+
 	return {
-		msg,
 		feedStream,
 	}
 }

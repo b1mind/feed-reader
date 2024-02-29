@@ -44,7 +44,7 @@ export async function load({ locals }) {
 	const publicFolder = `${userUrl.origin}/public/`
 	const privateFolder = `${userUrl.origin}/private`
 	const channel = store.sym(`${publicFolder}socialFeed`)
-	const feedFolder = store.sym(`${publicFolder}feedReader/my-feeds`)
+	const feedFolder = store.sym(`${publicFolder}feedReader/rssList.ttl`)
 
 	const items = [
 		{ title: 'Item1', link: 'http://example.com/item1' },

@@ -3,7 +3,7 @@ import { page } from '$app/stores'
 
 export const enhance = (
 	form,
-	{ result, errorHandle, pending, pendingDelete } = {}
+	{ result, errorHandle, pending, pendingDelete } = {},
 ) => {
 	let invalidatePath
 	page.subscribe((path) => {
