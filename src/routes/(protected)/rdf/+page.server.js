@@ -1,6 +1,7 @@
 import * as rdflib from 'rdflib'
 import solidNamespace from 'solid-namespace'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { SqlStorage } from '$lib/utils/SqlStorage'
 
 const ns = solidNamespace(rdflib)
 
@@ -26,10 +27,11 @@ const ns = solidNamespace(rdflib)
 
 export async function load({ locals }) {
 	//fixme auth fetch still takes forever...
-	console.time('rdf getSesh')
-	const session = await getSessionFromStorage(locals.session.id)
-	console.log(session, locals.session.id)
-	console.timeEnd('rdf getSesh')
+	// console.time('rdf getSesh')
+	// const sessionStorage = new SqlStorage('session.db')
+	// const session = await getSessionFromStorage(locals.session.id, sessionStorage)
+	// console.log(session, locals.session.id)
+	// console.timeEnd('rdf getSesh')
 
 	const store = rdflib.graph()
 	// const fetcher = new rdflib.Fetcher(store, { fetch: session.fetch })
@@ -46,12 +48,42 @@ export async function load({ locals }) {
 	const channel = store.sym(`${publicFolder}socialFeed`)
 	const feedFolder = store.sym(`${publicFolder}feedReader/my-feeds`)
 
-	const items = [
-		{ title: 'Item1', link: 'http://example.com/item1' },
-		{ title: 'Item2', link: 'http://example.com/item2' },
-		{ title: 'Item3', link: 'http://example.com/item3' },
-	]
+	const queryString = `
+ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+ SELECT ?friend
+ WHERE {
+    <${userUrl.origin}/profile/card> foaf:knows ?friend .
+ }
+`
+	console.log(`${userUrl.origin}/profile`)
+	console.log(ns.rss())
 
+	function executeQuery(queryString) {
+		return new Promise((resolve, reject) => {
+			const query = rdflib.SPARQLToQuery(queryString, false, store)
+			const results = store.query(query, resolve, null, reject)
+		})
+	}
+
+	executeQuery(queryString)
+		.then((results) => {
+			if (results.length > 0) {
+				console.log('The Pod has friends.')
+				results.forEach((result) => {
+					console.log('Friend:', result.friend.value)
+				})
+			} else {
+				console.log('The Pod does not have any friends.')
+			}
+		})
+		.catch((error) => {
+			console.error('Error executing SPARQL query:', error)
+		})
+
+	// Process the results
+	// for (let result of results) {
+	// 	console.log('Found a match:', result.child.value)
+	// }
 	// fixme figure out how .add RSS to store proper.
 	// store.add(user, ns.rss(), ns.rss('channel'), channel)
 	// store.add(ns.rss(), ns.rss('title'), 'Social RSS')
@@ -113,8 +145,6 @@ export async function load({ locals }) {
 		</opml>
 		`
 
-	console.log(opml)
-
 	let allFriends = []
 	// const req = await fetcher.load(user).then(
 	// 	async (response) => {
@@ -142,5 +172,5 @@ export async function load({ locals }) {
 	// console.log(rssNode())
 	// console.log(ns.ldp())
 
-	return { rdf: req.responseText, friends: allFriends, opml }
+	return { rdf: req.responseText, friends: allFriends, opml, feeds }
 }

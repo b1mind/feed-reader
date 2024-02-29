@@ -22,10 +22,10 @@
 		{data.rdf}
 	</p>
 
-	<h2>Friends</h2>
+	<h2>feeds</h2>
 	<ul>
-		{#each data.friends as friend}
-			<li>{friend}</li>
+		{#each data.feeds as feed}
+			<li>{feed.name} {feed.url}</li>
 		{/each}
 	</ul>
 </article>
