@@ -1,18 +1,21 @@
 import { redirect } from '@sveltejs/kit'
 
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { SqlStorage } from '$lib/utils/SqlStorage'
 
 import { lucia } from '$lib/server/auth'
 
 export async function POST({ locals }) {
 	console.time('logout getSesh')
 	const sessionId = locals.session.id
-	const session = await getSessionFromStorage(sessionId)
+
+	const sessionStorage = new SqlStorage('session.db')
+	const session = await getSessionFromStorage(sessionId, sessionStorage)
 	console.log(session)
 	console.timeEnd('logout getSesh')
 
 	if (session) {
-		session.logout()
+		session.logout(sessionStorage)
 	}
 
 	if (sessionId) {

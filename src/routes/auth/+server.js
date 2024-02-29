@@ -7,6 +7,7 @@ import { lucia } from '$lib/server/auth'
 import { db } from '$lib/server/db'
 import { userTable, sessionTable } from '$lib/server/db/schema'
 import { FileStorage } from '$lib/utils/FileStorage'
+import { SqlStorage } from '$lib/utils/SqlStorage'
 
 //note oauth lucia https://lucia-auth.com/guides/oauth/basics
 
@@ -17,12 +18,13 @@ export async function GET({ locals, url, cookies }) {
 	console.time('redirected getSesh')
 
 	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
+	const sessionStorage = new SqlStorage('session.db')
 
 	try {
 		const solidSession = await getSessionFromStorage(
 			// sessionId,
 			locals.sessionId,
-			// sessionStorage,
+			sessionStorage,
 		)
 
 		console.timeEnd('redirected getSesh')
