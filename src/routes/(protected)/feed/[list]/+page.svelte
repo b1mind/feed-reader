@@ -7,12 +7,14 @@
 {#await data.feedStream}
 	loading....
 {:then stream}
-	{@const sortedStream = flattenItemsIntoObjects(stream).sort(compareDates)}
+	{@const sortedStream = flattenItemsIntoObjects(stream).sort(
+		() => Math.random() - 0.5,
+	)}
+
 	<ul>
 		{#each sortedStream as { title, link, snippet, published, ogImage, feedTitle }}
 			<li>
 				<a href={link}>
-					<!-- <a href="/feed/read/?link={link}"> -->
 					{title}
 				</a>
 				<time>{published}</time>

@@ -30,7 +30,6 @@ export async function GET({ url, setHeaders }) {
 	const limit = url.searchParams.get('limit')
 	const parser = new Parser()
 
-	//todo refactor for faster res/mutations
 	//order items in the fetch/parser like https://benmyers.dev/blog/eleventy-blogroll/
 	const data = await parser
 		.parseURL(xmlURL)
