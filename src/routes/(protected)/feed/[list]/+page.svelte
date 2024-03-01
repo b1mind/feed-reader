@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores'
 	export let data
+	$: open = false
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
@@ -28,6 +29,7 @@
 
 <style>
 	ul {
+		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 10px;

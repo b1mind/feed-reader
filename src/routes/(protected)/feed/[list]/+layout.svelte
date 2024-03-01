@@ -9,6 +9,7 @@
 
 	let feed = ''
 	let url = ''
+	$: open = false
 
 	let opmlList = ``
 	data.rssList.forEach(({ name, href }) => {
@@ -41,7 +42,7 @@
 </script>
 
 <main>
-	<aside>
+	<aside class:open>
 		<ul>
 			{#each data.rssList as { name, href } (name)}
 				<li
@@ -93,12 +94,48 @@
 			<slot />
 		</section>
 	</div>
+
+	<button class="menu" type="button" on:click={() => (open = !open)}>
+		Menu
+	</button>
 </main>
 
 <style lang="scss">
 	main {
 		display: grid;
 		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
+		@media (max-width: 460px) {
+			grid-template-columns: 1fr;
+			& > aside {
+				display: none;
+				position: fixed;
+				max-height: 90svh;
+				bottom: 1rem;
+				right: 0;
+				background-color: var(--clr-primary-bg);
+				overflow-y: scroll;
+			}
+		}
+	}
+
+	.open {
+		display: grid;
+	}
+
+	.menu {
+		display: none;
+		z-index: 9999;
+		@media (max-width: 460px) {
+			display: flex;
+			position: fixed;
+			bottom: 0;
+			right: 0;
+		}
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
 	}
 
 	li > form {

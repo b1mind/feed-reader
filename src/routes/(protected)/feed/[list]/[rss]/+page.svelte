@@ -29,6 +29,11 @@
 		color: var(--clr-primary);
 	}
 
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
 	time {
 		font-size: 0.9rem;
 	}

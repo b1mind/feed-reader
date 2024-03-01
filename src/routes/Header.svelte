@@ -36,6 +36,7 @@
 <style lang="scss">
 	nav {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 1rem;
 		font-size: 1.3rem;
