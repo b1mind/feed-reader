@@ -19,7 +19,7 @@
 			{#if snippet}
 				<p>{snippet}</p>
 			{/if}
-			<img src={ogImage} alt={title} loading="lazy" />
+			<img src={ogImage.url} alt={ogImage.alt} loading="lazy" />
 		</li>
 	{/each}
 </ul>

@@ -90,10 +90,12 @@ export async function GET({ url, setHeaders }) {
 					// }
 
 					const imgTag = item['content:encoded'].match(
-						/<img[^>]*src="([^"]*)"[^>]*>/i,
+						/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
+						// /<img[^>]*src="([^"]*)"[^>]*>/i,
 					)
 					if (imgTag && imgTag[1]) {
-						images.push(cleanUrl(imgTag[1], xmlURL))
+						images.push({ url: cleanUrl(imgTag[1], xmlURL), alt: imgTag[2] })
+						// images.push(cleanUrl(imgTag[1], xmlURL))
 					}
 				} else {
 					// const img = await getMetaImage(item.link)

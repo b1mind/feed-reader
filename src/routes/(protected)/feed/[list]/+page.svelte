@@ -1,7 +1,6 @@
 <script>
 	import { page } from '$app/stores'
 	export let data
-	$: open = false
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
@@ -21,7 +20,7 @@
 				{#if snippet}
 					<p>{snippet}</p>
 				{/if}
-				<img src={ogImage} alt={title} loading="lazy" />
+				<img src={ogImage.url} alt={ogImage.alt} loading="lazy" />
 			</li>
 		{/each}
 	</ul>
