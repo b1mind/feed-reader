@@ -12,6 +12,8 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 import xml2js from 'xml2js'
 
 import { slugify, keepOnlyLetters } from '$lib/utils'
+import { SqlStorage } from '$lib/utils/SqlStorage'
+import { sessionStorage } from '$lib/server/auth'
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ locals, url, fetch }) {
@@ -48,6 +50,7 @@ async function addList({ locals, request }) {
 	let listName = slugify(formData.get('listName'))
 	const xmlString = formData.get('xmlString')
 
+	// const sessionStorage = new SqlStorage('session.db')
 	const webId = new URL(locals.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/${listName}`
 	let rssDataSet = createSolidDataset()
@@ -91,7 +94,10 @@ async function addList({ locals, request }) {
 			})
 		})
 
-		const session = await getSessionFromStorage(locals.session.id)
+		const session = await getSessionFromStorage(
+			locals.session.id,
+			sessionStorage,
+		)
 		console.log(session)
 		await saveSolidDatasetAt(listUrl, rssDataSet, { fetch: session.fetch })
 		console.log('success')
@@ -119,7 +125,7 @@ async function addList({ locals, request }) {
 
 	rssDataSet = setThing(rssDataSet, rssThing)
 
-	const session = await getSessionFromStorage(locals.session.id)
+	const session = await getSessionFromStorage(locals.session.id, sessionStorage)
 	await saveSolidDatasetAt(`${listUrl}`, rssDataSet, {
 		fetch: session.fetch,
 	})

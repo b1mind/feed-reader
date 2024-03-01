@@ -1,4 +1,5 @@
 import { dev } from '$app/environment'
+import { SqlStorage } from '../../utils/SqlStorage'
 
 import { Lucia, TimeSpan } from 'lucia'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
@@ -23,6 +24,7 @@ export const lucia = new Lucia(adapter, {
 	sessionExpiresIn: new TimeSpan(2, 'd'), // 2 days
 })
 
+export const sessionStorage = new SqlStorage('session.db')
 // declare module 'lucia' {
 // 	interface Register {
 // 		Lucia: typeof lucia
