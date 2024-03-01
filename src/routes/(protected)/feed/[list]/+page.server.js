@@ -43,7 +43,7 @@ export async function load({ parent, fetch, setHeaders, url }) {
 
 	const feedStream = Promise.all(
 		randomUrls.map((url) =>
-			fetch(`/api/feed?xml=${url}&limit=25`).then((response) =>
+			fetch(`/api/feed?xml=${url}&limit=99`).then((response) =>
 				response.json(),
 			),
 		),

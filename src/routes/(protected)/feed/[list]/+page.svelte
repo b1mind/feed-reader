@@ -1,17 +1,40 @@
 <script>
 	import { page } from '$app/stores'
+	import { actionLocalStorage } from '$lib/utils'
+	import { afterUpdate } from 'svelte'
 	export let data
+
+	let lastSeen = ''
+
+	afterUpdate(() => {
+		let hasSeenJson = localStorage.getItem('hasSeen')
+		if (!hasSeenJson) return
+		lastSeen = JSON.parse(hasSeenJson)
+	})
+
+	function saveSeen(e, title) {
+		e.target.closest('li').classList.add('seen')
+		actionLocalStorage('save', 'hasSeen', title, false)
+	}
+
+	function hideSeen() {
+		const allSeen = document.querySelectorAll('.seen')
+		for (const post of allSeen) {
+			post.classList.toggle('hidden')
+		}
+	}
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
+<button type="button" on:click={hideSeen}> hideSeen</button>
 
 {#await data.feedStream}
 	loading....
 {:then stream}
 	<ul>
 		{#each stream as { title, link, snippet, published, ogImage, feedTitle }}
-			<li>
-				<a href={link}>
+			<li class:seen={lastSeen.includes(title)}>
+				<a href={link} on:click={(e) => saveSeen(e, title)}>
 					{title}
 				</a>
 				<time>{published}</time>
@@ -35,9 +58,8 @@
 		list-style: none;
 	}
 
-	/* not working? */
-	li:has(a:visited) {
-		background: blue;
+	.seen {
+		color: red;
 	}
 
 	li {
