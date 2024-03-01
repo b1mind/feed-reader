@@ -89,12 +89,17 @@ export async function GET({ url, setHeaders }) {
 					// }
 
 					const imgTag = item['content:encoded'].match(
-						/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
+						/<img[^>]*src="([^"]*)"[^>]*>/i,
+						// /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
 					)
 					if (imgTag && imgTag[1]) {
-						images.push({ url: cleanUrl(imgTag[1], xmlURL), alt: imgTag[2] })
+						images.push({
+							url: cleanUrl(imgTag[1], xmlURL),
+							alt: imgTag[2] || '',
+						})
 					}
 				} else {
+					images.push({ url: '', alt: '' })
 					// const img = await getMetaImage(item.link)
 					// images.push(cleanUrl(img, xmlURL)) //fetch for each post..oof
 				}
