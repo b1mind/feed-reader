@@ -1,7 +1,7 @@
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 import { lucia } from '$lib/server/auth'
 // import { FileStorage } from '$lib/utils/FileStorage'
-import { SqlStorage } from '$lib/utils/SqlStorage'
+import { sessionStorage } from '$lib/server/auth'
 
 export async function handle({ event, resolve }) {
 	//remove auth for api routes?
@@ -11,7 +11,6 @@ export async function handle({ event, resolve }) {
 
 	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
 	if (event.route.id === '/') {
-		const sessionStorage = new SqlStorage('session.db')
 		const allSessions = await getSessionIdFromStorageAll(sessionStorage)
 		event.locals.allSessions = allSessions
 		console.log('allSessions', allSessions)

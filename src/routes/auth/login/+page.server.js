@@ -4,8 +4,7 @@ import { assets } from '$app/paths'
 import { lucia } from '$lib/server/auth'
 import { Session } from '@inrupt/solid-client-authn-node'
 // import { FileStorage } from '$lib/utils/FileStorage'
-import { SqlStorage } from '$lib/utils/SqlStorage'
-
+import { sessionStorage } from '$lib/server/auth'
 //do we even need a load? can this page be a +server?
 // export async function load({ locals, url, cookies }) {}
 
@@ -17,7 +16,6 @@ export const actions = {
 		let redirectUrl = ''
 
 		// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
-		const sessionStorage = new SqlStorage('session.db')
 		const solidSession = new Session({ storage: sessionStorage })
 
 		// const solidSession = new Session()

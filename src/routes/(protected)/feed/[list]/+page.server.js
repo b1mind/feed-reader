@@ -27,7 +27,7 @@ import {
 } from '@inrupt/solid-client'
 // import { Blob } from 'buffer'
 import { schema, dc, rdf } from 'rdf-namespaces'
-import { SqlStorage } from '$lib/utils/SqlStorage'
+import { sessionStorage } from '$lib/server/auth'
 //need to figure out if I need both or can just use namespaces
 // console.log(dc)
 // console.log(XSD)
@@ -80,7 +80,6 @@ async function add({ locals, request, params }) {
 	let rssThing
 
 	try {
-		const sessionStorage = new SqlStorage('session.db')
 		const session = await getSessionFromStorage(
 			locals.session.id,
 			sessionStorage,

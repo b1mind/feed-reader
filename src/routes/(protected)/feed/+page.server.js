@@ -12,7 +12,6 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 import xml2js from 'xml2js'
 
 import { slugify, keepOnlyLetters } from '$lib/utils'
-import { SqlStorage } from '$lib/utils/SqlStorage'
 import { sessionStorage } from '$lib/server/auth'
 
 /** @type {import('./$types').PageLoad} */
@@ -50,7 +49,6 @@ async function addList({ locals, request }) {
 	let listName = slugify(formData.get('listName'))
 	const xmlString = formData.get('xmlString')
 
-	// const sessionStorage = new SqlStorage('session.db')
 	const webId = new URL(locals.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/${listName}`
 	let rssDataSet = createSolidDataset()
