@@ -12,11 +12,13 @@
 
 	//use this logic to animate some how in a {#if} or {#key} block
 	let loading = false
-	beforeNavigate(() => {
-		loading = true
+	beforeNavigate((e) => {
+		if (e.from.url.origin === e.to.url.origin) {
+			loading = true
+		}
 	})
 
-	afterNavigate(() => {
+	afterNavigate((e) => {
 		loading = false
 	})
 </script>
