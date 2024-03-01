@@ -1,5 +1,9 @@
 import { redirect } from '@sveltejs/kit'
-import { getRandomItems } from '$lib/utils/index.js'
+import {
+	flattenItemsIntoObjects,
+	compareDates,
+	getRandomItems,
+} from '$lib/utils'
 
 // import rdfExt from 'rdf-ext'
 import $rdf from 'rdflib'
@@ -23,15 +27,19 @@ import {
 } from '@inrupt/solid-client'
 // import { Blob } from 'buffer'
 import { schema, dc, rdf } from 'rdf-namespaces'
+import { SqlStorage } from '$lib/utils/SqlStorage'
 //need to figure out if I need both or can just use namespaces
 // console.log(dc)
 // console.log(XSD)
 // console.log(rdf)
 
-export async function load({ parent, fetch, setHeaders }) {
+export async function load({ parent, fetch, setHeaders, url }) {
 	const feeds = await parent()
 	const urls = feeds.rssList.map((obj) => obj.href)
-	const randomUrls = getRandomItems(urls, 5)
+	const feedLimit = urls.length < 5 ? urls.length : 5
+	const randomUrls = getRandomItems(urls, feedLimit)
+	const sort = url.searchParams.get('sort')
+	const sortMethod = sort === 'newest' ? false : () => Math.random() - 0.5
 
 	const feedStream = Promise.all(
 		randomUrls.map((url) =>
@@ -40,7 +48,12 @@ export async function load({ parent, fetch, setHeaders }) {
 			),
 		),
 	)
-		.then((responses) => responses)
+		.then((responses) => {
+			const sortedStream = flattenItemsIntoObjects(responses).sort(
+				sortMethod ? sortMethod : compareDates,
+			)
+			return sortedStream
+		})
 		.catch((error) => {
 			// Handle any errors
 			console.error('Error fetching data:', error)
@@ -67,7 +80,11 @@ async function add({ locals, request, params }) {
 	let rssThing
 
 	try {
-		const session = await getSessionFromStorage(locals.session.id)
+		const sessionStorage = new SqlStorage('session.db')
+		const session = await getSessionFromStorage(
+			locals.session.id,
+			sessionStorage,
+		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = buildThing(createThing({ name: name }))

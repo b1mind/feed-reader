@@ -1,18 +1,15 @@
 <script>
-	import { flattenItemsIntoObjects, compareDates } from '$lib/utils'
-
+	import { page } from '$app/stores'
 	export let data
 </script>
+
+<a href="{$page.url.pathname}?sort=newest">newest</a>
 
 {#await data.feedStream}
 	loading....
 {:then stream}
-	{@const sortedStream = flattenItemsIntoObjects(stream).sort(
-		() => Math.random() - 0.5,
-	)}
-
 	<ul>
-		{#each sortedStream as { title, link, snippet, published, ogImage, feedTitle }}
+		{#each stream as { title, link, snippet, published, ogImage, feedTitle }}
 			<li>
 				<a href={link}>
 					{title}

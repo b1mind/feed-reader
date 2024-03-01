@@ -30,14 +30,32 @@ export async function GET({ url, setHeaders }) {
 	const limit = url.searchParams.get('limit')
 	const parser = new Parser()
 
+	//fixme this is insane right?
+	// async function getMetaImage(link) {
+	// 	const options = { url: link }
+	// 	const meta = await ogs(options)
+	// 		.catch((err) => {
+	// 			console.error(err)
+	// 			return null
+	// 		})
+	// 		.then((data) => {
+	// 			if (data) {
+	// 				const img = data.result.ogImage ? data.result.ogImage[0].url : ''
+	// 				return img
+	// 			}
+	// 		})
+	// 	return meta
+	// }
+
 	//order items in the fetch/parser like https://benmyers.dev/blog/eleventy-blogroll/
 	const data = await parser
 		.parseURL(xmlURL)
 		.catch((err) => {
 			console.error(err)
+			//fixme better err needed
 			return { feed: 'none', items: 'none', images: 'none' }
 		})
-		.then((feed) => {
+		.then(async (feed) => {
 			if (!feed || !feed.items || !feed.items.length) {
 				return null
 			}
@@ -55,6 +73,22 @@ export async function GET({ url, setHeaders }) {
 					item['content:encoded'] &&
 					item['content:encoded'].includes('<img')
 				) {
+					//note not really working but can get more images maybe
+					// const srcValues = []
+					// const regex = /<img[^>]*src="([^"]*\.(png|jpg|webp|svg|jpeg))"[^>]*>/g
+					// let match
+					// while ((match = regex.exec(item['content:encoded'])) !== null) {
+					// 	srcValues.push(match[1])
+					// }
+
+					// if (srcValues.length > 1) {
+					// 	console.log(srcValues)
+					// 	images.push(cleanUrl(srcValues[1], xmlURL))
+					// } else if (srcValues.length > 0) {
+					// 	console.log(srcValues)
+					// 	images.push(cleanUrl(srcValues[0], xmlURL))
+					// }
+
 					const imgTag = item['content:encoded'].match(
 						/<img[^>]*src="([^"]*)"[^>]*>/i,
 					)
@@ -62,7 +96,8 @@ export async function GET({ url, setHeaders }) {
 						images.push(cleanUrl(imgTag[1], xmlURL))
 					}
 				} else {
-					//find away to return meta:ogImage if no img in content
+					// const img = await getMetaImage(item.link)
+					// images.push(cleanUrl(img, xmlURL)) //fetch for each post..oof
 				}
 			}
 
@@ -74,18 +109,6 @@ export async function GET({ url, setHeaders }) {
 	for (const [i, item] of data.items.entries()) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
 		const content = item.contentSnippet ? item.contentSnippet : ''
-
-		//fixme faster Images...
-		// const options = { url: item.link }
-		// const meta = await ogs(options)
-		// 	.catch((err) => {
-		// 		console.error(err)
-		// 		return null
-		// 	})
-		// 	.then((data) => {
-		// 		if (data) return data.result
-		// 	})
-		const meta = ''
 
 		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
 			year: 'numeric',
@@ -111,7 +134,7 @@ export async function GET({ url, setHeaders }) {
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
 		// 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
-		'Cache-Control': 'public, max-age=6000',
+		'Cache-Control': 'public, s-maxage=600, max-age=6000',
 	})
 
 	return json({
