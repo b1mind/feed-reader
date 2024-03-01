@@ -8,8 +8,6 @@ export async function load({ locals, cookies, url }) {
 	// const session = await getSessionFromStorage(sessionId)
 
 	return {
-		session: locals.session?.data,
-		// allSessions: locals?.allSessions,
 		info: locals?.user,
 	}
 }

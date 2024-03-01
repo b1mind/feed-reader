@@ -1,7 +1,7 @@
 import { error, json } from '@sveltejs/kit'
 
 import Parser from 'rss-parser'
-import ogs from 'open-graph-scraper'
+// import ogs from 'open-graph-scraper'
 
 const cleanUrl = function (link, origin) {
 	const isUrl = link.includes('http')
@@ -64,7 +64,6 @@ export async function GET({ url, setHeaders }) {
 				.sort(sortByDateDescending)
 				.slice(0, limit)
 
-			//note faster images but not everyone has <img> in content
 			let images = []
 
 			//todo refactor this ugly shit
@@ -91,11 +90,9 @@ export async function GET({ url, setHeaders }) {
 
 					const imgTag = item['content:encoded'].match(
 						/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
-						// /<img[^>]*src="([^"]*)"[^>]*>/i,
 					)
 					if (imgTag && imgTag[1]) {
 						images.push({ url: cleanUrl(imgTag[1], xmlURL), alt: imgTag[2] })
-						// images.push(cleanUrl(imgTag[1], xmlURL))
 					}
 				} else {
 					// const img = await getMetaImage(item.link)
@@ -110,7 +107,6 @@ export async function GET({ url, setHeaders }) {
 
 	for (const [i, item] of data.items.entries()) {
 		const snippet = item.contentSnippet ? shorten(item.contentSnippet, 300) : ''
-		const content = item.contentSnippet ? item.contentSnippet : ''
 
 		const published = new Date(item?.pubDate).toLocaleDateString('en-US', {
 			year: 'numeric',
@@ -123,10 +119,8 @@ export async function GET({ url, setHeaders }) {
 			link: item.link,
 			categories: item.categories,
 			ogImage: data.images[i] || '',
-			// ogImage: meta?.ogImage ? meta.ogImage[0].url : '',
 			published,
 			snippet,
-			content,
 		}
 
 		items.push(newItem)
