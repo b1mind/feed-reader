@@ -1,5 +1,5 @@
 import { dev } from '$app/environment'
-import { SqlStorage } from '../../utils/SqlStorage'
+import { SqlStorage } from '../db/SqlStorage'
 
 import { Lucia, TimeSpan } from 'lucia'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
