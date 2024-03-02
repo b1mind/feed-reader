@@ -25,7 +25,7 @@ const ns = solidNamespace(rdflib)
 // 	)
 // }
 
-export async function load({ locals }) {
+export async function load({ locals, fetch }) {
 	//fixme auth fetch still takes forever...
 	// console.time('rdf getSesh')
 	// const session = await getSessionFromStorage(locals.session.id, sessionStorage)
@@ -46,38 +46,6 @@ export async function load({ locals }) {
 	const privateFolder = `${userUrl.origin}/private`
 	const channel = store.sym(`${publicFolder}socialFeed`)
 	const feedFolder = store.sym(`${publicFolder}feedReader/my-feeds`)
-
-	const queryString = `
- PREFIX foaf: <http://xmlns.com/foaf/0.1/>
- SELECT ?friend
- WHERE {
-    <${userUrl.origin}/profile/card> foaf:knows ?friend .
- }
-`
-	console.log(`${userUrl.origin}/profile`)
-	console.log(ns.rss())
-
-	function executeQuery(queryString) {
-		return new Promise((resolve, reject) => {
-			const query = rdflib.SPARQLToQuery(queryString, false, store)
-			const results = store.query(query, resolve, null, reject)
-		})
-	}
-
-	executeQuery(queryString)
-		.then((results) => {
-			if (results.length > 0) {
-				console.log('The Pod has friends.')
-				results.forEach((result) => {
-					console.log('Friend:', result.friend.value)
-				})
-			} else {
-				console.log('The Pod does not have any friends.')
-			}
-		})
-		.catch((error) => {
-			console.error('Error executing SPARQL query:', error)
-		})
 
 	// Process the results
 	// for (let result of results) {

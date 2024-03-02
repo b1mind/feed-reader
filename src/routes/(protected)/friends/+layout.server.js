@@ -7,20 +7,18 @@ import {
 	getUrlAll,
 	getStringNoLocale,
 	isContainer,
-	addUrl,
 } from '@inrupt/solid-client'
+
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 export async function load({ locals }) {
-	let friends = []
 	const webId = locals.user.webId
 
 	try {
 		const profileDataSet = await getSolidDataset(`${webId}`)
 		const profileThing = getThing(profileDataSet, webId)
 		const contacts = getUrlAll(profileThing, FOAF.knows)
-		console.log(contacts)
 
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)

@@ -1,3 +1,14 @@
+import {
+	getSolidDataset,
+	getThing,
+	getThingAll,
+	getUrlAll,
+	getStringNoLocale,
+	isContainer,
+	addUrl,
+} from '@inrupt/solid-client'
+import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
+
 export async function load({}) {
 	//load lists
 	return { test: 'test load' }
@@ -16,6 +27,8 @@ async function addFriend({ locals, request }) {
 	let profile = getThing(myDataSet, webId)
 
 	profile = addUrl(profile, FOAF.knows, friendWebId)
+	const contacts = getUrlAll(profile, FOAF.knows)
+	console.log(contacts)
 	//todo actually add to back to pod
 }
 
