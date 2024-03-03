@@ -1,10 +1,10 @@
 <script>
 	import { page } from '$app/stores'
+	import { safeSpace } from '$lib/utils'
 	import Card from '$lib/components/Card.svelte'
 	import SeenButton from '$lib/components/SeenButton.svelte'
 
 	export let data
-	console.log($page)
 </script>
 
 <hgroup>
@@ -13,7 +13,7 @@
 </hgroup>
 
 <SeenButton></SeenButton>
-<a href="/feed/{$page.url.search}">Add Feed</a>
+<a href="/feed/{$page.url.search}&title={data.rss.title}">Add Feed</a>
 
 <ul>
 	{#each data.rss.items as post}

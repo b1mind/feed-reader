@@ -19,12 +19,7 @@ export async function load({ locals, url, fetch }) {
 	const webId = locals.user.webId
 	const urlWebId = new URL(webId)
 	const xml = url.searchParams.get('xml')
-	let data
-
-	if (xml !== null) {
-		const res = await fetch(`/api/feed${url.search}`)
-		data = await res.json()
-	}
+	const title = url.searchParams.get('title')
 
 	try {
 		const listDataSet = await getSolidDataset(
@@ -36,7 +31,7 @@ export async function load({ locals, url, fetch }) {
 		return {
 			lists,
 			xml,
-			title: data?.title,
+			title,
 		}
 	} catch (err) {
 		console.error(err)
