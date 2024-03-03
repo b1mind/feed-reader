@@ -13,7 +13,7 @@ export function flattenItemsIntoObjects(posts) {
 				published: item.published,
 				link: item.link,
 				snippet: item.snippet,
-				ogImage: item.ogImage,
+				media: item.media,
 				feedTitle: post.title,
 			}
 
