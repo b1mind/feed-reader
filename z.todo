@@ -9,7 +9,7 @@ Todo:
 		//https://stackblitz.com/edit/sveltejs-kit-template-default-ddli26?file=src%2Froutes%2F%2Blayout.server.ts
 	☐ make solid-client util helpers (pretty wet get DRY)
 	☐ favicon(s)
-	☐ proper readme and license - contrib, versions etc (start to take this more serious)
+	✔ proper readme and license - contrib etc (start to take this more serious) @done
 	✔ login checks need refactored and improved for logout and per page @done
 	
 Features:
@@ -29,6 +29,7 @@ WishList:
 	☐ last updated or new posts... troublesome
 		//polling, action, service or web work.. don't really know yet. (ideas? open issue)
 	☐ login redirect to last page pass ?last=pagename param (this even needed?)
+	✔ better Readme and updates to versions @done
 	☐ server cache with data change checks for pods and rss
 	✔ import OPML or another XML list of feeds @done
 	✔ fetch api and away to store list/data unless changed? @done
