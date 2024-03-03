@@ -1,27 +1,37 @@
 Todo:
-	☐ find out best schema if not OPML/XSD to save lists in pod
-	✔ login checks need refactored and improved for logout and per page @done
-	☐ give some better styles for prototype (people like shiny things)
-	☐ favicon(s)
 	☐ home page needs a introduction to SolidPods and how to use.
+	☐ find out best schema if not OPML/XSD to save lists in pod
+		//can I just do rdf:xml? as a .ttl or container
+	☐ delete lists recursively or find out if .ttl would be faster/easier
+	☐ give some better styles for prototype (people like shiny things)
 	☐ update styles for error.html and +error.svelte
 	☐ localStorage for remembering Pod Provider and other settings (persitant$store with server;)
 		//https://stackblitz.com/edit/sveltejs-kit-template-default-ddli26?file=src%2Froutes%2F%2Blayout.server.ts
-	☐ make request util helpers (pretty wet get DRY)
+	☐ make solid-client util helpers (pretty wet get DRY)
+	☐ favicon(s)
+	☐ proper readme and license - contrib, versions etc (start to take this more serious)
+	✔ login checks need refactored and improved for logout and per page @done
 	
 Features:
 	☐ suggested me/rssPod if no friends with feeds
-	☐ add a friend via webId
 	☐ date added, and last updated props
-	✔ refactor endpoint to handle multiple lists @done
 	☐ better client enhancements i.e. transitions (logic in .svelte?)
-	☐ server cache with data change checks for pods and rss
+
+	✔ better media!!!! finally (still don't wanna scrap ogImage but left code in) @done
+	✔ add from friends lists @done
+	✔ friend of friends (needs icon) @done
+	✔ add a friend via webId @done
+	✔ refactor endpoint to handle multiple lists @done
+	✔ cache headers set for now (keep redis on the look) @done
 
 WishList:
 	make dreams come true
-	✔ import OPML or another XML list of feeds @done
-	☐ fetch api and away to store list/data unless changed?
+	☐ last updated or new posts... troublesome
+		//polling, action, service or web work.. don't really know yet. (ideas? open issue)
 	☐ login redirect to last page pass ?last=pagename param (this even needed?)
+	☐ server cache with data change checks for pods and rss
+	✔ import OPML or another XML list of feeds @done
+	✔ fetch api and away to store list/data unless changed? @done
 
 Archive:
 	✔ being able to pick a Pod provider @done @project(Todo)
