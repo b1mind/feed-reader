@@ -82,6 +82,9 @@ export async function GET({ url, setHeaders }) {
 							alt: imgTag[2] || '',
 						})
 					}
+				} else if (item['enclosure']) {
+					const video = item['enclosure']
+					media.push({ url: video.url, alt: '', type: video.type })
 				} else if (item.content) {
 					const hasImg = item.content.includes('<img')
 					if (hasImg) {
@@ -94,9 +97,6 @@ export async function GET({ url, setHeaders }) {
 					} else {
 						media.push({ url: '', alt: '' })
 					}
-				} else if (item['enclosure']) {
-					const video = item['enclosure']
-					media.push({ url: video.url, alt: '', type: video.type })
 				}
 				// else if (
 				// 	item['description'].includes('<![CDATA[') &&
