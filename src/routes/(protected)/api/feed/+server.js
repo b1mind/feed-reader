@@ -82,12 +82,16 @@ export async function GET({ url, setHeaders }) {
 							alt: imgTag[2] || '',
 						})
 					}
-				} else if (item?.content.includes('<img')) {
-					const imgTag = item.content.match(matchImg)
-					media.push({
-						url: cleanUrl(imgTag[1], xmlURL),
-						alt: imgTag[2] || '',
-					})
+				} else if (item.content) {
+					const hasImg = item.content.includes('<img')
+					if (hasImg) {
+						const imgTag = item.content.match(matchImg)
+
+						media.push({
+							url: cleanUrl(imgTag[1], xmlURL),
+							alt: imgTag[2] || '',
+						})
+					}
 				} else if (item['enclosure']) {
 					const video = item['enclosure']
 					media.push({ url: video.url, alt: '', type: video.type })

@@ -49,11 +49,12 @@
 		{:else if media.url}
 			<img src={media.url} alt={media.alt} loading="lazy" />
 		{:else}
-			<img
+			no img
+			<!-- <img
 				src="https://picsum.photos/500/350?random={Math.random()}"
 				loading="lazy"
 				alt="random from picsum photos"
-			/>
+			/> -->
 		{/if}
 	</div>
 	<footer>
