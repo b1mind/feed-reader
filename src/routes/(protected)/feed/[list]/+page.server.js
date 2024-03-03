@@ -60,7 +60,7 @@ export async function load({ parent, fetch, setHeaders, url }) {
 		})
 
 	setHeaders({
-		'Cache-Control': 'private, s-maxage=600, max-age=600',
+		'Cache-Control': 'private, s-maxage=3000, max-age=6000',
 	})
 
 	return {

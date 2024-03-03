@@ -1,17 +1,8 @@
 <script>
 	import Card from '$lib/components/Card.svelte'
+	import SeenButton from '$lib/components/SeenButton.svelte'
 
 	export let data
-
-	$: hidden = false
-
-	function hideSeen() {
-		const allSeen = document.querySelectorAll('.seen')
-		for (const post of allSeen) {
-			post.classList.toggle('hidden')
-		}
-		hidden = !hidden
-	}
 </script>
 
 <hgroup>
@@ -19,9 +10,7 @@
 	<p>{data.rss?.description || 'no description'}</p>
 </hgroup>
 
-<button type="button" on:click={hideSeen}>
-	{hidden ? 'showSeen' : 'hideSeen'}
-</button>
+<SeenButton></SeenButton>
 
 <ul>
 	{#each data.rss.items as post}

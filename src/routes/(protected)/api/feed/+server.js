@@ -72,22 +72,6 @@ export async function GET({ url, setHeaders }) {
 					item['content:encoded'] &&
 					item['content:encoded'].includes('<img')
 				) {
-					//note not really working but can get more images maybe
-					// const srcValues = []
-					// const regex = /<img[^>]*src="([^"]*\.(png|jpg|webp|svg|jpeg))"[^>]*>/g
-					// let match
-					// while ((match = regex.exec(item['content:encoded'])) !== null) {
-					// 	srcValues.push(match[1])
-					// }
-
-					// if (srcValues.length > 1) {
-					// 	console.log(srcValues)
-					// 	images.push(cleanUrl(srcValues[1], xmlURL))
-					// } else if (srcValues.length > 0) {
-					// 	console.log(srcValues)
-					// 	images.push(cleanUrl(srcValues[0], xmlURL))
-					// }
-
 					const imgTag = item['content:encoded'].match(
 						/<img[^>]*src="([^"]*)"[^>]*>/i,
 						// /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,

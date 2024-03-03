@@ -1,24 +1,13 @@
 <script>
 	import { page } from '$app/stores'
 	import Card from '$lib/components/Card.svelte'
+	import SeenButton from '$lib/components/SeenButton.svelte'
 
 	export let data
-
-	let hidden = false
-
-	function hideSeen() {
-		const allSeen = document.querySelectorAll('.seen')
-		for (const post of allSeen) {
-			post.classList.toggle('hidden')
-		}
-		hidden = !hidden
-	}
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
-<button type="button" on:click={hideSeen}>
-	{hidden ? 'showSeen' : 'hideSeen'}
-</button>
+<SeenButton></SeenButton>
 
 {#await data.feedStream}
 	loading....
