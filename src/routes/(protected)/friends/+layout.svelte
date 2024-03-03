@@ -13,7 +13,9 @@
 			<ul>
 				{#each friends as friend}
 					<li>
-						<a href={friend.webId}> {friend.nick || friend.name} </a>
+						<a href="/friends/{friend.nick}?id={friend.userId}">
+							{friend.nick || friend.name}
+						</a>
 						<!-- todo need away to pick list -->
 						<!-- <ul>
 							{#each friend.rssList as list}
