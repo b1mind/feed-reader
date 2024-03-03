@@ -28,7 +28,7 @@
 		{/if}
 	{/await}
 
-	<form action="/friends?/addFriend" method="POST">
+	<form action="/follows?/addFriend" method="POST">
 		<label for="friend">
 			Add full webId
 			<input

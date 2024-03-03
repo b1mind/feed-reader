@@ -8,7 +8,7 @@
 	{#each data.rssList as list}
 		<li>
 			<a
-				href="/friends/{$page.params.friend}/{$page.params.list}/{slugify(
+				href="/follows/{$page.params.friend}/{$page.params.list}/{slugify(
 					list.name,
 				)}/?xml={list.href}">{list.name}</a
 			>
