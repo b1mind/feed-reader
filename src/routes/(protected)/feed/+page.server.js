@@ -19,17 +19,12 @@ export async function load({ locals, url, fetch }) {
 	const webId = locals.user.webId
 	const urlWebId = new URL(webId)
 	const xml = url.searchParams.get('xml')
-	const res = await fetch(`/api/feed${url.search}`)
-	const data = await res.json()
-	const title = data.title
+	let data
 
-	// const sessionId = locals.session.id
-	// console.time('profile')
-	// const session = await getSessionFromStorage(sessionId)
-	// console.log(session)
-	// console.timeEnd('profile')
-
-	if (!webId) return json({ message: 'not logged in' })
+	if (xml !== null) {
+		const res = await fetch(`/api/feed${url.search}`)
+		data = await res.json()
+	}
 
 	try {
 		const listDataSet = await getSolidDataset(
@@ -41,9 +36,10 @@ export async function load({ locals, url, fetch }) {
 		return {
 			lists,
 			xml,
-			title,
+			title: data?.title,
 		}
-	} catch {
+	} catch (err) {
+		console.error(err)
 		return { lists: null }
 	}
 }
