@@ -4,7 +4,11 @@
 	console.log(data)
 </script>
 
-{#each data.lists as list}
-	{@const listName = list.split('/').pop().split('.').shift()}
-	<a href="{data.friend}/{listName}?id={list}">{listName}</a>
-{/each}
+<ul>
+	{#each data.lists as list}
+		{@const listName = list.split('/').pop().split('.').shift()}
+		<li>
+			<a href="{data.friend}/{listName}?id={list}">{listName}</a>
+		</li>
+	{/each}
+</ul>
