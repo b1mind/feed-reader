@@ -89,26 +89,20 @@ export async function GET({ url, setHeaders }) {
 					const hasImg = item.content.includes('<img')
 					if (hasImg) {
 						const imgTag = item.content.match(matchImg)
-
-						media.push({
-							url: cleanUrl(imgTag[1], xmlURL),
-							alt: imgTag[2] || '',
-						})
+						if (imgTag) {
+							media.push({
+								url: cleanUrl(imgTag[1], xmlURL),
+								alt: imgTag[2] || '',
+							})
+						}
 					} else {
 						media.push({ url: '', alt: '' })
 					}
-				}
-				// else if (
-				// 	item['description'].includes('<![CDATA[') &&
-				// 	item['description'].includes('<img')
-				// ) {
-				// }
-				else {
+				} else {
 					media.push({ url: '', alt: '' })
-					// const img = await getMetaImage(item.link)
-					// images.push(cleanUrl(img, xmlURL)) //fetch for each post..oof
 				}
 			}
+			//I regret nothing and everthing..
 
 			return { feed, items: orderedItems, media }
 		})
