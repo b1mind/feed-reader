@@ -1,6 +1,5 @@
 import { getSessionIdFromStorageAll } from '@inrupt/solid-client-authn-node'
 import { lucia } from '$lib/server/auth'
-// import { FileStorage } from '$lib/utils/FileStorage'
 import { sessionStorage } from '$lib/server/auth'
 
 export async function handle({ event, resolve }) {
@@ -9,7 +8,6 @@ export async function handle({ event, resolve }) {
 		return resolve(event)
 	}
 
-	// const sessionStorage = await FileStorage.atPath(`sessionStorage.json`)
 	if (event.route.id === '/') {
 		const allSessions = await getSessionIdFromStorageAll(sessionStorage)
 		event.locals.allSessions = allSessions
@@ -28,7 +26,7 @@ export async function handle({ event, resolve }) {
 	event.locals.sessionId = sessionId
 
 	const { session, user } = await lucia.validateSession(sessionId)
-	console.log('lucia', session, user)
+	// console.log('lucia', session, user)
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id)
 		// sveltekit types deviates from the de-facto standard

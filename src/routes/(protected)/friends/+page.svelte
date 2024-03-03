@@ -1,8 +1,9 @@
 <script>
-	export let data
+	// export let data
 </script>
 
-{#await data.rssLists}
+what to put here
+<!-- {#await data.rssLists}
 	loading rssLists
 {:then rssLists}
 	{#each rssLists as list}
@@ -10,4 +11,4 @@
 			{list}
 		</p>
 	{/each}
-{/await}
+{/await} -->
