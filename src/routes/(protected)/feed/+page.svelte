@@ -3,20 +3,12 @@
 
 	export let data
 
-	let names = []
-
-	if (data.lists) {
-		data.lists.forEach((list) => {
-			names = [...names, list.split('/').pop().split('.').shift()]
-			// names.push(list.split('/').pop().split('.').shift())
-		})
-	}
-
 	let newListName
 	let feedName
 	let feedUrl
 	let files
 	let xmlString
+	let select
 
 	// function parseTitle(str) {
 	// 	const regex = /<title>(.*?)<\/title>/
@@ -50,10 +42,11 @@
 
 {#if data.lists}
 	<ul>
-		{#each names as name}
+		{#each data.lists as name}
+			{@const splitName = name.split('/').pop().split('.').shift()}
 			<li>
-				<a href="/feed/{name}">
-					{name}
+				<a href="/feed/{splitName}">
+					{splitName}
 				</a>
 			</li>
 		{/each}
@@ -62,61 +55,90 @@
 	no lists, try making one
 {/if}
 
-<form
-	action="/feed?/addList"
-	method="POST"
-	autocomplete="off"
-	enctype="multipart/form-data"
-	use:enhance
->
-	<label for="newListName">
-		New List Name
-		<input
-			type="textarea"
-			bind:value={newListName}
-			name="listName"
-			{required}
-		/>
-	</label>
+{#if data.xml}
+	<form
+		action="/feed/{select}?/add"
+		method="POST"
+		autocomplete="off"
+		use:enhance
+	>
+		<label for="selectList">Select List</label>
+		<select id="selectList" bind:value={select}>
+			{#each data.lists as name}
+				{@const splitName = name.split('/').pop().split('.').shift()}
+				<option value={splitName}>
+					{splitName}
+				</option>
+			{/each}
+		</select>
 
-	<label>
-		Upload OPML
-		<input
-			bind:files
-			on:change={makeXmlString}
-			type="file"
-			id="opml"
-			name="file"
-			accept=".xml, .opml"
-		/>
-	</label>
-	<input type="textarea" hidden value={xmlString || null} name="xmlString" />
+		<label for="feed">
+			Feed Name:
+			<input type="text" name="feed" bind:value={feedName} />
+		</label><br />
+		<label for="url">
+			RSS Url:
+			<input type="text" name="url" value={data.xml} />
+		</label>
+		<button type="submit">add</button>
+	</form>
+{:else}
+	<form
+		action="/feed?/addList"
+		method="POST"
+		autocomplete="off"
+		enctype="multipart/form-data"
+		use:enhance
+	>
+		<label for="newListName">
+			New List Name
+			<input
+				type="textarea"
+				bind:value={newListName}
+				name="listName"
+				{required}
+			/>
+		</label>
 
-	<br />
+		<label>
+			Upload OPML
+			<input
+				bind:files
+				on:change={makeXmlString}
+				type="file"
+				id="opml"
+				name="file"
+				accept=".xml, .opml"
+			/>
+		</label>
+		<input type="textarea" hidden value={xmlString || null} name="xmlString" />
 
-	<label for="feed">
-		Feed Name:
-		<input
-			type="text"
-			name="feed"
-			bind:value={feedName}
-			{required}
-			disabled={!required}
-		/>
-	</label>
-	<label for="url">
-		RSS Url:
-		<input
-			type="text"
-			name="url"
-			bind:value={feedUrl}
-			{required}
-			disabled={!required}
-		/>
-	</label>
+		<br />
 
-	<button type="submit">create</button>
-</form>
+		<label for="feed">
+			Feed Name:
+			<input
+				type="text"
+				name="feed"
+				bind:value={feedName}
+				{required}
+				disabled={!required}
+			/>
+		</label>
+		<label for="url">
+			RSS Url:
+			<input
+				type="text"
+				name="url"
+				bind:value={feedUrl}
+				{required}
+				disabled={!required}
+			/>
+		</label>
+
+		<button type="submit">create</button>
+	</form>
+{/if}
 
 <style lang="scss">
 	label {

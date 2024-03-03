@@ -127,9 +127,13 @@ async function remove({ locals, request, params }) {
 	const listUrl = `${webId.origin}/public/feedReader/${params.list}`
 	let rssDataSet
 	let rssThing
+	console.log(name)
 
 	try {
-		const session = await getSessionFromStorage(locals.session.id)
+		const session = await getSessionFromStorage(
+			locals.session.id,
+			sessionStorage,
+		)
 		rssDataSet = await getSolidDataset(listUrl)
 		// let rssThing = getThing(rssDataSet, `${listUrl}#NewList`)
 		rssThing = getThing(rssDataSet, `${listUrl}#${name}`)
@@ -147,6 +151,7 @@ async function remove({ locals, request, params }) {
 			console.log('no Thing to del')
 			//need a proper return
 		} else {
+			console.log(error)
 			//else something ..
 		}
 	}

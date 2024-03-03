@@ -18,6 +18,7 @@ import { sessionStorage } from '$lib/server/auth'
 export async function load({ locals, url, fetch }) {
 	const webId = locals.user.webId
 	const urlWebId = new URL(webId)
+	const xml = url.searchParams.get('xml')
 
 	// const sessionId = locals.session.id
 	// console.time('profile')
@@ -36,6 +37,7 @@ export async function load({ locals, url, fetch }) {
 
 		return {
 			lists,
+			xml,
 		}
 	} catch {
 		return { lists: null }

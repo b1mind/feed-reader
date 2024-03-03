@@ -3,7 +3,7 @@
 	import { flip } from 'svelte/animate'
 	import { enhance } from '$app/forms'
 
-	import { slugify } from '$lib/utils'
+	import { slugify, safeSpace } from '$lib/utils'
 
 	export let data
 
@@ -11,12 +11,13 @@
 	let url = ''
 	$: open = false
 
-	let opmlList = ``
-	data.rssList.forEach(({ name, href }) => {
-		opmlList += `<outline text="${name}" type="rss" xmlUrl="${href}"/>`
-	})
+	function saveFile() {
+		let opmlList = ``
+		data.rssList.forEach(({ name, href }) => {
+			opmlList += `<outline text="${name}" type="rss" xmlUrl="${href}"/>`
+		})
 
-	const opml = `
+		const opml = `
 		<?xml version="1.0"?>
 		<opml version="2.0">
 		  <head>
@@ -30,7 +31,6 @@
 		</opml>
 		`
 
-	function saveFile() {
 		const blob = new Blob([opml], { type: 'text/plain;charset=utf-8' })
 		const url = URL.createObjectURL(blob)
 		const link = document.createElement('a')
@@ -55,7 +55,7 @@
 						{name}
 					</a>
 					<form method="POST" use:enhance>
-						<input type="hidden" name="name" value={name} />
+						<input type="hidden" name="name" value={safeSpace(name)} />
 						<input type="hidden" name="url" value={href} />
 
 						<button formaction="/feed/{data.listName}?/edit" title="edit">
