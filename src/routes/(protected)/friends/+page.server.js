@@ -17,30 +17,22 @@ import { schema, dc, rdf } from 'rdf-namespaces'
 import { sessionStorage } from '$lib/server/auth'
 
 export async function load({ parent }) {
-	const parentData = await parent()
-	const friendLists = await parentData.friends
-	let rssLists = []
-
-	try {
-		const listsPromise = friendLists.map(async (friend) => {
-			friend = new URL(friend.webId)
-			let listUrl = `${friend.origin}/public/feedReader/`
-
-			const friendListDataSet = await getSolidDataset(listUrl)
-
-			const list = getContainedResourceUrlAll(friendListDataSet)
-			return list
-		})
-		rssLists = Promise.all(listsPromise)
-
-		return { rssLists }
-	} catch (err) {
-		console.error(err)
-	}
-}
-
-async function addList({}) {
-	//add from list
+	// const parentData = await parent()
+	// const friendLists = await parentData.friends
+	// let rssLists = []
+	// try {
+	// 	const listsPromise = friendLists.map(async (friend) => {
+	// 		friend = new URL(friend.webId)
+	// 		let listUrl = `${friend.origin}/public/feedReader/`
+	// 		const friendListDataSet = await getSolidDataset(listUrl)
+	// 		const list = getContainedResourceUrlAll(friendListDataSet)
+	// 		return list
+	// 	})
+	// 	rssLists = Promise.all(listsPromise)
+	// 	return { rssLists }
+	// } catch (err) {
+	// 	console.error(err)
+	// }
 }
 
 async function addFriend({ locals, request }) {

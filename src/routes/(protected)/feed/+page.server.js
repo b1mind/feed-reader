@@ -1,11 +1,16 @@
 import {
 	getContainedResourceUrlAll,
 	getSolidDataset,
+	getResource,
+	getThing,
+	getThingAll,
+	removeThing,
 	createSolidDataset,
 	buildThing,
 	createThing,
 	setThing,
 	saveSolidDatasetAt,
+	deleteSolidDataset,
 } from '@inrupt/solid-client'
 import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
 import { schema, dc, rdf } from 'rdf-namespaces'
@@ -126,4 +131,41 @@ async function addList({ locals, request }) {
 	})
 }
 
-export const actions = { addList }
+async function removeList({ locals, request }) {
+	const formData = await request.formData()
+
+	//need util classes for abstraction
+	const webId = new URL(locals.user.webId)
+	const feedUrl = `${webId.origin}/public/feedReader/`
+	let listUrl = slugify(formData.get('listName'))
+	let rssDataSet
+	let rssThings
+	console.log(listUrl)
+
+	try {
+		const session = await getSessionFromStorage(
+			locals.session.id,
+			sessionStorage,
+		)
+
+		//fixme removing from dataSet/container..
+
+		await deleteSolidDataset(listUrl + '/', {
+			fetch: session.fetch,
+		})
+		//should we return here or let it escape out to the main return?
+		console.log('deleted')
+	} catch (error) {
+		error = error
+		if (typeof error.statusCode === 'number' && error.statusCode === 404) {
+			console.log('no Thing to del')
+			console.error(error)
+			//need a proper return
+		} else {
+			console.log(error)
+			//else something ..
+		}
+	}
+}
+
+export const actions = { addList, removeList }

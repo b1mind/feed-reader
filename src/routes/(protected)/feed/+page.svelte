@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from '$app/forms'
+	import { safeSpace } from '$lib/utils'
 
 	export let data
 
@@ -48,9 +49,13 @@
 	<ul>
 		{#each data.lists as name}
 			<li>
-				<a href="/feed/{splitName(name)}">
-					{splitName(name)}
-				</a>
+				<form action="/feed/?/removeList" method="POST">
+					<a href="/feed/{splitName(name)}">
+						{splitName(name)}
+					</a>
+					<input type="hidden" name="listName" value={name} />
+					<button title="remove"> ❌ </button>
+				</form>
 			</li>
 		{/each}
 	</ul>
