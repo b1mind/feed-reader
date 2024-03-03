@@ -1,11 +1,9 @@
 <script>
-	import { enhance } from '$app/forms'
-
 	export let data
 </script>
 
 <main>
-	<h1>Friends</h1>
+	<h1>Following</h1>
 	{#await data.friends}
 		looking for friends with lists
 	{:then friends}
@@ -13,30 +11,15 @@
 			<ul>
 				{#each friends as friend}
 					<li>
+						{#if friend.img}
+							<img src={friend.img} alt={friend.nick} />
+						{/if}
+
 						<a href="/friends/{friend.nick}?id={friend.userId}">
 							{friend.nick || friend.name}
 						</a>
+
 						{friend.known ? '⭐' : ''}
-						<!-- todo need away to pick list -->
-						<!-- <ul>
-							{#each friend.rssList as list}
-								<li>
-									<a href="/feed/friend/{list.name}?xml={list.href}">
-										{list.name}
-									</a>
-									<form
-										data-loading="false"
-										action="/feed?/add"
-										method="POST"
-										use:enhance
-									>
-										<input type="hidden" name="feed" value={list.name} />
-										<input type="hidden" name="url" value={list.href} />
-										<button type="submit" disabled>➕</button>
-									</form>
-								</li>
-							{/each}
-						</ul> -->
 					</li>
 				{/each}
 			</ul>
@@ -69,11 +52,8 @@
 		color: var(--color);
 	}
 
-	li > form {
-		display: inline-block;
-	}
-
-	[data-loading='false'] > button {
-		color: black;
+	img {
+		width: 32px;
+		aspect-ratio: 1;
 	}
 </style>

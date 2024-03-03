@@ -33,7 +33,7 @@ export async function load({ locals }) {
 				// Check if they are also a friend
 				const knows = getUrlAll(friendThing, FOAF.knows)
 				const known = knows.includes(webId)
-				console.log(knows.includes(webId))
+
 				const img = getUrl(friendThing, VCARD.hasPhoto)
 				const name = getStringNoLocale(friendThing, VCARD.fn)
 				const nick = getStringNoLocale(friendThing, FOAF.nick)

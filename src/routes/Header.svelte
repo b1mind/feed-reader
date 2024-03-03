@@ -13,7 +13,7 @@
 	{:else}
 		<a href="/rdf">rdfTest</a>
 		<a data-sveltekit-preload-data href="/profile">profile</a>
-		<a data-sveltekit-preload-data href="/friends">friends</a>
+		<a data-sveltekit-preload-data href="/follows">follows</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>
 
 		<!-- do I need to enhance the logout? animate some feedback if used -->
