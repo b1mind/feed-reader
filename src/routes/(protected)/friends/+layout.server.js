@@ -3,6 +3,7 @@ import {
 	getSolidDataset,
 	getThing,
 	getThingAll,
+	getProfileAll,
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
@@ -29,11 +30,22 @@ export async function load({ locals }) {
 			if (friendListDataSet) {
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
+				// Check if they are also a friend
+				const knows = getUrlAll(friendThing, FOAF.knows)
+				const known = knows.includes(webId)
+				console.log(knows.includes(webId))
 				const img = getUrl(friendThing, VCARD.hasPhoto)
 				const name = getStringNoLocale(friendThing, VCARD.fn)
 				const nick = getStringNoLocale(friendThing, FOAF.nick)
 
-				return { img, name, nick, webId: contact.href, userId: contact.host }
+				return {
+					img,
+					name,
+					nick,
+					webId: contact.href,
+					userId: contact.host,
+					known,
+				}
 			}
 		})
 

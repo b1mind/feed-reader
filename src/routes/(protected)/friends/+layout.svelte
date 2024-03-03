@@ -16,6 +16,7 @@
 						<a href="/friends/{friend.nick}?id={friend.userId}">
 							{friend.nick || friend.name}
 						</a>
+						is friend: {friend.known}
 						<!-- todo need away to pick list -->
 						<!-- <ul>
 							{#each friend.rssList as list}
