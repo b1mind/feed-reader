@@ -64,32 +64,49 @@ export async function GET({ url, setHeaders }) {
 				.sort(sortByDateDescending)
 				.slice(0, limit)
 
-			let images = []
+			let media = []
+			//todo match alt text for images/media
+			let matchImg = /<img[^>]*src="([^"]*)"[^>]*>/i
+			// /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
 
 			//todo refactor this ugly shit
 			for (let item of orderedItems) {
+				console.log(item)
 				if (
 					item['content:encoded'] &&
 					item['content:encoded'].includes('<img')
 				) {
-					const imgTag = item['content:encoded'].match(
-						/<img[^>]*src="([^"]*)"[^>]*>/i,
-						// /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/i,
-					)
+					const imgTag = item['content:encoded'].match(matchImg)
 					if (imgTag && imgTag[1]) {
-						images.push({
+						media.push({
 							url: cleanUrl(imgTag[1], xmlURL),
 							alt: imgTag[2] || '',
 						})
 					}
-				} else {
-					images.push({ url: '', alt: '' })
+				} else if (item?.content.includes('<img')) {
+					const imgTag = item.content.match(matchImg)
+					media.push({
+						url: cleanUrl(imgTag[1], xmlURL),
+						alt: imgTag[2] || '',
+					})
+				} else if (item['enclosure']) {
+					const video = item['enclosure']
+					media.push({ url: video.url, alt: '', type: video.type })
+				}
+				// else if (
+				// 	item['description'].includes('<![CDATA[') &&
+				// 	item['description'].includes('<img')
+				// ) {
+				// }
+				else {
+					media.push({ url: '', alt: '' })
 					// const img = await getMetaImage(item.link)
 					// images.push(cleanUrl(img, xmlURL)) //fetch for each post..oof
 				}
 			}
+			console.log(media)
 
-			return { feed, items: orderedItems, images }
+			return { feed, items: orderedItems, media }
 		})
 
 	let items = []
@@ -107,7 +124,7 @@ export async function GET({ url, setHeaders }) {
 			title: item.title,
 			link: item.link,
 			categories: item.categories,
-			ogImage: data.images[i] || '',
+			media: data.media[i] || '',
 			published,
 			snippet,
 		}

@@ -21,7 +21,7 @@
 	export let categories = ''
 	export let feedTitle = ''
 	export let snippet = ''
-	export let ogImage = {}
+	export let media = {}
 </script>
 
 <li class:seen={lastSeen.includes(title)}>
@@ -36,8 +36,19 @@
 	{/if}
 
 	<div class="img">
-		{#if ogImage.url}
-			<img src={ogImage.url} alt={ogImage.alt} loading="lazy" />
+		{console.log(media.type)}
+		{#if media.type === 'video/mp4'}
+			<video controles>
+				<source src={media.url} type={media.type} />
+				<track kind="captions" />
+			</video>
+		{:else if media.type === 'audio/mpeg'}
+			<figure>
+				<figcaption>Listen to the {title}:</figcaption>
+				<audio controls src={media.url}></audio>
+			</figure>
+		{:else if media.url}
+			<img src={media.url} alt={media.alt} loading="lazy" />
 		{:else}
 			<img
 				src="https://picsum.photos/500/350?random={Math.random()}"
