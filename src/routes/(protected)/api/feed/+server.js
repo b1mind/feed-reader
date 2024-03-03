@@ -91,6 +91,8 @@ export async function GET({ url, setHeaders }) {
 							url: cleanUrl(imgTag[1], xmlURL),
 							alt: imgTag[2] || '',
 						})
+					} else {
+						media.push({ url: '', alt: '' })
 					}
 				} else if (item['enclosure']) {
 					const video = item['enclosure']
