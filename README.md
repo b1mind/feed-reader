@@ -4,7 +4,7 @@ RSS list sharing + feed reader built with SvelteKit and SolidPods. (very much ju
 
 ## Solid Pods
 
-This app uses Solid Protocol (the real Web3.0) https://solidproject.org and all user data is stored on your pod or minor state in your localStorage.
+This app uses Solid Protocol (the real Web3.0) https://solidproject.org and all user data is stored on your pod.
 
 Solid: Your data, your choice. Advancing Web standards to empower individuals and groups. Web 3.0 Solid Protocol, by Sir Tim Burners Lee
 
@@ -17,6 +17,8 @@ Started as a project that I really wanted but also thought it was a good way to 
 All your follows/lists/feeds are stored where potentially any other app could use them. Friends use a FOAF:schema format and profiles are VCARD that can be used across any other Solid Application or website.
 
 Auth and Sessions are stored on server and in cookies using OAuth/OpenId. You grant permissions to what applications can access and can revoke it at anytime taking your data with you.
+
+There is some minor state that is stored in your browsers localStorage but in future updates it will sync to your pod.
 
 ### Where to get a Pod?
 
