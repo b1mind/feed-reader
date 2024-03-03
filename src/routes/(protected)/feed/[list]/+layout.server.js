@@ -12,15 +12,7 @@ export async function load({ fetch, locals, params }) {
 	let rssList = []
 	let rssThing
 	let rssDataSet
-	// let testDataSet
-	// let testThing
 
-	// by not getting session to read public its way way faster
-	// but right now the hook gets session from cookie every server.js
-	// look into using a api /fetch/ from server.fetch()
-	// const session = await getSessionFromStorage(locals.session.data.sessionId)
-	// const webId = new URL(locals.info.webId)
-	//todo how to store the data.. not .ttl?
 	const webId = new URL(locals.user.webId)
 	let listUrl = `${webId.origin}/public/feedReader/${params.list}`
 
