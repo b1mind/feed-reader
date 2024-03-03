@@ -19,6 +19,9 @@ export async function load({ locals, url, fetch }) {
 	const webId = locals.user.webId
 	const urlWebId = new URL(webId)
 	const xml = url.searchParams.get('xml')
+	const res = await fetch(`/api/feed${url.search}`)
+	const data = await res.json()
+	const title = data.title
 
 	// const sessionId = locals.session.id
 	// console.time('profile')
@@ -38,6 +41,7 @@ export async function load({ locals, url, fetch }) {
 		return {
 			lists,
 			xml,
+			title,
 		}
 	} catch {
 		return { lists: null }

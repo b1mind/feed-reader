@@ -21,6 +21,10 @@
 		return str.split('<title>')[1].split('</title>')[0]
 	}
 
+	function splitName(name) {
+		return name.split('/').pop().split('.').shift()
+	}
+
 	function makeXmlString(e) {
 		if (!files) return
 		const [file] = files
@@ -43,10 +47,9 @@
 {#if data.lists}
 	<ul>
 		{#each data.lists as name}
-			{@const splitName = name.split('/').pop().split('.').shift()}
 			<li>
-				<a href="/feed/{splitName}">
-					{splitName}
+				<a href="/feed/{splitName(name)}">
+					{splitName(name)}
 				</a>
 			</li>
 		{/each}
@@ -62,25 +65,42 @@
 		autocomplete="off"
 		use:enhance
 	>
-		<label for="selectList">Select List</label>
-		<select id="selectList" bind:value={select}>
-			{#each data.lists as name}
-				{@const splitName = name.split('/').pop().split('.').shift()}
-				<option value={splitName}>
-					{splitName}
-				</option>
-			{/each}
-		</select>
-
 		<label for="feed">
 			Feed Name:
-			<input type="text" name="feed" bind:value={feedName} />
-		</label><br />
+			<input type="text" name="feed" bind:value={data.title} {required} />
+		</label>
 		<label for="url">
 			RSS Url:
 			<input type="text" name="url" value={data.xml} />
 		</label>
-		<button type="submit">add</button>
+
+		<label for="selectList">
+			Select List
+
+			<select id="selectList" bind:value={select}>
+				{#each data.lists as name}
+					<option value={splitName(name)}>
+						{splitName(name)}
+					</option>
+				{/each}
+				<option value="addList"> -New List- </option>
+			</select>
+		</label>
+
+		{#if select === 'addList'}
+			<label for="newListName">
+				New List Name
+				<input
+					type="textarea"
+					bind:value={newListName}
+					name="listName"
+					{required}
+				/>
+			</label>
+			<button formaction="/feed?/addList" title="addlist">add List</button>
+		{:else}
+			<button type="submit">add</button>
+		{/if}
 	</form>
 {:else}
 	<form
