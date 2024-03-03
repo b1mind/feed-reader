@@ -71,7 +71,6 @@ export async function GET({ url, setHeaders }) {
 
 			//todo refactor this ugly shit
 			for (let item of orderedItems) {
-				console.log(item)
 				if (
 					item['content:encoded'] &&
 					item['content:encoded'].includes('<img')
@@ -104,7 +103,6 @@ export async function GET({ url, setHeaders }) {
 					// images.push(cleanUrl(img, xmlURL)) //fetch for each post..oof
 				}
 			}
-			console.log(media)
 
 			return { feed, items: orderedItems, media }
 		})

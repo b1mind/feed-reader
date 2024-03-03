@@ -36,7 +36,6 @@
 	{/if}
 
 	<div class="img">
-		{console.log(media.type)}
 		{#if media.type === 'video/mp4'}
 			<video controles>
 				<source src={media.url} type={media.type} />
@@ -45,7 +44,7 @@
 		{:else if media.type === 'audio/mpeg'}
 			<figure>
 				<figcaption>Listen to the {title}:</figcaption>
-				<audio controls src={media.url}></audio>
+				<audio controls src={media.url} preload="none"></audio>
 			</figure>
 		{:else if media.url}
 			<img src={media.url} alt={media.alt} loading="lazy" />
