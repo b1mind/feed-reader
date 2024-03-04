@@ -6,11 +6,10 @@
 
 <nav>
 	<a href="/">home</a>
-	<!-- <a href="/fetch">cacheTest</a> -->
 	{#if !$page.data?.info}
-		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}
+		<!-- <a href="/fetch">cacheTest</a> -->
 		<!-- <a href="/rdf">rdfTest</a> -->
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/follows">follows</a>
@@ -26,9 +25,10 @@
 			}}
 		-->
 
+		<!-- //note link or form/btn..  -->
 		<form action="/auth/logout" method="POST">
 			<button type="submit">logout</button>
-			<button formaction="/api/feed?/test">test</button>
+			<!-- <button formaction="/api/feed?/test">test</button> -->
 		</form>
 	{/if}
 </nav>
