@@ -40,7 +40,7 @@
 	</header>
 
 	{#if snippet}
-		<p>{snippet}</p>
+		<p>{snippet} <a href={link}>Read More...</a></p>
 	{/if}
 
 	<div class="media">
@@ -89,6 +89,15 @@
 
 	header {
 		grid-row: header;
+
+		& > a {
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+
+		& > a:visited {
+			color: var(--clr-primary-dark);
+		}
 	}
 
 	.wrap-flex > b {
@@ -96,15 +105,6 @@
 		font-size: 0.75rem;
 		background-color: var(--clr-primary-bg);
 		border-radius: 10px;
-	}
-
-	a {
-		font-size: 1.5rem;
-		font-weight: bold;
-	}
-
-	a:visited {
-		color: var(--clr-primary-dark);
 	}
 
 	.media,
