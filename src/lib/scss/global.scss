@@ -2,8 +2,11 @@
 	--clr-primary: hsl(277, 92%, 66%);
 	--clr-primary-dark: hsl(277, 92%, 46%);
 	--clr-primary-bg: hsl(277, 16%, 16%);
-	--clr-primary-bg-alt: hsl(280, 19%, 6%);
+	--clr-primary-bg-alt: hsl(280, 19%, 14%);
+	--clr-secondary-bg: hsl(280, 19%, 6%);
+	--clr-secondary-bg-alt: hsl(280, 19%, 9%);
 	--clr-light: #d3d3d3;
+	--clr-dark: #1b1b1b;
 }
 
 body {
@@ -21,6 +24,20 @@ body {
 		'Helvetica Neue',
 		sans-serif;
 	background: var(--clr-primary-bg);
+}
+
+.wrap-cards {
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 10px;
+	list-style: none;
+}
+
+.wrap-flex {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
 }
 
 a {

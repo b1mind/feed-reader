@@ -12,18 +12,8 @@
 
 <SeenButton></SeenButton>
 
-<ul>
+<div class="wrap-cards">
 	{#each data.rss.items as post}
 		<Card {...post}></Card>
 	{/each}
-</ul>
-
-<style lang="scss">
-	ul {
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 10px;
-		list-style: none;
-	}
-</style>
+</div>

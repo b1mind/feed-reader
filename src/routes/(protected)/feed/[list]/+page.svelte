@@ -12,19 +12,9 @@
 {#await data.feedStream}
 	loading....
 {:then stream}
-	<ul>
+	<div class="wrap-cards">
 		{#each stream as post}
 			<Card {...post}></Card>
 		{/each}
-	</ul>
+	</div>
 {/await}
-
-<style>
-	ul {
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 10px;
-		list-style: none;
-	}
-</style>

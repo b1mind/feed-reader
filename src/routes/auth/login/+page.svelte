@@ -2,7 +2,7 @@
 	import { localSettings } from '$lib/stores'
 
 	let provider = $localSettings.savedProvider
-	let saveProvider = true
+	let saveProvider = !provider
 	let required = provider || true
 
 	function save(e) {
