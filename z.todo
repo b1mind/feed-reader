@@ -1,16 +1,16 @@
 Todo:
-	☐ home page needs a introduction to SolidPods and how to use.
+	☐ favicon(s)
+	☐ give some better styles for prototype (people like shiny things)
+	☐ theme switcher and prefers color
+	☐ delete lists recursively or find out if .ttl would be faster/easier
 	☐ find out best schema if not OPML/XSD to save lists in pod
 		//can I just do rdf:xml? as a .ttl or container
-	☐ delete lists recursively or find out if .ttl would be faster/easier
-	☐ give some better styles for prototype (people like shiny things)
 	☐ update styles for error.html and +error.svelte
-	✔ localStorage for remembering Pod Provider and other settings (persitant$store) @done
-		//use what britt did and used in mememachine
 	☐ make solid-client util helpers (pretty wet get DRY)
-	☐ favicon(s)
+	☐ home page needs a introduction to SolidPods and how to use.
 	✔ proper readme and license - contrib etc (start to take this more serious) @done
 	✔ login checks need refactored and improved for logout and per page @done
+	✔ localStorage for remembering Pod Provider and other settings (persitant$store) @done
 	
 Features:
 	☐ suggested me/rssPod if no friends with feeds
@@ -26,11 +26,12 @@ Features:
 
 WishList:
 	make dreams come true
+	☐ server cache with data change checks for pods and rss
 	☐ last updated or new posts... troublesome
 		//polling, action, service or web work.. don't really know yet. (ideas? open issue)
+	
 	☐ login redirect to last page pass ?last=pagename param (this even needed?)
 	✔ better Readme and updates to versions @done
-	☐ server cache with data change checks for pods and rss
 	✔ import OPML or another XML list of feeds @done
 	✔ fetch api and away to store list/data unless changed? @done
 
