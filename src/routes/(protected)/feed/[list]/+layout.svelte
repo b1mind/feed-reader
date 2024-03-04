@@ -9,7 +9,17 @@
 
 	let feed = ''
 	let url = ''
-	$: open = false
+	let open = false
+
+	function toggleMenu(e) {
+		open = !open
+
+		if (open) {
+			document.body.style.overflow = 'hidden'
+		} else {
+			document.body.style.overflow = 'initial'
+		}
+	}
 
 	function saveFile() {
 		let opmlList = ``
@@ -72,25 +82,25 @@
 					</li>
 				{/each}
 			</nav>
-		</ul>
 
-		<form
-			action="/feed/{data.listName}?/add"
-			method="POST"
-			autocomplete="off"
-			use:enhance
-		>
-			<label for="feed">
-				Feed Name:
-				<input type="text" name="feed" bind:value={feed} />
-			</label><br />
-			<label for="url">
-				RSS Url:
-				<input type="text" name="url" bind:value={url} />
-			</label>
-			<button type="submit">add</button>
-		</form>
-		<button on:click={saveFile}>Save Opml</button>
+			<form
+				action="/feed/{data.listName}?/add"
+				method="POST"
+				autocomplete="off"
+				use:enhance
+			>
+				<label for="feed">
+					Feed Name:
+					<input type="text" name="feed" bind:value={feed} />
+				</label><br />
+				<label for="url">
+					RSS Url:
+					<input type="text" name="url" bind:value={url} />
+				</label>
+				<button type="submit">add</button>
+			</form>
+			<button on:click={saveFile}>Save Opml</button>
+		</ul>
 	</aside>
 
 	<div class="content">
@@ -100,7 +110,7 @@
 		</section>
 	</div>
 
-	<button class="menu" type="button" on:click={() => (open = !open)}>
+	<button class="menu" type="button" on:click={toggleMenu}>
 		{open ? '✖️' : 'list'}
 	</button>
 </main>
@@ -111,19 +121,23 @@
 		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
 
 		& > aside {
+			/*position: sticky;
+			top: 1px;
+			align-self: start; */
 			display: grid;
+			font-size: 1.2rem;
 		}
 
 		@media (max-width: 460px) {
 			grid-template-columns: 1fr;
 			& > aside {
-				padding: 20px;
+				padding-block: 10px 30px;
+				padding-inline: 10px 30px;
 				display: none;
 				position: fixed;
-				max-height: 90svh;
-				bottom: 1rem;
+				max-height: 95svh;
+				bottom: 5px;
 				right: 0;
-				font-size: 1.2rem;
 				background-color: var(--clr-secondary-bg);
 				overflow-y: scroll;
 				z-index: 999;
