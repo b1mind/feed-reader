@@ -64,6 +64,7 @@
 						<a
 							data-sveltekit-preload-data
 							href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
+							on:click={open ? toggleMenu : null}
 						>
 							{name}
 						</a>
