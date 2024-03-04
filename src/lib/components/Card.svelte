@@ -5,7 +5,7 @@
 	let lastSeen = $localSettings.seenPosts
 
 	function saveSeen(e, title) {
-		e.target.closest('li').classList.add('seen')
+		e.target.closest('article').classList.add('seen')
 		$localSettings.seenPosts = [title, ...$localSettings.seenPosts]
 		// console.log($localSettings)
 	}
@@ -21,13 +21,15 @@
 
 <article class:seen={lastSeen.includes(title)}>
 	<header>
-		<b>{feedTitle}</b>
+		<!-- //todo check if author fallback to this -->
+		{#if feedTitle}
+			<b>{feedTitle}</b>
+			<br />
+		{/if}
 		<a href={link} on:click={(e) => saveSeen(e, title)}>
 			{title}
 		</a>
-		<br />
 
-		<time>{published}</time>
 		<div class="wrap-flex">
 			{#if categories}
 				{#each categories.slice(-3) as tag}
@@ -62,7 +64,7 @@
 			/> -->
 		{/if}
 	</div>
-	<footer>foot</footer>
+	<footer><time>{published}</time></footer>
 </article>
 
 <style lang="scss">
