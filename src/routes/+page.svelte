@@ -10,13 +10,15 @@
 	<p>Register for a Pod from any (NodeSolidServer)</p>
 	<ul>
 		<li>
-			<a href="http://solidcommunity.net/register">SolidCommunity</a>
+			<a target="_blank" href="http://solidcommunity.net/register">
+				SolidCommunity
+			</a>
 		</li>
 		<li>
-			<a href="https://datapod.igrant.io/register">iGrant.io</a>
+			<a target="_blank" href="https://datapod.igrant.io/register">iGrant.io</a>
 		</li>
 		<li>
-			<a href="https://solidweb.org">solidweb.org</a>
+			<a target="_blank" href="https://solidweb.org/register">solidweb.org</a>
 		</li>
 	</ul>
 {:else}

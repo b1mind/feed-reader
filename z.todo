@@ -1,5 +1,5 @@
 Todo:
-	☐ favicon(s)
+	☐ better way to init DB on deploy (check if exist, stop whiping every time lol)
 	☐ give some better styles for prototype (people like shiny things)
 	☐ theme switcher and prefers color
 	☐ delete lists recursively or find out if .ttl would be faster/easier
@@ -8,6 +8,8 @@ Todo:
 	☐ update styles for error.html and +error.svelte
 	☐ make solid-client util helpers (pretty wet get DRY)
 	☐ home page needs a introduction to SolidPods and how to use.
+	☐ start adding a11y past svelte checks (test with SR)
+	☐ favicon(s)
 	✔ proper readme and license - contrib etc (start to take this more serious) @done
 	✔ login checks need refactored and improved for logout and per page @done
 	✔ localStorage for remembering Pod Provider and other settings (persitant$store) @done

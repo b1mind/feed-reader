@@ -8,9 +8,7 @@ import { lucia } from '$lib/server/auth'
 export async function POST({ locals }) {
 	console.time('logout getSesh')
 	const sessionId = locals.session.id
-
 	const session = await getSessionFromStorage(sessionId, sessionStorage)
-	console.log(session)
 	console.timeEnd('logout getSesh')
 
 	if (session) {

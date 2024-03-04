@@ -43,7 +43,7 @@
 		<p>{snippet}</p>
 	{/if}
 
-	<div class="img">
+	<div class="media">
 		{#if media.type === 'video/mp4'}
 			<video controls>
 				<source src={media.url} type={media.type} />
@@ -55,7 +55,9 @@
 				<figcaption>{title}</figcaption>
 			</figure>
 		{:else if media.url}
-			<img src={media.url} alt={media.alt} loading="lazy" />
+			<div class="img">
+				<img src={media.url} alt={media.alt} loading="lazy" />
+			</div>
 		{:else}
 			<!-- <img
 				src="https://picsum.photos/500/350?random={Math.random()}"
@@ -105,15 +107,15 @@
 		color: var(--clr-primary-dark);
 	}
 
-	.img,
+	.media,
 	p {
 		grid-column: 1 / -1;
 		grid-row: content;
 	}
 
-	.img {
+	.media {
 		justify-self: center;
-		margin-block: 20px;
+		margin-block-start: 20px;
 		max-height: 250px;
 		display: grid;
 		border-radius: 8px;

@@ -25,7 +25,7 @@ function sortByDateDescending(feedItemA, feedItemB) {
 }
 
 export async function GET({ url, setHeaders }) {
-	console.log('fresh GET')
+	// console.log('fresh GET')
 	const xmlURL = url.searchParams.get('xml')
 	const limit = url.searchParams.get('limit')
 	const parser = new Parser()
