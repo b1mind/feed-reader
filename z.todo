@@ -5,8 +5,8 @@ Todo:
 	☐ delete lists recursively or find out if .ttl would be faster/easier
 	☐ give some better styles for prototype (people like shiny things)
 	☐ update styles for error.html and +error.svelte
-	☐ localStorage for remembering Pod Provider and other settings (persitant$store with server;)
-		//https://stackblitz.com/edit/sveltejs-kit-template-default-ddli26?file=src%2Froutes%2F%2Blayout.server.ts
+	✔ localStorage for remembering Pod Provider and other settings (persitant$store) @done
+		//use what britt did and used in mememachine
 	☐ make solid-client util helpers (pretty wet get DRY)
 	☐ favicon(s)
 	✔ proper readme and license - contrib etc (start to take this more serious) @done
