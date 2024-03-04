@@ -87,14 +87,13 @@ export async function GET({ url, setHeaders }) {
 					media.push({ url: video.url, alt: '', type: video.type })
 				} else if (item.content) {
 					const hasImg = item.content.includes('<img')
-					if (hasImg) {
-						const imgTag = item.content.match(matchImg)
-						if (imgTag) {
-							media.push({
-								url: cleanUrl(imgTag[1], xmlURL),
-								alt: imgTag[2] || '',
-							})
-						}
+					const imgTag = item.content.match(matchImg)
+
+					if (hasImg && imgTag) {
+						media.push({
+							url: cleanUrl(imgTag[1], xmlURL),
+							alt: imgTag[2] || '',
+						})
 					} else {
 						media.push({ url: '', alt: '' })
 					}
@@ -134,7 +133,7 @@ export async function GET({ url, setHeaders }) {
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
 		// 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
-		'Cache-Control': 'public, s-maxage=6000, max-age=12000',
+		'Cache-Control': 'public, s-maxage=12000, max-age=42000',
 	})
 
 	return json({

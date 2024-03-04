@@ -67,7 +67,7 @@ export async function GET({ fetch, locals, url, params, setHeaders }) {
 		//note learn more about cache-control
 		//stale-while is not supported in safari/opera (fallback needed?)
 		// 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=6000',
-		'Cache-Control': 'private, max-age=6000',
+		'Cache-Control': 'private, max-age=42000',
 	})
 
 	return json(await feedStreamPromise)

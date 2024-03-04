@@ -51,7 +51,10 @@
 				>
 					<!-- to preload / client parse or what how taxing is it? -->
 					<!-- <a data-sveltekit-preload-data href="/feed/{slugify(name)}/?xml={href}"> -->
-					<a href="/feed/{data.listName}/{slugify(name)}/?xml={href}">
+					<a
+						data-sveltekit-preload-data
+						href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
+					>
 						{name}
 					</a>
 					<form method="POST" use:enhance>
