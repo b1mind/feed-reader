@@ -1,18 +1,13 @@
 <script>
-	import { actionLocalStorage } from '$lib/utils'
-	import { afterUpdate } from 'svelte'
+	import { localSettings } from '$lib/utils/settings'
 
-	let lastSeen = ''
-
-	afterUpdate(() => {
-		let hasSeenJson = localStorage.getItem('hasSeen')
-		if (!hasSeenJson) return
-		lastSeen = JSON.parse(hasSeenJson)
-	})
+	//note are we running this too much on every card? parent logic?
+	let lastSeen = $localSettings.seenPosts
 
 	function saveSeen(e, title) {
 		e.target.closest('li').classList.add('seen')
-		actionLocalStorage('save', 'hasSeen', title, false)
+		$localSettings.seenPosts = [title, ...$localSettings.seenPosts]
+		// console.log($localSettings)
 	}
 
 	export let title = ''
