@@ -50,14 +50,14 @@
 					transition:fly|local={{ x: 150, duration: 350 }}
 				>
 					<!-- to preload / client parse or what how taxing is it? -->
-					<!-- <a data-sveltekit-preload-data href="/feed/{slugify(name)}/?xml={href}"> -->
 					<a
 						data-sveltekit-preload-data
 						href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
 					>
 						{name}
 					</a>
-					<form method="POST" use:enhance>
+
+					<!-- <form method="POST" use:enhance>
 						<input type="hidden" name="name" value={safeSpace(name)} />
 						<input type="hidden" name="url" value={href} />
 
@@ -67,7 +67,7 @@
 						<button formaction="/feed/{data.listName}?/remove" title="remove">
 							❌
 						</button>
-					</form>
+					</form> -->
 				</li>
 			{/each}
 		</ul>
@@ -99,7 +99,7 @@
 	</div>
 
 	<button class="menu" type="button" on:click={() => (open = !open)}>
-		Menu
+		{open ? '✖️' : 'list'}
 	</button>
 </main>
 
@@ -107,16 +107,27 @@
 	main {
 		display: grid;
 		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
+
+		& > aside {
+			display: grid;
+			position: sticky;
+			top: 1px;
+			align-self: start;
+		}
+
 		@media (max-width: 460px) {
 			grid-template-columns: 1fr;
 			& > aside {
+				padding: 20px;
 				display: none;
 				position: fixed;
 				max-height: 90svh;
 				bottom: 1rem;
 				right: 0;
-				background-color: var(--clr-primary-bg);
+				font-size: 1.2rem;
+				background-color: var(--clr-secondary-bg);
 				overflow-y: scroll;
+				z-index: 999;
 			}
 		}
 	}
@@ -126,13 +137,16 @@
 	}
 
 	.menu {
+		padding: 0.5rem 0.75rem;
 		display: none;
+		border-radius: 10px;
 		z-index: 9999;
+
 		@media (max-width: 460px) {
 			display: flex;
 			position: fixed;
-			bottom: 0;
-			right: 0;
+			bottom: 10px;
+			right: 10px;
 		}
 	}
 
@@ -141,7 +155,8 @@
 		padding: 0;
 	}
 
-	li > form {
-		display: inline-block;
+	li {
+		padding-block: 3px;
+		list-style: none;
 	}
 </style>

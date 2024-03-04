@@ -6,12 +6,12 @@
 
 <nav>
 	<a href="/">home</a>
-	<a href="/fetch">cacheTest</a>
+	<!-- <a href="/fetch">cacheTest</a> -->
 	{#if !$page.data?.info}
 		<!-- <a href="/login" rel="external">login</a> -->
 		<a href="/auth/login">login</a>
 	{:else}
-		<a href="/rdf">rdfTest</a>
+		<!-- <a href="/rdf">rdfTest</a> -->
 		<a data-sveltekit-preload-data href="/profile">profile</a>
 		<a data-sveltekit-preload-data href="/follows">follows</a>
 		<a data-sveltekit-preload-data href="/feed">feed</a>

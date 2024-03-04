@@ -118,7 +118,6 @@
 		border-radius: 8px;
 		overflow: hidden;
 		background-color: var(--seen, var(--clr-secondary-bg));
-		z-index: 1;
 	}
 
 	img {
