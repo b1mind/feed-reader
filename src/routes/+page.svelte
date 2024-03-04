@@ -20,6 +20,16 @@
 		</li>
 	</ul>
 {:else}
-	<h1>Welcome</h1>
-	{data?.allSessions?.length} users logged in. provider.
+	<h1>RSS Share Pod</h1>
+
+	<b>
+		{data?.allSessions?.length} users logged in. Enjoy owning your own data!
+	</b>
+
+	<p>
+		Get started by following someone with their WebId and adding finding
+		feeds/lists to add, make a start a list with opml, or make a new one!
+	</p>
+
+	<p>more to come...</p>
 {/if}

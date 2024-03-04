@@ -32,7 +32,7 @@
 
 		<div class="wrap-flex">
 			{#if categories}
-				{#each categories.slice(-3) as tag}
+				{#each categories.slice(-4) as tag}
 					<b>{tag}</b>
 				{/each}
 			{/if}
@@ -113,6 +113,7 @@
 
 	.img {
 		justify-self: center;
+		margin-block: 20px;
 		max-height: 250px;
 		display: grid;
 		border-radius: 8px;
@@ -121,9 +122,6 @@
 	}
 
 	img {
-		display: block;
-		max-width: 100%;
-		max-height: 100%;
 		object-fit: cover;
 	}
 

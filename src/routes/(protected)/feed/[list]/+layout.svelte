@@ -44,20 +44,21 @@
 <main>
 	<aside class:open>
 		<ul>
-			{#each data.rssList as { name, href } (name)}
-				<li
-					animate:flip={{ duration: 350 }}
-					transition:fly|local={{ x: 150, duration: 350 }}
-				>
-					<!-- to preload / client parse or what how taxing is it? -->
-					<a
-						data-sveltekit-preload-data
-						href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
+			<nav>
+				{#each data.rssList as { name, href } (name)}
+					<li
+						animate:flip={{ duration: 350 }}
+						transition:fly|local={{ x: 150, duration: 350 }}
 					>
-						{name}
-					</a>
+						<!-- to preload / client parse or what how taxing is it? -->
+						<a
+							data-sveltekit-preload-data
+							href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
+						>
+							{name}
+						</a>
 
-					<!-- <form method="POST" use:enhance>
+						<!-- <form method="POST" use:enhance>
 						<input type="hidden" name="name" value={safeSpace(name)} />
 						<input type="hidden" name="url" value={href} />
 
@@ -68,8 +69,9 @@
 							❌
 						</button>
 					</form> -->
-				</li>
-			{/each}
+					</li>
+				{/each}
+			</nav>
 		</ul>
 
 		<form
@@ -110,9 +112,6 @@
 
 		& > aside {
 			display: grid;
-			position: sticky;
-			top: 1px;
-			align-self: start;
 		}
 
 		@media (max-width: 460px) {

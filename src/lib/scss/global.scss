@@ -9,6 +9,20 @@
 	--clr-dark: #1b1b1b;
 }
 
+html {
+	height: 100%;
+}
+
+//resets
+p {
+	max-width: 65ch;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
 body {
 	color: var(--clr-font-main, var(--clr-light));
 	font-family:
