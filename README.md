@@ -14,6 +14,8 @@ Started as a project that I really wanted but also thought it was a good way to 
 
 ### Your Data
 
+Currently saves to /public/ in your pod so it is visible to anyone. Working on private lists!
+
 All your follows/lists/feeds are stored where potentially any other app could use them. Friends use a FOAF:schema format and profiles are VCARD that can be used across any other Solid Application or website.
 
 Auth and Sessions are stored on server and in cookies using OAuth/OpenId. You grant permissions to what applications can access and can revoke it at anytime taking your data with you.
@@ -24,7 +26,11 @@ There is some minor state that is stored in your browsers localStorage but in fu
 
 ⚠️ You can log in with a Community Server (CSS) but permissions are not working right to save data! Working on it! So we recommend getting a Node Solid Server (NSS) pod for now ⚠️
 
-More pod hosting is becoming available, but for now we recommend https://solidcommunity.net it is currently using NSS [Node Solid Server 5.7.8](https://github.com/solid/node-solid-server/releases/tag/v5.7.8)
+More pod hosting is becoming available, but for now we recommend one of the following that is currently using NSS [Node Solid Server 5.7.8](https://github.com/solid/node-solid-server/releases/tag/v5.7.8)
+
+- https://datapod.igrant.io (best UI currently)
+- https://solidcommunity.net (more access in pod viewer)
+- https://solidweb.org (new!)
 
 ## Version
 
