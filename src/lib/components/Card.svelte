@@ -1,5 +1,5 @@
 <script>
-	import { localSettings } from '$lib/utils/settings'
+	import { localSettings } from '$lib/stores'
 
 	//note are we running this too much on every card? parent logic?
 	let lastSeen = $localSettings.seenPosts

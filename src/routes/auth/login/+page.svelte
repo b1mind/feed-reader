@@ -1,12 +1,11 @@
 <script>
-	import { localSettings } from '$lib/utils/settings'
+	import { localSettings } from '$lib/stores'
 
-	$: provider = $localSettings.savedProvider
-	let required = provider || true
+	let provider = $localSettings.savedProvider
 	let saveProvider = true
+	let required = provider || true
 
 	function save(e) {
-		console.log(e, saveProvider)
 		if (saveProvider) {
 			$localSettings.savedProvider = provider
 		}
@@ -28,7 +27,7 @@
 
 	<button>login</button>
 	<label for="saveProvider">
-		<input type="checkbox" value={saveProvider} />
+		<input id="saveProvider" type="checkbox" bind:checked={saveProvider} />
 		save
 	</label>
 

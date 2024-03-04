@@ -7,3 +7,5 @@ const data = {
 }
 
 export const localSettings = persistStore('localSettings', data)
+
+export const testStore = persistStore('teststore', 'testing this shit')
