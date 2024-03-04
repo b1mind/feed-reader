@@ -9,6 +9,8 @@ import {
 	getStringNoLocale,
 	isContainer,
 } from '@inrupt/solid-client'
+import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
+import { sessionStorage } from '$lib/server/auth'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
@@ -19,6 +21,19 @@ export async function load({ locals }) {
 	try {
 		const webId = locals.user.webId
 		const contacts = await getFriends(webId)
+
+		//fixme Auth for fetching contacts from https://b1mind.datapod.igrant.io/contacts/
+		// if (contacts.length < 1) {
+		// 	const url = new URL(webId)
+		// 	const session = await getSessionFromStorage(
+		// 		locals.session.id,
+		// 		sessionStorage,
+		// 	)
+		// 	contacts = await getFriends(url.origin + '/contacts/', {
+		// 		fetch: session.fetch,
+		// 	})
+		// 	console.log(contacts)
+		// }
 
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)
