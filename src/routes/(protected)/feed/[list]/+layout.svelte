@@ -118,9 +118,9 @@
 
 <style lang="scss">
 	main {
-		grid-column: content;
 		display: grid;
-		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
+		// grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
+		grid-template-columns: auto 1fr;
 
 		& > aside {
 			/*position: sticky;
@@ -173,5 +173,9 @@
 	li {
 		padding-block: 3px;
 		list-style: none;
+	}
+
+	label {
+		display: grid;
 	}
 </style>

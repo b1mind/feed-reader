@@ -1,4 +1,6 @@
 <script>
+	import Icon from '$lib/components/Icon.svelte'
+
 	export let data
 </script>
 
@@ -12,5 +14,13 @@
 			<i>{data.user.note || ``}</i>
 			<i>{data.user.contacts || ``}</i>
 		</p>
+
+		<form action="/auth/logout" method="POST">
+			<button class="btn" type="submit">
+				Logout
+				<Icon name="logout" width="16px" height="16px" />
+			</button>
+			<!-- <button formaction="/api/feed?/test">test</button> -->
+		</form>
 	</main>
 {/if}

@@ -30,13 +30,14 @@
 </svelte:head>
 
 <div class="layout">
-	<Header />
 	<div class="bar">
 		<!-- todo animate page/loader -->
 		{#if loading}
 			<div class:loading in:fade out:fade>loading..</div>
 		{/if}
 	</div>
+
+	<Header />
 
 	<slot />
 </div>
@@ -48,7 +49,7 @@
 <!-- todo need a footer yo or how can the page walk -->
 <style lang="scss">
 	.bar {
-		grid-column: content;
+		grid-column: full;
 		display: grid;
 		height: 10px;
 	}

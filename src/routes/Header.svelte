@@ -1,6 +1,5 @@
 <script>
 	import { page } from '$app/stores'
-	import Icon from '$lib/components/Icon.svelte'
 	// import { applyAction, enhance } from '$app/forms'
 	// import { invalidateAll } from '$app/navigation'
 </script>
@@ -27,13 +26,6 @@
 		-->
 
 			<!-- //note link or form/btn..  -->
-			<form action="/auth/logout" method="POST">
-				<button class="btn" type="submit">
-					Logout
-					<Icon name="logout" width="16px" height="16px" />
-				</button>
-				<!-- <button formaction="/api/feed?/test">test</button> -->
-			</form>
 
 			<!-- remove: just having fun with ideas -->
 			<!-- <div class="layer">
