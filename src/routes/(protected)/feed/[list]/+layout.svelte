@@ -118,6 +118,7 @@
 
 <style lang="scss">
 	main {
+		grid-column: content;
 		display: grid;
 		grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
 

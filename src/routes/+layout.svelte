@@ -29,27 +29,31 @@
 	</title>
 </svelte:head>
 
-<Header />
-<div class="bar">
-	<!-- todo animate page/loader -->
-	{#if loading}
-		<div class:loading in:fade out:fade>loading..</div>
-	{/if}
-</div>
+<div class="layout">
+	<Header />
+	<div class="bar">
+		<!-- todo animate page/loader -->
+		{#if loading}
+			<div class:loading in:fade out:fade>loading..</div>
+		{/if}
+	</div>
 
-<slot />
+	<slot />
+</div>
 
 <!-- {#key loading}
 	<div in:slide={{ y: 200 }}>loading</div>
 {/key} -->
 
 <!-- todo need a footer yo or how can the page walk -->
-<style>
+<style lang="scss">
 	.bar {
+		grid-column: content;
 		display: grid;
 		height: 10px;
 	}
-	/* just an example how the same var we can hook into a style even css animate here */
+
+	//todo add better loader
 	.loading {
 		background-color: var(--clr-primary);
 	}

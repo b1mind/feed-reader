@@ -41,36 +41,46 @@
 	</header>
 
 	{#if snippet}
-		<p>{snippet} <a href={link}>Read More...</a></p>
+		<p>
+			{snippet}
+			{#if !title}
+				<a href={link}> Read More...</a>
+			{/if}
+		</p>
 	{/if}
 
-	<div class="media">
-		{#if snippet && media.url !== ''}
-			<button type="button"><Icon name="arrow-shift-down"></Icon></button>
-		{/if}
+	{#if media.url !== ''}
+		<div class="media">
+			{#if snippet}
+				<button type="button"><Icon name="arrow-shift-down"></Icon></button>
+			{/if}
 
-		{#if media.type === 'video/mp4'}
-			<video controls>
-				<source src={media.url} type={media.type} />
-				<track kind="captions" />
-			</video>
-		{:else if media.type === 'audio/mpeg'}
-			<figure>
-				<audio controls src={media.url} type={media.type} preload="none" />
-				<figcaption>{title}</figcaption>
-			</figure>
-		{:else if media.url}
-			<div class="img">
-				<img src={media.url} alt={media.alt} loading="lazy" />
-			</div>
-		{:else}
-			<!-- <img
-				src="https://picsum.photos/500/350?random={Math.random()}"
-				loading="lazy"
-				alt="random from picsum photos"
-			/> -->
-		{/if}
-	</div>
+			{#if media.type === 'video/mp4'}
+				<video controls>
+					<source src={media.url} type={media.type} />
+					<track kind="captions" />
+				</video>
+			{:else if media.type === 'audio/mpeg'}
+				<figure>
+					<audio controls src={media.url} type={media.type} preload="none" />
+					<figcaption>{title}</figcaption>
+				</figure>
+			{:else if media.url}
+				<picture class="img">
+					<!-- need fallback if fails to load -->
+
+					<img src={media.url} alt={media.alt} loading="lazy" />
+					<!-- <img
+						src="https://picsum.photos/500/350?random={Math.random()}"
+						loading="lazy"
+						alt="random from picsum photos"
+					/> -->
+				</picture>
+
+				<b class="error">image 404</b>
+			{/if}
+		</div>
+	{/if}
 	<footer><time>{published}</time></footer>
 </article>
 
@@ -108,6 +118,7 @@
 
 	.wrap-flex {
 		justify-content: end;
+		margin-block-start: 4px;
 
 		& > b {
 			padding: 2px 5px;
@@ -127,6 +138,7 @@
 	.media {
 		justify-self: center;
 		position: relative;
+		width: 100%;
 		min-height: 100%;
 		max-height: 250px;
 		display: grid;
@@ -138,22 +150,30 @@
 		button {
 			--fill: var(--clr-primary);
 			position: absolute;
-			justify-self: start;
+			justify-self: end;
 			align-self: start;
 			padding: 1px;
 			border: 0;
-			border-radius: 0 0 10px 0;
+			border-radius: 0 0 0 10px;
 			&:hover {
 				--fill: var(--clr-primary-bg);
 			}
 		}
 	}
 
-	img {
-		object-fit: cover;
+	.error {
+		position: absolute;
+		place-self: center;
+		z-index: 0;
 	}
 
 	video {
 		max-width: 100%;
+	}
+
+	video,
+	picture,
+	figure {
+		z-index: 1;
 	}
 </style>

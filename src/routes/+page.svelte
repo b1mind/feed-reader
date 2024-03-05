@@ -2,7 +2,7 @@
 	export let data
 </script>
 
-{#if !data?.info}
+{#if !data?.user}
 	<h1>Solid Pod RSS</h1>
 	<p>
 		You need to <a href="/auth/login">login</a> to use this app.

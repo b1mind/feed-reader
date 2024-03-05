@@ -11,6 +11,9 @@
 	--clr-secondary-bg-alt: hsl(280, 19%, 9%);
 	--clr-light: #d3d3d3;
 	--clr-dark: #1b1b1b;
+
+	--gap-sm: 10px;
+	--content-max: 1240px;
 }
 
 //resets (import ? layer?)
@@ -23,7 +26,7 @@ p {
 }
 
 img {
-	display: block;
+	display: inline-block;
 	max-width: 100%;
 }
 
@@ -56,18 +59,42 @@ body {
 }
 
 //need main wrapper...
+.layout {
+	display: grid;
+	grid-template-columns:
+		[full-start]
+		minmax(var(--gap-sm), 1fr)
+		[popout-start]
+		minmax(0, 0.35fr)
+		[content-start]
+		minmax(0, var(--content-max))
+		[content-end]
+		minmax(0, 0.35fr)
+		[popout-end]
+		minmax(var(--gap-sm), 1fr)
+		[full-end];
+	grid-template-rows: auto auto 1fr auto;
+
+	& > * {
+		grid-column: content;
+	}
+}
 
 .wrap-cards {
-	padding: 0;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+	columns: 18.75rem auto;
+	// display: grid;
+	// grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
 	gap: 10px;
 	list-style: none;
+	& > * {
+		margin-block-end: 10px;
+	}
 }
 
 .wrap-flex {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 5px;
 }
 

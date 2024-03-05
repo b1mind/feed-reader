@@ -49,8 +49,3 @@
 		Select (NSS) provider
 	</p>
 </form>
-
-<style>
-	select {
-	}
-</style>
