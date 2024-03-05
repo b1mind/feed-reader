@@ -122,3 +122,9 @@ a {
 .hidden {
 	display: none !important;
 }
+
+@media (max-width: 852px) {
+	.mobile-only {
+		display: none;
+	}
+}
