@@ -1,13 +1,15 @@
 Todo:
-	☐ really need to fix auth proper with Lucia so they are using same session table
+	☐ find out best schema if not OPML/XSD to save lists in pod
+		//need to make a shape then find out which schema
+		//can I just do rdf:xml? as a .ttl or container
+	☐ fix auth proper with Lucia so they are using same user table and Solid sessionStorage
 	☐ better way to init DB on deploy (check if exist, stop whiping every time lol)
 	☐ make an actual design and add styles (people do like shiny things proper)
 	☐ fallback img if fails to load.
 	☐ delete lists recursively or find out if .ttl would be faster/easier
-	☐ find out best schema if not OPML/XSD to save lists in pod
-		//can I just do rdf:xml? as a .ttl or container
 	☐ make solid-client util helpers (pretty wet get DRY)
 	☐ home page needs a introduction to SolidPods and how to use.
+	☐ scss global media queries - (slacker)
 	☐ start adding a11y past svelte checks (test with SR)
 	☐ form error and validation handling (zod?)
 	☐ favicon(s) and logo
@@ -20,7 +22,10 @@ Todo:
 	
 Features:
 	☐ theme switcher and prefers color
+	☐ back to top button!! 
+	☐ sticky header/nav or hideaway/scroll up view
 	☐ user settings for openBlank, hideSeen, default post feed order
+	☐ sync changes localstore > pod > localstore (last sync date needed?)
 	☐ date added, and last updated props
 	☐ favorite posts that save to pod in proper rdf schema.
 	☐ favorite feeds for lists to pull random or newest from. (in edit mode?)
@@ -41,7 +46,7 @@ WishList:
 	☐ some kinda last viewed > last updated comparison/feedback to user.
 		☐ last updated or new posts... troublesome
 		//polling, action, service or web work.. don't really know yet. (ideas? open issue)
-	☐ login redirect to last page pass ?last=pagename param (this even needed?)
+	✘ login redirect to last page pass ?last=pagename param (this even needed?) @cancelled
 
 	✔ better Readme and updates to versions @done
 	✔ import OPML or another XML list of feeds @done
