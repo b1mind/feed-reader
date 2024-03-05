@@ -1,4 +1,5 @@
 Todo:
+	☐ really need to fix auth proper with Lucia so they are using same session table
 	☐ better way to init DB on deploy (check if exist, stop whiping every time lol)
 	☐ make an actual design and add styles (people do like shiny things proper)
 	☐ fallback img if fails to load.

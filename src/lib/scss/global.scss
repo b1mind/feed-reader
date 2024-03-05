@@ -82,11 +82,13 @@ body {
 }
 
 .wrap-cards {
-	columns: 18.75rem auto;
-	// display: grid;
-	// grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
 	gap: 10px;
-	list-style: none;
+}
+
+.columns {
+	columns: 18.75rem auto;
 	& > * {
 		margin-block-end: 10px;
 	}

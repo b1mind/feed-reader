@@ -52,6 +52,8 @@
 		display: grid;
 		grid-auto-flow: column;
 		grid-template-columns: 1fr auto;
+		//hack to make 1fr child not fill
+		justify-items: start;
 		gap: var(--gap-sm);
 		font-size: 1.3rem;
 

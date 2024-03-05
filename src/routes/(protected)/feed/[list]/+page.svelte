@@ -1,20 +1,17 @@
 <script>
 	import { page } from '$app/stores'
-	import Card from '$lib/components/Card.svelte'
+	import LayoutCards from '$lib/components/LayoutCards.svelte'
 	import SeenButton from '$lib/components/SeenButton.svelte'
 
 	export let data
+	let columns = true
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
 <SeenButton></SeenButton>
 
 {#await data.feedStream}
-	loading....
-{:then stream}
-	<div class="wrap-cards">
-		{#each stream as post}
-			<Card {...post}></Card>
-		{/each}
-	</div>
+	gathering from feeds....
+{:then posts}
+	<LayoutCards {posts} {columns} />
 {/await}

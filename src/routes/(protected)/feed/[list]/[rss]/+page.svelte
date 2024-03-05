@@ -1,19 +1,17 @@
 <script>
-	import Card from '$lib/components/Card.svelte'
+	import LayoutCards from '$lib/components/LayoutCards.svelte'
 	import SeenButton from '$lib/components/SeenButton.svelte'
 
 	export let data
+
+	let columns = true
 </script>
 
-<hgroup>
+<header>
 	<h2>{data.rss.title}</h2>
 	<p>{data.rss?.description || 'no description'}</p>
-</hgroup>
+</header>
 
 <SeenButton></SeenButton>
 
-<div class="wrap-cards">
-	{#each data.rss.items as post}
-		<Card {...post}></Card>
-	{/each}
-</div>
+<LayoutCards posts={data.rss.items} {columns} />
