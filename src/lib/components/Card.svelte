@@ -44,6 +44,10 @@
 	{/if}
 
 	<div class="media">
+		{#if snippet && media.url !== ''}
+			<button type="button">read</button>
+		{/if}
+
 		{#if media.type === 'video/mp4'}
 			<video controls>
 				<source src={media.url} type={media.type} />
@@ -82,6 +86,7 @@
 			[header] auto
 			[content] 1fr;
 		grid-template-columns: 1fr;
+		gap: 10px;
 		border-radius: var(--radius);
 		background: var(--clr-secondary-bg);
 		overflow: hidden;
@@ -100,27 +105,40 @@
 		}
 	}
 
-	.wrap-flex > b {
-		padding: 2px 5px;
-		font-size: 0.75rem;
-		background-color: var(--clr-primary-bg);
-		border-radius: 10px;
+	.wrap-flex {
+		justify-content: end;
+
+		& > b {
+			padding: 2px 5px;
+			font-size: 0.75rem;
+			background-color: var(--clr-primary-bg);
+			border-radius: 10px;
+		}
 	}
 
 	.media,
 	p {
 		grid-column: 1 / -1;
 		grid-row: content;
+		align-self: end;
 	}
 
 	.media {
 		justify-self: center;
-		margin-block-start: 20px;
+		position: relative;
+		min-height: 100%;
 		max-height: 250px;
 		display: grid;
+		place-content: center;
 		border-radius: 8px;
 		overflow: hidden;
 		background-color: var(--seen, var(--clr-secondary-bg));
+
+		button {
+			position: absolute;
+			justify-self: end;
+			align-self: start;
+		}
 	}
 
 	img {

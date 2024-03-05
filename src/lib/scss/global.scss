@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 :root {
 	--clr-primary: hsl(277, 92%, 66%);
 	--clr-primary-dark: hsl(277, 92%, 46%);
@@ -9,11 +13,11 @@
 	--clr-dark: #1b1b1b;
 }
 
+//resets
 html {
 	height: 100%;
 }
 
-//resets
 p {
 	max-width: 65ch;
 }
@@ -21,6 +25,11 @@ p {
 img {
 	display: block;
 	max-width: 100%;
+}
+
+input,
+button {
+	font-family: inherit;
 }
 
 body {
@@ -40,10 +49,12 @@ body {
 	background: var(--clr-primary-bg);
 }
 
+//need main wrapper...
+
 .wrap-cards {
 	padding: 0;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
 	gap: 10px;
 	list-style: none;
 }
