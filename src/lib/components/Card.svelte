@@ -155,6 +155,7 @@
 			padding: 1px;
 			border: 0;
 			border-radius: 0 0 0 10px;
+			z-index: 9;
 			&:hover {
 				--fill: var(--clr-primary-bg);
 			}
