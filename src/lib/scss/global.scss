@@ -13,7 +13,7 @@
 	--clr-dark: #1b1b1b;
 }
 
-//resets
+//resets (import ? layer?)
 html {
 	height: 100%;
 }
@@ -28,8 +28,14 @@ img {
 }
 
 input,
-button {
+button,
+select {
 	font-family: inherit;
+	font-size: 1rem;
+}
+
+button {
+	cursor: pointer;
 }
 
 body {
@@ -67,6 +73,20 @@ body {
 
 a {
 	color: var(--clr-primary);
+}
+
+//todo Button comp?
+.btn {
+	padding: 2px 4px;
+	display: inline-flex;
+	gap: 0.5ch;
+	align-items: center;
+	color: var(--clr-primary);
+	font-size: 1rem;
+	text-decoration: none;
+	background-color: var(--clr-secondary-bg-alt);
+	border: 1px solid var(--clr-secondary-bg);
+	border-radius: 6px;
 }
 
 .hidden {

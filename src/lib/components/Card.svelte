@@ -1,5 +1,6 @@
 <script>
 	import { localSettings } from '$lib/stores'
+	import Icon from '$lib/components/Icon.svelte'
 
 	//note are we running this too much on every card? parent logic?
 	let lastSeen = $localSettings.seenPosts
@@ -45,7 +46,7 @@
 
 	<div class="media">
 		{#if snippet && media.url !== ''}
-			<button type="button">read</button>
+			<button type="button"><Icon name="arrow-shift-down"></Icon></button>
 		{/if}
 
 		{#if media.type === 'video/mp4'}
@@ -135,9 +136,16 @@
 		background-color: var(--seen, var(--clr-secondary-bg));
 
 		button {
+			--fill: var(--clr-primary);
 			position: absolute;
-			justify-self: end;
+			justify-self: start;
 			align-self: start;
+			padding: 1px;
+			border: 0;
+			border-radius: 0 0 10px 0;
+			&:hover {
+				--fill: var(--clr-primary-bg);
+			}
 		}
 	}
 

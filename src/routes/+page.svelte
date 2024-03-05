@@ -22,15 +22,18 @@
 		</li>
 	</ul>
 {:else}
-	<h1>RSS Share Pod</h1>
+	<h1>SolidPod RSS</h1>
 
 	<b>
-		{data?.allSessions?.length} users logged in. Enjoy owning your own data!
+		Welcome, enjoy owning your data!
+		<br />
+		{data?.allSessions?.length} users logged in.
 	</b>
 
 	<p>
-		Get started by following someone with their WebId and adding finding
-		feeds/lists to add, make a start a list with opml, or make a new one!
+		Get started by following someone with their WebId and find out what to add
+		from their lists, start a list with opml, or make a new one by adding a
+		feed!
 	</p>
 
 	<p>more to come...</p>

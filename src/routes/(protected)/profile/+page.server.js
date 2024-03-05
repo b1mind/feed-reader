@@ -1,9 +1,8 @@
-import { redirect } from '@sveltejs/kit'
+// import { redirect } from '@sveltejs/kit'
 
-export async function load({ locals, url, fetch }) {
-	const response = await fetch('/api/profile')
+// export async function load({ parent }) {
+// 	const data = await parent()
+// 	console.log(data)
 
-	const data = await response.json()
-
-	return { user: data.user }
-}
+// 	return { user: data.user }
+// }

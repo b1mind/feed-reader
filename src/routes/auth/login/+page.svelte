@@ -1,5 +1,6 @@
 <script>
 	import { localSettings } from '$lib/stores'
+	import Icon from '$lib/components/Icon.svelte'
 
 	let provider = $localSettings.savedProvider
 	let saveProvider = !provider
@@ -15,7 +16,7 @@
 <br />
 <form method="POST" action="/auth/login?/sendIt" on:submit={save}>
 	<label for="provider">
-		Pod provider
+		Pod
 		<input
 			name="provider"
 			type="text"
@@ -25,24 +26,31 @@
 		/>
 	</label>
 
-	<button>login</button>
+	<button class="btn">
+		Login
+		<Icon name="logout" width="18px" height="18px" />
+	</button>
 	<label for="saveProvider">
 		<input id="saveProvider" type="checkbox" bind:checked={saveProvider} />
 		save
 	</label>
 
 	<!-- //fixme ssr this needs to be sent with form or in params -->
-	<p>Login with (NodeSolidServer) provider</p>
-	<button on:click={() => (provider = 'https://inrupt.net')}>
-		Inrupt.net
-	</button>
-	<button on:click={() => (provider = 'https://solidcommunity.net')}>
-		SolidCommunity.net
-	</button>
-	<button on:click={() => (provider = 'https://datapod.igrant.io')}>
-		igrant.io
-	</button>
-	<button on:click={() => (provider = 'https://solidweb.org ')}>
-		solidweb.org
-	</button>
+	<br />
+	<p>
+		<label for="provider-select" aria-label="select provider">
+			<select bind:value={provider}>
+				<option value="https://inrupt.net"> Inrupt.net </option>
+				<option value="https://solidcommunity.net"> SolidCommunity.net</option>
+				<option value="https://datapod.igrant.io"> igrant.io</option>
+				<option value="https://solidweb.org "> solidweb.org</option>
+			</select>
+		</label>
+		Select (NSS) provider
+	</p>
 </form>
+
+<style>
+	select {
+	}
+</style>

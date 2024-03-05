@@ -38,7 +38,13 @@ export async function load({ parent }) {
 async function addFriend({ locals, request }) {
 	const session = await getSessionFromStorage(locals.session.id, sessionStorage)
 	const formData = await request.formData()
-	const friendWebId = formData.get('friend')
+	let friend = formData.get('friend')
+	friend = friend.includes('https://') ? friend : `https://${friend}`
+
+	const friendUrl = new URL(friend)
+
+	const friendWebId = `https://${friendUrl.hostname}/profile/card#me`
+	console.log(friendWebId)
 
 	const webId = locals.user.webId
 	let myDataSet = await getSolidDataset(webId)

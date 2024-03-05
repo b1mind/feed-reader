@@ -1,4 +1,5 @@
 <script>
+	import Icon from '$lib/components/Icon.svelte'
 	export let data
 </script>
 
@@ -19,22 +20,31 @@
 							{friend.nick || friend.name}
 						</a>
 
-						{friend.known ? '⭐' : ''}
+						{#if friend.known}
+							<Icon name="friendship" aria="hidden" />
+						{/if}
 					</li>
 				{/each}
 			</ul>
 		{:else}
 			<p>you have no friends with RSS feed lists</p>
+			<p>You can start by following the</p>
+			<ul>
+				<li>podrss.solidcommunity.net</li>
+				<li>b1mind.inrupt.net</li>
+			</ul>
 		{/if}
 	{/await}
 
 	<form action="/follows?/addFriend" method="POST">
 		<label for="friend">
-			Add full webId
+			Add full webId or name.domain
+			<br />
 			<input
 				type="text"
 				name="friend"
-				placeholder="friend.host/profile.card#me"
+				placeholder="name.solidcommunity.net"
+				required
 			/>
 		</label>
 		<button>add</button>
