@@ -25,9 +25,10 @@
 	export let feedTitle = ''
 	export let snippet = ''
 	export let media = {}
+	export let id
 </script>
 
-<article class:seen={lastSeen.includes(title)}>
+<article class:seen={lastSeen.includes(title)} data-id={id}>
 	<header>
 		<!-- //todo check if author fallback to this -->
 		{#if feedTitle}
