@@ -76,6 +76,7 @@ async function addList({ locals, request }) {
 					//really need to make a helper function for this
 					name = outline.$.text
 					href = outline.$.xmlUrl
+
 					let feedThing = buildThing(createThing({ name: encodeURI(name) }))
 						.addUrl(rdf.type, schema.DataFeed)
 						.addStringNoLocale(schema.name, name)
@@ -98,9 +99,8 @@ async function addList({ locals, request }) {
 			locals.session.id,
 			sessionStorage,
 		)
-		console.log(session)
 		await saveSolidDatasetAt(listUrl, rssDataSet, { fetch: session.fetch })
-		console.log('success')
+		console.log('success saved new list')
 
 		return null
 	}

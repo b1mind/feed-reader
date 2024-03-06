@@ -13,7 +13,7 @@
 	<p>{data.rss?.description || 'no description'}</p>
 </header>
 
-<SeenButton></SeenButton>
+<SeenButton />
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
 <LayoutCards posts={data.rss.items} {columns} />

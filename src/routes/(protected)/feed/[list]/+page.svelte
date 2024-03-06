@@ -9,7 +9,7 @@
 </script>
 
 <a href="{$page.url.pathname}?sort=newest">newest</a>
-<SeenButton></SeenButton>
+<SeenButton />
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
 {#await data.feedStream}
