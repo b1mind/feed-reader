@@ -165,10 +165,11 @@
 			position: absolute;
 			// justify-self: start;
 			top: -4px;
-			left: -4px;
+			right: -4px;
 			padding: 1px;
 			border: 0;
-			border-radius: 10px 0 10px 0;
+			border-radius: 0 10px 0 10px;
+
 			background-color: var(--clr-secondary-bg);
 			z-index: 9;
 			&:hover {
@@ -199,5 +200,10 @@
 		position: absolute;
 		place-self: center;
 		z-index: 0;
+	}
+
+	footer {
+		text-align: right;
+		font-size: 0.75rem;
 	}
 </style>

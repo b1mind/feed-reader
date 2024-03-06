@@ -1,12 +1,13 @@
 <script>
 	import { createEventDispatcher } from 'svelte'
+
 	export let columns
 
 	const dispatch = createEventDispatcher()
 
 	function toggleView() {
 		dispatch('toggleView')
-		columns = !columns
+		// columns = !columns
 	}
 </script>
 

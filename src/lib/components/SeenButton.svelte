@@ -1,25 +1,29 @@
 <script>
-	import { localSettings } from '$lib/stores'
-	import { onMount } from 'svelte'
+	// import { localSettings } from '$lib/stores'
+	import { onMount, beforeUpdate } from 'svelte'
 
-	$: hidden = false
+	export let hidden
 
+	//fixme this logic should be handled in the posts object really then we can flip and shit
 	onMount(() => {
-		if ($localSettings.settings.hidden) {
+		if (hidden === true) {
 			hideSeen()
 		}
 	})
+
+	function handleClick() {
+		hideSeen()
+		hidden = !hidden
+	}
 
 	function hideSeen() {
 		const allSeen = document.querySelectorAll('.seen')
 		for (const post of allSeen) {
 			post.classList.toggle('hidden')
 		}
-
-		hidden = !hidden
 	}
 </script>
 
-<button type="button" on:click={hideSeen}>
+<button type="button" on:click={handleClick}>
 	{hidden ? 'showSeen' : 'hideSeen'}
 </button>
