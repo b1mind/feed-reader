@@ -5,8 +5,8 @@ const data = {
 	savedProvider: '',
 	favPosts: '',
 	settings: {
-		target: true,
-		layout: false,
+		target: false,
+		layout: true,
 		order: false,
 		hidden: false,
 	},

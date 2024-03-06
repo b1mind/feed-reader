@@ -5,11 +5,17 @@
 	//note are we running this too much on every card? parent logic?
 	let lastSeen = $localSettings.seenPosts
 	let target = $localSettings.settings.target ? 'target="_blank"' : null
+	let rotate = false
+	let down = false
 
 	function saveSeen(e, title) {
 		e.target.closest('article').classList.add('seen')
 		$localSettings.seenPosts = [title, ...$localSettings.seenPosts]
-		// console.log($localSettings)
+	}
+
+	function toggleImg() {
+		rotate = !rotate
+		down = !down
 	}
 
 	export let title = ''
@@ -44,26 +50,31 @@
 	{#if snippet}
 		<p>
 			{snippet}
-			{#if !title}
-				<a href={link}> Read More...</a>
-			{/if}
+			<a href={link}>..Read More</a>
 		</p>
 	{/if}
 
 	{#if media.url !== ''}
-		<div class="media">
+		<div class="media" class:down>
 			{#if snippet}
-				<button type="button"><Icon name="arrow-shift-down"></Icon></button>
+				<button class:rotate type="button" on:click={toggleImg}
+					><Icon name="arrow-shift-down"></Icon></button
+				>
 			{/if}
 
 			{#if media.type === 'video/mp4'}
-				<video controls>
+				<video controls preload="metadata">
 					<source src={media.url} type={media.type} />
 					<track kind="captions" />
 				</video>
 			{:else if media.type === 'audio/mpeg'}
 				<figure>
-					<audio controls src={media.url} type={media.type} preload="none" />
+					<audio
+						controls
+						src={media.url}
+						type={media.type}
+						preload="metadata"
+					/>
 					<figcaption>{title}</figcaption>
 				</figure>
 			{:else if media.url}
@@ -133,11 +144,11 @@
 	p {
 		grid-column: 1 / -1;
 		grid-row: content;
-		align-self: end;
 	}
 
 	.media {
 		justify-self: center;
+		align-self: end;
 		position: relative;
 		width: 100%;
 		min-height: 100%;
@@ -155,18 +166,12 @@
 			align-self: start;
 			padding: 1px;
 			border: 0;
-			border-radius: 0 0 0 10px;
+			border-radius: 0 10px 0 10px;
 			z-index: 9;
 			&:hover {
 				--fill: var(--clr-primary-bg);
 			}
 		}
-	}
-
-	.error {
-		position: absolute;
-		place-self: center;
-		z-index: 0;
 	}
 
 	video {
@@ -177,5 +182,19 @@
 	picture,
 	figure {
 		z-index: 1;
+	}
+
+	.down {
+		transform: translateY(99%);
+	}
+
+	.rotate {
+		transform: rotate(180deg);
+	}
+
+	.error {
+		position: absolute;
+		place-self: center;
+		z-index: 0;
 	}
 </style>
