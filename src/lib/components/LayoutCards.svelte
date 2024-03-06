@@ -1,5 +1,4 @@
 <script>
-	import { page } from '$app/stores'
 	import { localSettings } from '$lib/stores'
 
 	import Card from '$lib/components/Card.svelte'
@@ -8,11 +7,10 @@
 
 	export let posts
 
-	let columns = $localSettings.settings.columns
+	let columns = $localSettings.settings.layout
 	let hidden = $localSettings.settings.hidden
 </script>
 
-<a href="{$page.url.pathname}?sort=newest">newest</a>
 <SeenButton {hidden} />
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
