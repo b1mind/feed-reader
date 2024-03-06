@@ -1,9 +1,15 @@
-import { persistStore } from '$lib/utils/persistStore'
+import { persistStore } from '$lib/stores/persistStore'
 
 const data = {
 	seenPosts: [],
 	savedProvider: '',
 	favPosts: '',
+	settings: {
+		target: true,
+		layout: false,
+		order: false,
+		hidden: false,
+	},
 }
 
 export const localSettings = persistStore('localSettings', data)

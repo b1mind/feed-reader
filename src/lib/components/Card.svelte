@@ -4,6 +4,7 @@
 
 	//note are we running this too much on every card? parent logic?
 	let lastSeen = $localSettings.seenPosts
+	let target = $localSettings.settings.target ? 'target="_blank"' : null
 
 	function saveSeen(e, title) {
 		e.target.closest('article').classList.add('seen')
@@ -27,7 +28,7 @@
 			<b>{feedTitle}</b>
 			<br />
 		{/if}
-		<a href={link} on:click={(e) => saveSeen(e, title)}>
+		<a {target} href={link} on:click={(e) => saveSeen(e, title)}>
 			{title}
 		</a>
 

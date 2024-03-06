@@ -1,6 +1,8 @@
 <script>
+	import { localSettings } from '$lib/stores'
 	import Card from '$lib/components/Card.svelte'
-	export let columns
+
+	export let columns = $localSettings.settings.layout
 	export let posts
 </script>
 
