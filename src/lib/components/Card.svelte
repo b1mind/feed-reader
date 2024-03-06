@@ -158,15 +158,18 @@
 		border-radius: 8px;
 		overflow: hidden;
 		background-color: var(--seen, var(--clr-secondary-bg));
+		transition: all 0.2s ease-out;
 
 		button {
 			--fill: var(--clr-primary);
 			position: absolute;
-			justify-self: end;
-			align-self: start;
+			// justify-self: start;
+			top: -4px;
+			left: -4px;
 			padding: 1px;
 			border: 0;
-			border-radius: 0 10px 0 10px;
+			border-radius: 10px 0 10px 0;
+			background-color: var(--clr-secondary-bg);
 			z-index: 9;
 			&:hover {
 				--fill: var(--clr-primary-bg);
@@ -185,7 +188,7 @@
 	}
 
 	.down {
-		transform: translateY(99%);
+		transform: translateY(100%);
 	}
 
 	.rotate {
