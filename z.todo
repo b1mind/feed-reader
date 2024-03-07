@@ -11,6 +11,7 @@ Todo:
 	☐ home page needs a introduction to SolidPods and how to use.
 	☐ scss global media queries - (slacker)
 	☐ start adding a11y past svelte checks (test with SR)
+	☐ prefers reduced motion for animations? (Geoff had some lib for it)
 	☐ form error and validation handling (zod?)
 	☐ favicon(s) and logo
 	✔ get a svg sprite of icons and stop using emoji @done
@@ -43,6 +44,7 @@ WishList:
 	☐ better client enhancements i.e. transitions (logic in .svelte?)
 	☐ update styles for error.html and +error.svelte
 	☐ server cache with data change checks for pods and rss.
+	☐ youtube videos for direct rss from them
 	☐ some kinda last viewed > last updated comparison/feedback to user.
 		☐ last updated or new posts... troublesome
 		//polling, action, service or web work.. don't really know yet. (ideas? open issue)
