@@ -7,11 +7,11 @@
 <ul>
 	{#each data.rssList as list}
 		<li>
-			<a
-				href="/follows/{$page.params.friend}/{$page.params.list}/{slugify(
-					list.name,
-				)}/?xml={list.href}">{list.name}</a
+			<a href="{$page.url.pathname}/{slugify(list.name)}/?xml={list.href}"
+				>{list.name}</a
 			>
 		</li>
 	{/each}
 </ul>
+
+<slot />

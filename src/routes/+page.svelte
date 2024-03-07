@@ -3,7 +3,7 @@
 </script>
 
 {#if !data?.user}
-	<h1>Solid Pod RSS</h1>
+	<h1>PodRSS .social</h1>
 	<p>
 		You need to <a href="/auth/login">login</a> to use this app.
 	</p>
@@ -22,7 +22,7 @@
 		</li>
 	</ul>
 {:else}
-	<h1>SolidPod RSS</h1>
+	<h1>PodRSS .social</h1>
 
 	<b>
 		Welcome, enjoy owning your data!

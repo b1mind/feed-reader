@@ -4,57 +4,63 @@
 </script>
 
 <main>
-	<h1>Following</h1>
-	{#await data.friends}
-		looking for friends with lists
-	{:then friends}
-		{#if friends.length > 0}
-			<ul>
-				{#each friends as friend}
-					<li>
-						{#if friend.img}
-							<img src={friend.img} alt={friend.nick} />
-						{/if}
+	<aside>
+		<h2>Following</h2>
+		{#await data.friends}
+			looking for friends with lists
+		{:then friends}
+			{#if friends.length > 0}
+				<ul>
+					{#each friends as friend}
+						<li>
+							{#if friend.img}
+								<img src={friend.img} alt={friend.nick} />
+							{/if}
 
-						<a href="/follows/{friend.nick}?id={friend.userId}">
-							{friend.nick || friend.name}
-						</a>
+							<a href="/follows/lists?id={friend.userId}">
+								{friend.nick || friend.name}
+							</a>
 
-						{#if friend.known}
-							<Icon name="friendship" aria="hidden" />
-						{/if}
-					</li>
-				{/each}
-			</ul>
-		{:else}
-			<p>you have no friends with RSS feed lists</p>
-			<p>You can start by following the</p>
-			<ul>
-				<li>podrss.solidcommunity.net</li>
-				<li>b1mind.inrupt.net</li>
-			</ul>
-		{/if}
-	{/await}
+							<a href="/follows/discover?id={friend.userId}">follows</a>
 
-	<form action="/follows?/addFriend" method="POST">
-		<label for="friend">
-			Add full webId or name.domain
-			<br />
-			<input
-				type="text"
-				name="friend"
-				placeholder="name.solidcommunity.net"
-				required
-			/>
-		</label>
-		<button>add</button>
-	</form>
+							{#if friend.known}
+								<Icon name="friendship" aria="hidden" />
+							{/if}
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				<p>you have no friends with RSS feed lists</p>
+				<p>You can start by following the</p>
+				<ul>
+					<li>podrss.solidcommunity.net</li>
+					<li>b1mind.inrupt.net</li>
+				</ul>
+			{/if}
+		{/await}
+
+		<form action="/follows?/addFriend" method="POST">
+			<label for="friend">
+				Add full webId or name.domain
+				<br />
+				<input
+					type="text"
+					name="friend"
+					placeholder="name.solidcommunity.net"
+					required
+				/>
+			</label>
+			<button>add</button>
+		</form>
+	</aside>
 	<slot />
 </main>
 
 <style lang="scss">
 	main {
 		--color: var(--clr-primary);
+		display: grid;
+		grid-template-columns: auto 1fr;
 	}
 
 	a,

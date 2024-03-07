@@ -21,7 +21,7 @@ export async function load({ url, params, parent }) {
 		const listDataSet = await getSolidDataset(listUrl)
 		const lists = getContainedResourceUrlAll(listDataSet)
 
-		return { lists, friend: params.friend }
+		return { lists, friend }
 	} catch (err) {
 		console.error(err)
 	}
