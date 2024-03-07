@@ -104,6 +104,7 @@
 
 	article {
 		--radius: 10px;
+		min-height: 100%;
 		padding: 0.5rem;
 		display: grid;
 		grid-template-rows:

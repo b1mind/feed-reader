@@ -1,6 +1,8 @@
 <script>
-	import { localSettings } from '$lib/stores'
 	import { afterUpdate } from 'svelte'
+	import { flip } from 'svelte/animate'
+	import { fade, fly } from 'svelte/transition'
+	import { localSettings } from '$lib/stores'
 
 	import Card from '$lib/components/Card.svelte'
 	// import SeenButton from '$lib/components/SeenButton.svelte'
@@ -56,8 +58,10 @@
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
 <div class="wrap-cards" class:columns>
-	{#each sortedPosts as post, id}
-		<Card {id} {...post}></Card>
+	{#each sortedPosts as post (post.id)}
+		<div animate:flip={{ duration: 500 }} in:fade out:fly={{ y: 200 }}>
+			<Card id={post.id} {...post} />
+		</div>
 	{/each}
 </div>
 
