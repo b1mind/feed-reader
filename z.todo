@@ -1,8 +1,9 @@
 Todo:
 	☐ find out best schema if not OPML/XSD to save lists in pod
 		//need to make a shape then find out which schema
-		//can I just do rdf:xml? as a .ttl or container
+		//looking at https://schema.org/Collection > https://schema.org/DataFeed > can be type of webFeed
 	☐ fix auth proper with Lucia so they are using same user table and Solid sessionStorage
+	☐ away to do followers of follows of follows ... recursively?
 	☐ better way to init DB on deploy (check if exist, stop whiping every time lol)
 	☐ make an actual design and add styles (people do like shiny things proper)
 	☐ fallback img if fails to load.
@@ -25,13 +26,13 @@ Features:
 	☐ theme switcher and prefers color
 	☐ back to top button!! 
 	☐ sticky header/nav or hideaway/scroll up view
-	☐ user settings for openBlank, hideSeen, default post feed order
 	☐ sync changes localstore > pod > localstore (last sync date needed?)
 	☐ date added, and last updated props
 	☐ favorite posts that save to pod in proper rdf schema.
 	☐ favorite feeds for lists to pull random or newest from. (in edit mode?)
 	☐ favorite lists to put at top of lists view.
 
+	✔ user settings for openBlank, hideSeen, default post feed order @done
 	✔ better media!!!! finally (still don't wanna scrap ogImage but left code in) @done
 	✔ add from friends lists @done
 	✔ friend of friends (needs icon) @done
