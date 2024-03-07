@@ -59,7 +59,7 @@
 
 <div class="wrap-cards" class:columns>
 	{#each sortedPosts as post (post.id)}
-		<div animate:flip={{ duration: 500 }} in:fade out:fly={{ y: 200 }}>
+		<div animate:flip={{ duration: 500 }}>
 			<Card id={post.id} {...post} />
 		</div>
 	{/each}
