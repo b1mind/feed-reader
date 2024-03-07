@@ -3,6 +3,7 @@ Todo:
 		//need to make a shape then find out which schema
 		//looking at https://schema.org/Collection > https://schema.org/DataFeed > can be type of webFeed
 	☐ fix auth proper with Lucia so they are using same user table and Solid sessionStorage
+	☐ finish making away to edit lists/list (move add list to lists page, and opml save to xml)
 	☐ away to do followers of follows of follows ... recursively?
 	☐ better way to init DB on deploy (check if exist, stop whiping every time lol)
 	☐ make an actual design and add styles (people do like shiny things proper)
