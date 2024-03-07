@@ -63,7 +63,7 @@
 						<!-- to preload / client parse or what how taxing is it? -->
 						<a
 							data-sveltekit-preload-data
-							href="/feed/{data.listName}/{slugify(name)}/?xml={href}"
+							href="/lists/{data.listName}/{slugify(name)}/?xml={href}"
 							on:click={open ? toggleMenu : null}
 						>
 							{name}

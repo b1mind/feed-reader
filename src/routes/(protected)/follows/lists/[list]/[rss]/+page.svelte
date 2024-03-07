@@ -10,5 +10,5 @@
 	<p>{data.rss?.description || 'no description'}</p>
 </header>
 
-<a href="/feed/{$page.url.search}&title={data.rss.title}">Add Feed</a>
+<a href="/lists/{$page.url.search}&title={data.rss.title}">Add Feed</a>
 <LayoutCards posts={data.rss.items} />

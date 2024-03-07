@@ -50,7 +50,7 @@
 		{#each data.lists as name}
 			<li>
 				<form action="/feed/?/removeList" method="POST">
-					<a href="/feed/{splitName(name)}">
+					<a href="/lists/{splitName(name)}">
 						{splitName(name)}
 					</a>
 					<input type="hidden" name="listName" value={name} />

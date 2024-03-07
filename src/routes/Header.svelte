@@ -13,7 +13,7 @@
 			<!-- <a href="/fetch">cacheTest</a> -->
 			<!-- <a href="/rdf">rdfTest</a> -->
 			<a data-sveltekit-preload-data href="/follows">follows</a>
-			<a data-sveltekit-preload-data href="/feed">lists</a>
+			<a data-sveltekit-preload-data href="/lists">lists</a>
 
 			<!-- do I need to enhance the logout? animate some feedback if used -->
 			<!--
