@@ -51,7 +51,9 @@
 	{#if snippet}
 		<p>
 			{snippet}
-			<a href={link}>..Read More</a>
+			{#if !title}
+				<a href={link}>..Read More</a>
+			{/if}
 		</p>
 	{/if}
 
