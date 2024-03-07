@@ -118,6 +118,7 @@ export async function GET({ url, setHeaders }) {
 		})
 
 		let newItem = {
+			id: items.length,
 			title: item.title,
 			link: item.link,
 			categories: item.categories,

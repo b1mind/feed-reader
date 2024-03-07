@@ -7,11 +7,14 @@
 	import ViewButton from '$lib/components/ViewButton.svelte'
 
 	export let posts
+	$: sortedPosts = posts
 
 	let columns = $localSettings.settings.layout
 
 	afterUpdate(() => {
-		hideSeen()
+		if ($localSettings.settings.hidden) {
+			hideSeen()
+		}
 	})
 
 	function toggleSeen() {
@@ -21,21 +24,27 @@
 
 	function hideSeen() {
 		// this really does not work when switching feeds data gets jumbled
-		// if ($localSettings.settings.hidden) {
-		// 	filteredPosts = posts.filter(
-		// 		(post) => !$localSettings.seenPosts.includes(post.title),
-		// 	)
-		// } else {
-		// 	filteredPosts = posts
-		// }
-		const allSeen = document.querySelectorAll('.seen')
-		for (const post of allSeen) {
-			if ($localSettings.settings.hidden) {
-				post.classList.add('hidden')
-			} else {
-				post.classList.remove('hidden')
-			}
+		//fixme need key.id in posts
+		let seenPosts = document.querySelectorAll('.seen')
+		// seenPosts = $localSettings.seenPosts
+		if ($localSettings.settings.hidden) {
+			seenPosts.forEach((post) => {
+				sortedPosts = sortedPosts.filter((key) => {
+					return key.id != post.dataset.id
+				})
+			})
+		} else {
+			sortedPosts = posts
 		}
+
+		// const allSeen = document.querySelectorAll('.seen')
+		// for (const post of allSeen) {
+		// 	if ($localSettings.settings.hidden) {
+		// 		post.classList.add('hidden')
+		// 	} else {
+		// 		post.classList.remove('hidden')
+		// 	}
+		// }
 	}
 </script>
 
@@ -47,8 +56,8 @@
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
 <div class="wrap-cards" class:columns>
-	{#each posts as post}
-		<Card {...post}></Card>
+	{#each sortedPosts as post, id}
+		<Card {id} {...post}></Card>
 	{/each}
 </div>
 
