@@ -57,16 +57,13 @@
 <!-- <SeenButton on:toggleSeen={() => (hidden = !hidden)} {hidden} /> -->
 <ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
-<!-- {#key posts} -->
-<div class="wrap-cards" class:columns>
-	{#each sortedPosts as post (post.id)}
-		<div animate:flip={{ duration: 500 }} transition:fade={{ duration: 200 }}>
+{#key posts}
+	<div class="wrap-cards" class:columns transition:fade={{ duration: 300 }}>
+		{#each sortedPosts as post (post.id)}
 			<Card id={post.id} {...post} />
-		</div>
-	{/each}
-</div>
-
-<!-- {/key} -->
+		{/each}
+	</div>
+{/key}
 
 <style lang="scss">
 	.columns {
