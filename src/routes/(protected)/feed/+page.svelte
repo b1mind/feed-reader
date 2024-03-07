@@ -35,7 +35,7 @@
 			'load',
 			() => {
 				xmlString = reader.result
-				console.log(xmlString)
+				// console.log(xmlString)
 				newListName = parseTitle(xmlString)
 			},
 			false,

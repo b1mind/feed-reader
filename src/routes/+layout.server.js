@@ -21,7 +21,6 @@ export async function load({ locals, cookies, url, fetch }) {
 	let user
 
 	if (webId) {
-		console.log(locals.user.webId)
 		const profileDataSet = await getSolidDataset(`${webId}`)
 		const profileThing = getThing(profileDataSet, webId)
 		// where is this name FOAF schema

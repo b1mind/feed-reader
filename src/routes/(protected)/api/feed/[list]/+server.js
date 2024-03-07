@@ -56,8 +56,9 @@ export async function GET({ fetch, locals, url, params, setHeaders }) {
 			const sortedStream = flattenItemsIntoObjects(responses).sort(
 				sortMethod ? sortMethod : compareDates,
 			)
+
+			//needed to key each block
 			sortedStream.map((obj, i) => (obj.id = i))
-			console.log(sortedStream)
 			return sortedStream
 		})
 		.catch((error) => {
