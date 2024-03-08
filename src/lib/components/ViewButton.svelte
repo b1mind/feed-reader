@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte'
+	import Icon from '$lib/components/Icon.svelte'
 
 	export let columns
 
@@ -11,6 +12,10 @@
 	}
 </script>
 
-<button type="button" class="mobile-only" on:click={toggleView}>
-	{columns ? 'grid' : 'columns'}
+<button type="button" class="btn mobile-only" on:click={toggleView}>
+	{#if columns}
+		<Icon name="grid" />
+	{:else}
+		<Icon name="columns" />
+	{/if}
 </button>

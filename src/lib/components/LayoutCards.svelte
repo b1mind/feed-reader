@@ -1,10 +1,12 @@
 <script>
 	import { afterUpdate } from 'svelte'
 	import { fade } from 'svelte/transition'
+	import { page } from '$app/stores'
 	import { localSettings } from '$lib/stores'
 	import { compareDates } from '$lib/utils'
 
 	import Card from '$lib/components/Card.svelte'
+	import Icon from '$lib/components/Icon.svelte'
 	// import SeenButton from '$lib/components/SeenButton.svelte'
 	import ViewButton from '$lib/components/ViewButton.svelte'
 
@@ -53,29 +55,42 @@
 	}
 </script>
 
-{#if !recent}
-	<button type="button" on:click={sortRecent}>Recent</button>
-{:else}
-	<button type="button" on:click={sortRandom}>Random</button>
-{/if}
+<div class="layout-content">
+	{#if !$page.url.search}
+		{#if recent}
+			<button type="button" class="btn" on:click={sortRandom}>Random</button>
+		{:else}
+			<button type="button" class="btn" on:click={sortRecent}>Recent</button>
+		{/if}
+	{/if}
 
-<button type="button" on:click={toggleSeen}>
-	{$localSettings.settings.hidden ? 'showSeen' : 'hideSeen'}
-</button>
+	<button type="button" class="btn" on:click={toggleSeen}>
+		{#if $localSettings.settings.hidden}
+			<Icon name="view" />
+		{:else}
+			<Icon name="view-off" />
+		{/if}
+	</button>
+	<!-- could jus make this a button here.. -->
+	<ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
-<!-- could jus make this a button here.. -->
-<ViewButton on:toggleView={() => (columns = !columns)} {columns} />
-
-{#key posts}
-	<div class="wrap-cards" class:columns transition:fade={{ duration: 300 }}>
-		{#each hiddenPosts as post (post.id)}
-			<Card id={post.id} {...post} />
-		{/each}
-	</div>
-{/key}
+	{#key posts}
+		<div class="wrap-cards" class:columns transition:fade={{ duration: 300 }}>
+			{#each hiddenPosts as post (post.id)}
+				<Card id={post.id} {...post} />
+			{/each}
+		</div>
+	{/key}
+</div>
 
 <style lang="scss">
 	.columns {
 		display: block;
+	}
+
+	@media (max-width: 600px) {
+		.layout-content {
+			text-align: right;
+		}
 	}
 </style>

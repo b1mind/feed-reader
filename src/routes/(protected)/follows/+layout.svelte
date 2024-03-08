@@ -12,21 +12,23 @@
 			{#if friends.length > 0}
 				<ul>
 					{#each friends as friend}
-						<li>
-							{#if friend.img}
-								<img src={friend.img} alt={friend.nick} />
-							{/if}
+						{#if friend}
+							<li>
+								{#if friend.img}
+									<img src={friend.img} alt={friend.nick} />
+								{/if}
 
-							<a href="/follows/lists?id={friend.userId}">
-								{friend.nick || friend.name}
-							</a>
+								<a href="/follows/lists?id={friend.userId}">
+									{friend.nick || friend.name}
+								</a>
 
-							<a href="/follows/discover?id={friend.userId}">follows</a>
+								<a href="/follows/discover?id={friend.userId}">follows</a>
 
-							{#if friend.known}
-								<Icon name="friendship" aria="hidden" />
-							{/if}
-						</li>
+								{#if friend.known}
+									<Icon name="friendship" aria="hidden" />
+								{/if}
+							</li>
+						{/if}
 					{/each}
 				</ul>
 			{:else}
