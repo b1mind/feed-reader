@@ -1,53 +1,77 @@
 import {
 	getSolidDataset,
 	getThing,
-	getThingAll,
-	getProfileAll,
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
-	isContainer,
+	getResourceInfo,
+	isRawData,
+	getProfileAll,
 } from '@inrupt/solid-client'
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
-import { sessionStorage } from '$lib/server/auth'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 import { getFriends } from '$lib/pod/index.js'
 
-export async function load({ locals, url }) {
+// async function checkContainer(webId) {
+// 	let contact = new URL(webId)
+// 	let listUrl = `${contact.origin}/public/feedReader/`
+// 	let hasLists
+// 	try {
+// 		const container = await getResourceInfo(listUrl)
+// 		hasLists = true
+// 	} catch (err) {
+// 		hasLists = false
+// 	}
+// 	return hasLists
+// }
+
+// async function fetchProfile(webId) {}
+
+// async function processFriends(webId) {
+// 	const friends = await getFriends(webId)
+// 	const friendsWithLists = []
+
+// 	for (const friendWebId of friends) {
+// 		if (await checkContainer(friendWebId)) {
+// 			const profile = await getSolidDataset(friendWebId)
+// 			friendsWithLists.push(profile)
+// 		}
+// 	}
+// 	return friendsWithLists
+// }
+
+export async function load({ parent, locals, url, setHeaders }) {
 	try {
+		const parentData = await parent()
 		const webId = locals.user.webId
 		const followId = `https://${url.searchParams.get('id')}/profile/card#me`
 		const contacts = await getFriends(followId)
 
-		//fixme Auth for fetching contacts from https://b1mind.datapod.igrant.io/contacts/
-		// if (contacts.length < 1) {
-		// 	const url = new URL(webId)
-		// 	const session = await getSessionFromStorage(
-		// 		locals.session.id,
-		// 		sessionStorage,
-		// 	)
-		// 	contacts = await getFriends(url.origin + '/contacts/', {
-		// 		fetch: session.fetch,
-		// 	})
-		// 	console.log(contacts)
-		// }
+		// let friends = processFriends(followId).then((friendsWithLists) =>
+		// 	console.log(friendsWithLists),
+		// )
 
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)
 			let listUrl = `${contact.origin}/public/feedReader/`
 
-			// Check if friend has feedReader
-			const friendListDataSet = isContainer(listUrl)
-
-			if (friendListDataSet) {
+			try {
+				const lists = await getResourceInfo(listUrl)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
 				// Check if they are also a friend
 				const knows = getUrlAll(friendThing, FOAF.knows)
-				const known = knows.includes(webId)
+
+				//fixme Follows but not known
+				let follows = knows.includes(webId)
+				let known
+				if (follows) {
+					known = parentData.friends.some(
+						(profile) => profile.webId === contact.href,
+					)
+				}
 
 				const img = getUrl(friendThing, VCARD.hasPhoto)
 				const name = getStringNoLocale(friendThing, VCARD.fn)
@@ -60,12 +84,15 @@ export async function load({ locals, url }) {
 					webId: contact.href,
 					userId: contact.host,
 					known,
+					lists,
 				}
+			} catch {
+				console.log('failed')
+				return null
 			}
 		})
 
 		const friends = await Promise.all(friendPromises)
-
 		return { friends }
 	} catch (error) {
 		console.error(error)

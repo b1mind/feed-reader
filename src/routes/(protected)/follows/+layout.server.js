@@ -7,10 +7,8 @@ import {
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
-	isContainer,
+	getResourceInfo,
 } from '@inrupt/solid-client'
-import { getSessionFromStorage } from '@inrupt/solid-client-authn-node'
-import { sessionStorage } from '$lib/server/auth'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
@@ -19,19 +17,6 @@ import { getFriends } from '$lib/pod/index.js'
 
 export async function load({ locals }) {
 	try {
-		//fixme Auth for fetching contacts from https://b1mind.datapod.igrant.io/contacts/
-		// if (contacts.length < 1) {
-		// 	const url = new URL(webId)
-		// 	const session = await getSessionFromStorage(
-		// 		locals.session.id,
-		// 		sessionStorage,
-		// 	)
-		// 	contacts = await getFriends(url.origin + '/contacts/', {
-		// 		fetch: session.fetch,
-		// 	})
-		// 	console.log(contacts)
-		// }
-
 		const webId = locals.user.webId
 		const contacts = await getFriends(webId)
 
@@ -39,10 +24,8 @@ export async function load({ locals }) {
 			contact = new URL(contact)
 			let listUrl = `${contact.origin}/public/feedReader/`
 
-			// Check if friend has feedReader
-			const friendListDataSet = isContainer(listUrl)
-
-			if (friendListDataSet) {
+			try {
+				const lists = await getSolidDataset(listUrl)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
 				// Check if they are also a friend
@@ -60,7 +43,12 @@ export async function load({ locals }) {
 					webId: contact.href,
 					userId: contact.host,
 					known,
+					lists,
+					knows,
 				}
+			} catch {
+				console.log(failed)
+				return null
 			}
 		})
 

@@ -11,13 +11,6 @@
 	let xmlString
 	let select
 
-	// function parseTitle(str) {
-	// 	const regex = /<title>(.*?)<\/title>/
-	// 	const match = str.match(regex)
-	// 	return match ? match[1] : null
-	// }
-
-	//cleaner than regex? xD
 	function parseTitle(str) {
 		return str.split('<title>')[1].split('</title>')[0]
 	}

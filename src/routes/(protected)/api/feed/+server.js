@@ -18,6 +18,7 @@ function shorten(str, maxLen, separator = ' ') {
 	return str.substr(0, str.lastIndexOf(separator, maxLen))
 }
 
+//need to combine this with //compare dates
 function sortByDateDescending(feedItemA, feedItemB) {
 	const itemADate = new Date(feedItemA.isoDate)
 	const itemBDate = new Date(feedItemB.isoDate)
