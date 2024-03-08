@@ -19,9 +19,6 @@ import { getFriends } from '$lib/pod/index.js'
 
 export async function load({ locals }) {
 	try {
-		const webId = locals.user.webId
-		const contacts = await getFriends(webId)
-
 		//fixme Auth for fetching contacts from https://b1mind.datapod.igrant.io/contacts/
 		// if (contacts.length < 1) {
 		// 	const url = new URL(webId)
@@ -34,6 +31,9 @@ export async function load({ locals }) {
 		// 	})
 		// 	console.log(contacts)
 		// }
+
+		const webId = locals.user.webId
+		const contacts = await getFriends(webId)
 
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)
