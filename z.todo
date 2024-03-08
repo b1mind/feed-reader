@@ -28,8 +28,9 @@ Todo:
 Features:
 	☐ away to add a full list (opml string since logic exists already?)
 	☐ theme switcher and prefers color
-	☐ back to top button!! 
-	☐ sticky header/nav or hideaway/scroll up view
+	✔ back to top button!! @done
+	✔ better loading bar proper @done
+	✔ sticky header/nav or hideaway/scroll up view @done
 	☐ sync changes localstore > pod > localstore (last sync date needed?)
 	☐ date added, and last updated props
 	☐ favorite posts that save to pod in proper rdf schema.

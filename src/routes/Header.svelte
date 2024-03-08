@@ -1,22 +1,39 @@
 <script>
-	import { page } from '$app/stores'
+	import { fade, fly, slide } from 'svelte/transition'
+	import { beforeNavigate, afterNavigate } from '$app/navigation'
+	import { page, navigating } from '$app/stores'
+	import Loadbar from './Loadbar.svelte'
 	// import { applyAction, enhance } from '$app/forms'
 	// import { invalidateAll } from '$app/navigation'
+
+	//use this logic to animate some how in a {#if} or {#key} block
+	let loading = false
+	beforeNavigate((e) => {
+		if (e.from.url.origin === e.to.url.origin) {
+			loading = true
+		}
+	})
+
+	afterNavigate((e) => {
+		loading = false
+	})
 </script>
 
-<header>
-	<nav>
-		<a href="/">home</a>
-		{#if !$page.data?.user?.info}
-			<a href="/auth/login"> login </a>
-		{:else}
-			<!-- <a href="/fetch">cacheTest</a> -->
-			<!-- <a href="/rdf">rdfTest</a> -->
-			<a data-sveltekit-preload-data href="/follows">follows</a>
-			<a data-sveltekit-preload-data href="/lists">lists</a>
+<div class="bar">
+	<header>
+		<!-- todo animate page/loader -->
+		<nav>
+			<a href="/">home</a>
+			{#if !$page.data?.user?.info}
+				<a href="/auth/login"> login </a>
+			{:else}
+				<!-- <a href="/fetch">cacheTest</a> -->
+				<!-- <a href="/rdf">rdfTest</a> -->
+				<a data-sveltekit-preload-data href="/follows">follows</a>
+				<a data-sveltekit-preload-data href="/lists">lists</a>
 
-			<!-- do I need to enhance the logout? animate some feedback if used -->
-			<!--
+				<!-- do I need to enhance the logout? animate some feedback if used -->
+				<!--
 			use:enhance={() => {
 				return async ({ result }) => {
 					invalidateAll()
@@ -25,23 +42,54 @@
 			}}
 		-->
 
-			<!-- //note link or form/btn..  -->
+				<!-- //note link or form/btn..  -->
 
-			<!-- remove: just having fun with ideas -->
-			<!-- <div class="layer">
+				<!-- remove: just having fun with ideas -->
+				<!-- <div class="layer">
 			<div class="icon">
 				<Icon name="settings" width="18px" height="18" />
 			</div>
 		</div> -->
 
-			<a class="pfp" href="/profile">
-				<img src={$page.data.user.img} alt="profile" />
-			</a>
+				<a class="pfp" href="/profile">
+					<img src={$page.data.user.img} alt="profile" />
+				</a>
+			{/if}
+		</nav>
+	</header>
+
+	<!-- <div class="loadbar">
+		{#if loading}
+			<div class:loading in:fade out:fade></div>
 		{/if}
-	</nav>
-</header>
+	</div> -->
+</div>
+
+<Loadbar />
 
 <style lang="scss">
+	.bar {
+		grid-column: full;
+		position: sticky;
+		top: 0;
+		display: grid;
+		grid-template-columns: inherit;
+		background-color: var(--clr-primary-bg);
+		z-index: 999;
+	}
+
+	//todo add better loader
+	// .loadbar {
+	// 	grid-column: full;
+	// 	display: grid;
+	// 	height: 2px;
+	// 	box-shadow: 0 0 10 black;
+	// }
+
+	// .loading {
+	// 	background-color: var(--clr-primary);
+	// }
+
 	header {
 		grid-column: popout;
 		padding-block: var(--gap-sm);
@@ -66,23 +114,6 @@
 	a:not(:has(img)) {
 		padding-block-end: 4px;
 	}
-	//remove: when done playing around
-	// .layer {
-	// 	display: grid;
-	// 	grid-template-areas: 'l';
-	// 	& > * {
-	// 		grid-area: l;
-	// 	}
-	// }
-
-	// .icon {
-	// 	place-self: end;
-	// 	width: 24px;
-	// 	padding: 2px;
-	// 	transform: translate(6px, 8px);
-	// 	border-radius: 50%;
-	// 	background-color: var(--clr-primary-bg);
-	// }
 
 	.pfp {
 		width: 42px;
