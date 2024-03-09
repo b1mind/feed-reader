@@ -24,6 +24,14 @@ export function flattenItemsIntoObjects(posts) {
 	return newObjects
 }
 
+export function parseTitle(str) {
+	return str.split('<title>')[1].split('</title>')[0]
+}
+
+export function splitName(name) {
+	return name.split('/').pop().split('.').shift()
+}
+
 export const nameSort = (a, b) => {
 	let nameA = a.name.toLowerCase()
 	let nameB = b.name.toLowerCase()
