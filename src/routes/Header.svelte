@@ -5,18 +5,6 @@
 	import Loadbar from './Loadbar.svelte'
 	// import { applyAction, enhance } from '$app/forms'
 	// import { invalidateAll } from '$app/navigation'
-
-	//use this logic to animate some how in a {#if} or {#key} block
-	let loading = false
-	beforeNavigate((e) => {
-		if (e.from.url.origin === e.to.url.origin) {
-			loading = true
-		}
-	})
-
-	afterNavigate((e) => {
-		loading = false
-	})
 </script>
 
 <div class="bar">
@@ -78,18 +66,6 @@
 		z-index: 999;
 	}
 
-	//todo add better loader
-	// .loadbar {
-	// 	grid-column: full;
-	// 	display: grid;
-	// 	height: 2px;
-	// 	box-shadow: 0 0 10 black;
-	// }
-
-	// .loading {
-	// 	background-color: var(--clr-primary);
-	// }
-
 	header {
 		grid-column: popout;
 		padding-block: var(--gap-sm);
@@ -108,6 +84,8 @@
 		@media (max-width: 460px) {
 			display: flex;
 			flex-wrap: wrap;
+			justify-content: end;
+			height: 1.69rem;
 		}
 	}
 
