@@ -155,13 +155,13 @@
 			></path>
 		</symbol>
 
-		<symbol viewBox="0 0 24 24" id="columns">
+		<symbol viewBox="0 0 32 32" id="columns">
 			<path
-				fill="none"
-				stroke="var(--fill, currentColor)"
-				stroke-width="1.5"
-				d="M3 7.4V3.6a.6.6 0 0 1 .6-.6h5.8a.6.6 0 0 1 .6.6v3.8a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6Zm11 13v-3.8a.6.6 0 0 1 .6-.6h5.8a.6.6 0 0 1 .6.6v3.8a.6.6 0 0 1-.6.6h-5.8a.6.6 0 0 1-.6-.6Zm0-8V3.6a.6.6 0 0 1 .6-.6h5.8a.6.6 0 0 1 .6.6v8.8a.6.6 0 0 1-.6.6h-5.8a.6.6 0 0 1-.6-.6Zm-11 8v-8.8a.6.6 0 0 1 .6-.6h5.8a.6.6 0 0 1 .6.6v8.8a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6Z"
-			></path>
+				fill-rule="evenodd"
+				fill="var(--fill, currentColor)"
+				d="M14 4H4v8h10V4ZM6 6h6v4H6V6Zm8 10H4v12h10V16Zm-2 2H6v8h6v-8Zm6-14v12h10V4H18Zm2 2h6v8h-6V6Zm-2 22v-8h10v8H18Zm8-6h-6v4h6v-4Z"
+				clip-rule="evenodd"
+			/>
 		</symbol>
 
 		<symbol viewBox="0 0 32 32" id="grid">
