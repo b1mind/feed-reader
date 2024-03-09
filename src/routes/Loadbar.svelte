@@ -5,7 +5,9 @@
 
 	$: {
 		if ($navigating) {
-			loading = 'yes'
+			setTimeout(() => {
+				loading = 'yes'
+			}, 50)
 		} else {
 			loading = 'closing'
 			setTimeout(() => {
@@ -26,7 +28,7 @@
 		let timeout
 		const handle = () => {
 			if (percentage < 0.7) {
-				percentage += Math.random() * 0.3
+				percentage += Math.random() * 0.2
 				timeout = setTimeout(handle, Math.random() * 1000)
 			}
 		}
