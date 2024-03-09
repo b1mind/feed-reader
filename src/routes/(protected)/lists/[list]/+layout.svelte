@@ -73,10 +73,10 @@
 						<input type="hidden" name="name" value={safeSpace(name)} />
 						<input type="hidden" name="url" value={href} />
 
-						<button formaction="/feed/{data.listName}?/edit" title="edit">
+						<button formaction="/lists/{data.listName}?/edit" title="edit">
 							📝
 						</button>
-						<button formaction="/feed/{data.listName}?/remove" title="remove">
+						<button formaction="/lists/{data.listName}?/remove" title="remove">
 							❌
 						</button>
 					</form> -->
@@ -85,7 +85,7 @@
 			</nav>
 
 			<form
-				action="/feed/{data.listName}?/add"
+				action="/lists/{data.listName}?/add"
 				method="POST"
 				autocomplete="off"
 				use:enhance

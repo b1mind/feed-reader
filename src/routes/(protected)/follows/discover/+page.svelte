@@ -33,7 +33,7 @@
 				{/each}
 			</ul>
 		{:else}
-			<p>This person has no friends with lists</p>
+			<p>Not following anyone with RSS lists</p>
 		{/if}
 	{/await}
 </main>

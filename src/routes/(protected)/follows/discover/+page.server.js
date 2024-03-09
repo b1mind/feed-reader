@@ -4,9 +4,6 @@ import {
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
-	getResourceInfo,
-	isRawData,
-	getProfileAll,
 } from '@inrupt/solid-client'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
@@ -42,11 +39,11 @@ import { getFriends } from '$lib/pod/index.js'
 // 	return friendsWithLists
 // }
 
-export async function load({ parent, locals, url, setHeaders }) {
+export async function load({ locals, url }) {
+	const webId = locals.user.webId
+	const followId = `https://${url.searchParams.get('id')}/profile/card#me`
+
 	try {
-		const parentData = await parent()
-		const webId = locals.user.webId
-		const followId = `https://${url.searchParams.get('id')}/profile/card#me`
 		const contacts = await getFriends(followId)
 
 		// let friends = processFriends(followId).then((friendsWithLists) =>
@@ -56,9 +53,10 @@ export async function load({ parent, locals, url, setHeaders }) {
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)
 			let listUrl = `${contact.origin}/public/feedReader/`
+			if (contact.href === webId) return null
 
 			try {
-				const lists = await getResourceInfo(listUrl)
+				const lists = await getSolidDataset(listUrl)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
 				// Check if they are also a friend
@@ -68,9 +66,7 @@ export async function load({ parent, locals, url, setHeaders }) {
 				let follows = knows.includes(webId)
 				let known
 				if (follows) {
-					known = parentData.friends.some(
-						(profile) => profile.webId === contact.href,
-					)
+					known = knows.some((profile) => profile.webId === contact.href)
 				}
 
 				const img = getUrl(friendThing, VCARD.hasPhoto)
@@ -84,18 +80,20 @@ export async function load({ parent, locals, url, setHeaders }) {
 					webId: contact.href,
 					userId: contact.host,
 					known,
+					follows,
 					lists,
 				}
 			} catch {
-				console.log('failed')
-				return null
+				return null //need to do better here
 			}
 		})
 
-		const friends = await Promise.all(friendPromises)
+		let friends = await Promise.all(friendPromises)
+		friends = friends.filter((f) => f !== null)
+
 		return { friends }
 	} catch (error) {
 		console.error(error)
-		return { friends: [{ nick: 'No friends with rss lists' }] }
+		return { friends: [] }
 	}
 }

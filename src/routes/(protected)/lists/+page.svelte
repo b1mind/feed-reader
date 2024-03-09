@@ -44,7 +44,7 @@
 		<ul>
 			{#each data.lists as name}
 				<li>
-					<form action="/feed/?/removeList" method="POST">
+					<form action="/lists/?/removeList" method="POST">
 						<a href="/lists/{splitName(name)}">
 							{splitName(name)}
 						</a>
@@ -60,7 +60,7 @@
 
 	{#if data.xml}
 		<form
-			action="/feed/{select}?/add"
+			action="/lists/{select}?/add"
 			method="POST"
 			autocomplete="off"
 			use:enhance
@@ -97,14 +97,14 @@
 						{required}
 					/>
 				</label>
-				<button formaction="/feed?/addList" title="addlist">add List</button>
+				<button formaction="/lists?/addList" title="addlist">add List</button>
 			{:else}
 				<button type="submit">add</button>
 			{/if}
 		</form>
 	{:else}
 		<form
-			action="/feed?/addList"
+			action="/lists?/addList"
 			method="POST"
 			autocomplete="off"
 			enctype="multipart/form-data"

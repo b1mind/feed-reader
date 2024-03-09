@@ -7,7 +7,7 @@ import {
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
-	getResourceInfo,
+	getContainedResourceUrlAll,
 } from '@inrupt/solid-client'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
@@ -25,7 +25,8 @@ export async function load({ locals }) {
 			let listUrl = `${contact.origin}/public/feedReader/`
 
 			try {
-				const lists = await getSolidDataset(listUrl)
+				const listsDataSet = await getSolidDataset(listUrl)
+				const lists = getContainedResourceUrlAll(listsDataSet)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
 				// Check if they are also a friend
@@ -47,7 +48,7 @@ export async function load({ locals }) {
 					knows,
 				}
 			} catch {
-				console.log(failed)
+				console.log('failed')
 				return null
 			}
 		})
@@ -57,6 +58,6 @@ export async function load({ locals }) {
 		return { friends }
 	} catch (error) {
 		console.error(error)
-		return { friends: [{ nick: 'No friends with rss lists' }] }
+		return { friends: [] }
 	}
 }
