@@ -47,7 +47,9 @@
 <div class="layout">
 	<Header />
 
-	<slot />
+	<main>
+		<slot />
+	</main>
 </div>
 
 <button
@@ -66,6 +68,14 @@
 
 <!-- todo need a footer yo or how can the page walk -->
 <style lang="scss">
+	main {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		@media (max-width: 460px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
 	.btnTop {
 		--fill: var(--clr-light);
 		position: fixed;

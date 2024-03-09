@@ -51,25 +51,24 @@
 	}
 </script>
 
-<main>
-	<aside class:open>
-		<ul>
-			<nav>
-				{#each data.rssList as { name, href } (name)}
-					<li
-						animate:flip={{ duration: 350 }}
-						transition:fly|local={{ x: 150, duration: 350 }}
+<aside class:open>
+	<ul>
+		<nav>
+			{#each data.rssList as { name, href } (name)}
+				<li
+					animate:flip={{ duration: 350 }}
+					transition:fly|local={{ x: 150, duration: 350 }}
+				>
+					<!-- to preload / client parse or what how taxing is it? -->
+					<a
+						data-sveltekit-preload-data
+						href="/lists/{data.listName}/{slugify(name)}/?xml={href}"
+						on:click={open ? toggleMenu : null}
 					>
-						<!-- to preload / client parse or what how taxing is it? -->
-						<a
-							data-sveltekit-preload-data
-							href="/lists/{data.listName}/{slugify(name)}/?xml={href}"
-							on:click={open ? toggleMenu : null}
-						>
-							{name}
-						</a>
+						{name}
+					</a>
 
-						<!-- <form method="POST" use:enhance>
+					<!-- <form method="POST" use:enhance>
 						<input type="hidden" name="name" value={safeSpace(name)} />
 						<input type="hidden" name="url" value={href} />
 
@@ -80,70 +79,60 @@
 							❌
 						</button>
 					</form> -->
-					</li>
-				{/each}
-			</nav>
+				</li>
+			{/each}
+		</nav>
 
-			<form
-				action="/lists/{data.listName}?/add"
-				method="POST"
-				autocomplete="off"
-				use:enhance
-			>
-				<label for="feed">
-					Feed Name:
-					<input type="text" name="feed" bind:value={feed} />
-				</label><br />
-				<label for="url">
-					RSS Url:
-					<input type="text" name="url" bind:value={url} />
-				</label>
-				<button type="submit">add</button>
-			</form>
-			<button on:click={saveFile}>Save Opml</button>
-		</ul>
-	</aside>
+		<form
+			action="/lists/{data.listName}?/add"
+			method="POST"
+			autocomplete="off"
+			use:enhance
+		>
+			<label for="feed">
+				Feed Name:
+				<input type="text" name="feed" bind:value={feed} />
+			</label><br />
+			<label for="url">
+				RSS Url:
+				<input type="text" name="url" bind:value={url} />
+			</label>
+			<button type="submit">add</button>
+		</form>
+		<button on:click={saveFile}>Save Opml</button>
+	</ul>
+</aside>
 
-	<div class="content">
-		<h1>{data.listName}</h1>
-		<section>
-			<slot />
-		</section>
-	</div>
+<div class="content">
+	<h1>{data.listName}</h1>
+	<section>
+		<slot />
+	</section>
+</div>
 
-	<button class="menu" type="button" on:click={toggleMenu}>
-		{open ? '✖️' : 'list'}
-	</button>
-</main>
+<button class="menu" type="button" on:click={toggleMenu}>
+	{open ? '✖️' : 'list'}
+</button>
 
 <style lang="scss">
-	main {
-		display: grid;
-		// grid-template-columns: [aside] minmax(300px, 1fr) [content] 5fr;
-		grid-template-columns: auto 1fr;
-
-		& > aside {
-			/*position: sticky;
+	aside {
+		/*position: sticky;
 			top: 1px;
 			align-self: start; */
-			display: grid;
-			font-size: 1.2rem;
-		}
+		display: grid;
+		font-size: 1.2rem;
 
 		@media (max-width: 460px) {
-			grid-template-columns: 1fr;
-			& > aside {
-				padding-block: 10px 30px;
-				padding-inline: 10px 30px;
-				display: none;
-				position: fixed;
-				max-height: 95svh;
-				bottom: 5px;
-				right: 0;
-				background-color: var(--clr-secondary-bg);
-				overflow-y: scroll;
-				z-index: 999;
-			}
+			padding-block: 10px 30px;
+			padding-inline: 10px 30px;
+			display: none;
+			position: fixed;
+			max-height: 95svh;
+			bottom: 5px;
+			right: 0;
+			background-color: var(--clr-secondary-bg);
+			overflow-y: scroll;
+			z-index: 999;
 		}
 	}
 
