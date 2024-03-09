@@ -59,10 +59,8 @@ export async function load({ locals, url }) {
 				const lists = await getSolidDataset(listUrl)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
-				// Check if they are also a friend
 				const knows = getUrlAll(friendThing, FOAF.knows)
 
-				//fixme Follows but not known
 				let follows = knows.includes(webId)
 				let known
 				if (follows) {

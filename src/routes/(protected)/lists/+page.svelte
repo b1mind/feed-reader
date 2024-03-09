@@ -1,6 +1,6 @@
 <script>
 	import { enhance } from '$app/forms'
-	import { safeSpace } from '$lib/utils'
+	import { splitName, parseTitle, safeSpace } from '$lib/utils'
 
 	export let data
 
@@ -10,14 +10,6 @@
 	let files
 	let xmlString
 	let select
-
-	function parseTitle(str) {
-		return str.split('<title>')[1].split('</title>')[0]
-	}
-
-	function splitName(name) {
-		return name.split('/').pop().split('.').shift()
-	}
 
 	function makeXmlString(e) {
 		if (!files) return

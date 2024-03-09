@@ -1,5 +1,7 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte'
+	import { splitName } from '$lib/utils'
+
 	export let data
 </script>
 
@@ -10,30 +12,39 @@
 			looking for friends with lists
 		{:then friends}
 			{#if friends.length > 0}
-				<ul>
-					{#each friends as friend}
-						{#if friend}
-							<li>
-								{#if friend.img}
-									<img src={friend.img} alt={friend.nick} />
-								{/if}
+				{#each friends as friend}
+					{#if friend}
+						<details>
+							{#if friend.img}
+								<img src={friend.img} alt={friend.nick} />
+							{/if}
 
-								<a href="/follows/lists?id={friend.userId}">
-									{friend.nick || friend.name}
-								</a>
+							<summary>
+								<!-- <a href="/follows/lists?id={friend.userId}"> -->
+								{friend.nick || friend.name}
+								<!-- </a> -->
 
 								<a href="/follows/discover?id={friend.userId}">follows</a>
 
 								{#if friend.known}
 									<Icon name="friendship" aria="hidden" />
 								{/if}
-							</li>
-						{/if}
-					{/each}
-				</ul>
+							</summary>
+							<ul>
+								{#each friend.lists as list}
+									<li>
+										<a href="/follows/lists/{friend.name}/?id={list}">
+											{splitName(list)}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					{/if}
+				{/each}
 			{:else}
 				<p>you have no friends with RSS feed lists</p>
-				<p>You can start by following the</p>
+				<p>You can start by following:</p>
 				<ul>
 					<li>podrss.solidcommunity.net</li>
 					<li>b1mind.inrupt.net</li>

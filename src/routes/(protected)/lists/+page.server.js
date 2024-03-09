@@ -20,15 +20,15 @@ import { slugify, keepOnlyLetters } from '$lib/utils'
 import { sessionStorage } from '$lib/server/auth'
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ locals, url, fetch }) {
+export async function load({ locals, url }) {
 	const webId = locals.user.webId
-	const urlWebId = new URL(webId)
+	const webIdHost = new URL(webId)
 	const xml = url.searchParams.get('xml')
 	const title = url.searchParams.get('title')
 
 	try {
 		const listDataSet = await getSolidDataset(
-			`${urlWebId.origin}/public/feedReader`,
+			`${webIdHost.origin}/public/feedReader`,
 		)
 
 		const lists = getContainedResourceUrlAll(listDataSet)
