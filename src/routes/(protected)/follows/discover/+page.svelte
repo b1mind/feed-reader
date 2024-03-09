@@ -15,7 +15,7 @@
 							<img src={friend.img} alt={friend.nick} />
 						{/if}
 
-						<a href="/follows/lists?id={friend?.userId}">
+						<a href="/follows/{friend?.userId}">
 							{friend.nick || friend.name}
 						</a>
 

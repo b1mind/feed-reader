@@ -34,7 +34,9 @@
 						<ul>
 							{#each friend.lists as list}
 								<li>
-									<a href="/follows/lists/{splitName(list)}/?id={list}">
+									<a
+										href="/follows/{friend.userId}/{splitName(list)}/?id={list}"
+									>
 										{splitName(list)}
 									</a>
 								</li>

@@ -12,8 +12,8 @@ import { schema } from 'rdf-namespaces'
 
 import { getFriends } from '$lib/pod/index.js'
 
-export async function load({ url, params, parent }) {
-	let friend = url.searchParams.get('id')
+export async function load({ params }) {
+	let friend = params.id
 
 	try {
 		let listUrl = `https://${friend}/public/feedReader/`

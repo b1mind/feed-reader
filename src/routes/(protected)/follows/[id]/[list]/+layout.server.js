@@ -12,9 +12,8 @@ import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
 import { schema } from 'rdf-namespaces'
 
 export async function load({ url, params, parent }) {
-	console.log(params.list)
-	console.log(await parent())
-	let list = url.searchParams.get('id')
+	console.log(params.id)
+	let list = `https://${params.id}/public/feedReader/${params.list}`
 	let rssList = []
 
 	try {
