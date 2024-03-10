@@ -13,7 +13,8 @@
 	--clr-dark: #1b1b1b;
 
 	--gap-sm: 10px;
-	--content-max: 1200px;
+	--gap-lg: 100px;
+	--content-max: 75rem;
 }
 
 //resets (import ? layer?)
@@ -44,6 +45,7 @@ select {
 	font-size: 1rem;
 }
 
+summary,
 button {
 	cursor: pointer;
 }
@@ -76,7 +78,7 @@ body {
 	display: grid;
 	grid-template-columns:
 		[full-start]
-		minmax(var(--gap-sm), 1fr)
+		minmax(var(--gap-sm), 0.5fr)
 		[popout-start]
 		minmax(0, 0.35fr)
 		[content-start]
@@ -84,9 +86,9 @@ body {
 		[content-end]
 		minmax(0, 0.35fr)
 		[popout-end]
-		minmax(var(--gap-sm), 1fr)
+		minmax(var(--gap-sm), 0.5fr)
 		[full-end];
-	grid-template-rows: auto auto 1fr auto;
+	grid-template-rows: auto 1fr auto;
 
 	& > * {
 		grid-column: content;
