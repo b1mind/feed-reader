@@ -42,6 +42,9 @@
 									</a>
 								</li>
 							{/each}
+							<!-- {#each friend.knows as know}
+								{know}
+							{/each} -->
 						</ul>
 					</details>
 				{/if}

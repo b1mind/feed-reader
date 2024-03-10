@@ -1,6 +1,7 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte'
 	import { splitName } from '$lib/utils'
+
 	export let data
 </script>
 
@@ -8,8 +9,10 @@
 	looking for friends with lists
 {:then friends}
 	{#if friends.length > 0}
+		<b>Discover</b>
 		{#each friends as friend}
 			{#if friend}
+				{@const known = data.user.knows.includes(friend.webId)}
 				<details>
 					{#if friend.img}
 						<img src={friend.img} alt={friend.nick} />
@@ -22,7 +25,7 @@
 						</b>
 						<!-- </a> -->
 
-						{#if friend.known}
+						{#if known}
 							<Icon name="friendship" aria="hidden" />
 						{:else if friend.follows}
 							<Icon name="follows" aria="hidden" />

@@ -40,12 +40,18 @@ import { getFriends } from '$lib/pod/index.js'
 // 	return friendsWithLists
 // }
 
-export async function load({ locals, url }) {
+export async function load({ locals, url, parent }) {
 	const webId = locals.user.webId
 	const followId = `https://${url.searchParams.get('id')}/profile/card#me`
 
 	try {
 		const contacts = await getFriends(followId)
+		// const parentData = await parent()
+		// const contacts = parentData.friends.forEach((f) => {
+		// 	if (f.webId === followId) {
+		// 		return f.knows
+		// 	}
+		// })
 
 		// let friends = processFriends(followId).then((friendsWithLists) =>
 		// 	console.log(friendsWithLists),
@@ -64,10 +70,14 @@ export async function load({ locals, url }) {
 				const knows = getUrlAll(friendThing, FOAF.knows)
 
 				let follows = knows.includes(webId)
-				let known
-				if (follows) {
-					known = knows.some((profile) => profile.webId === contact.href)
-				}
+				// let known
+				// if (follows) {
+				// 	const parentData = await parent()
+				// 	known = parentData.user.knows.includes(contact.href)
+				// 	// known = parentData.friends.some(
+				// 	// 	(profile) => profile.webId === contact.href,
+				// 	// )
+				// }
 
 				const img = getUrl(friendThing, VCARD.hasPhoto)
 				const name = getStringNoLocale(friendThing, VCARD.fn)
@@ -79,7 +89,7 @@ export async function load({ locals, url }) {
 					nick,
 					webId: contact.href,
 					userId: contact.host,
-					known,
+					// known,
 					follows,
 					lists,
 				}

@@ -15,10 +15,13 @@ import { schema } from 'rdf-namespaces'
 
 import { getFriends } from '$lib/pod/index.js'
 
-export async function load({ locals }) {
+export async function load({ locals, parent }) {
 	try {
 		const webId = locals.user.webId
-		const contacts = await getFriends(webId)
+		const parentData = await parent()
+
+		const contacts = parentData.user.knows
+		// const contacts = await getFriends(webId)
 
 		const friendPromises = contacts.map(async (contact) => {
 			contact = new URL(contact)

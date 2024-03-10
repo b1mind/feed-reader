@@ -3,6 +3,7 @@ import {
 	getSolidDataset,
 	getThing,
 	getUrl,
+	getUrlAll,
 	getStringNoLocale,
 } from '@inrupt/solid-client'
 import { FOAF, VCARD, RDF } from '@inrupt/vocab-common-rdf'
@@ -29,8 +30,9 @@ export async function load({ locals, cookies, url, fetch }) {
 		const name = getStringNoLocale(profileThing, VCARD.fn)
 		const nick = getStringNoLocale(profileThing, FOAF.nick)
 		const note = getStringNoLocale(profileThing, VCARD.note)
+		const knows = getUrlAll(profileThing, FOAF.knows)
 
-		user = { info: { ...locals.user }, name, nick, img, note }
+		user = { info: { ...locals.user }, name, nick, img, note, knows }
 	}
 
 	return {
