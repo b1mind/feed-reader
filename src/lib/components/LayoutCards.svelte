@@ -92,5 +92,9 @@
 		.layout-content {
 			text-align: right;
 		}
+
+		.wrap-cards {
+			text-align: left;
+		}
 	}
 </style>
