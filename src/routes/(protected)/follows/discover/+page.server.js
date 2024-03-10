@@ -4,6 +4,7 @@ import {
 	getUrl,
 	getUrlAll,
 	getStringNoLocale,
+	getContainedResourceUrlAll,
 } from '@inrupt/solid-client'
 
 import { FOAF, VCARD } from '@inrupt/vocab-common-rdf'
@@ -56,7 +57,8 @@ export async function load({ locals, url }) {
 			if (contact.href === webId) return null
 
 			try {
-				const lists = await getSolidDataset(listUrl)
+				const listsDataSet = await getSolidDataset(listUrl)
+				const lists = getContainedResourceUrlAll(listsDataSet)
 				const friendUserDataSet = await getSolidDataset(contact.href)
 				const friendThing = getThing(friendUserDataSet, contact.href)
 				const knows = getUrlAll(friendThing, FOAF.knows)

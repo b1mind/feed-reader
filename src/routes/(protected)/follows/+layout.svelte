@@ -6,7 +6,7 @@
 </script>
 
 <aside>
-	<h2>Following</h2>
+	<h2>Follow List</h2>
 	{#await data.friends}
 		looking for friends with lists
 	{:then friends}
@@ -27,11 +27,12 @@
 
 							{#if friend.known}
 								<Icon name="friendship" aria="hidden" />
+							{:else if friend.follows}
+								<Icon name="follows" aria="hidden" />
 							{/if}
-
-							<a href="/follows/discover?id={friend.userId}">follows</a>
 						</summary>
 						<ul>
+							<a href="/follows/discover?id={friend.userId}">follows</a>
 							{#each friend.lists as list}
 								<li>
 									<a
@@ -51,8 +52,10 @@
 	{/await}
 </aside>
 
-<h1>Following</h1>
-<slot />
+<div>
+	<h1>Following</h1>
+	<slot />
+</div>
 
 <style lang="scss">
 	img {

@@ -1,14 +1,12 @@
 <script>
-	import { fade, fly, slide } from 'svelte/transition'
-	import { beforeNavigate, afterNavigate } from '$app/navigation'
-	import { page, navigating } from '$app/stores'
+	import { page } from '$app/stores'
 	import Loadbar from './Loadbar.svelte'
 	// import { applyAction, enhance } from '$app/forms'
 	// import { invalidateAll } from '$app/navigation'
 </script>
 
-<div class="bar">
-	<header>
+<header>
+	<div class="bar">
 		<!-- todo animate page/loader -->
 		<nav>
 			<a href="/">home</a>
@@ -44,19 +42,19 @@
 				</a>
 			{/if}
 		</nav>
-	</header>
+	</div>
+</header>
 
-	<!-- <div class="loadbar">
+<!-- <div class="loadbar">
 		{#if loading}
 			<div class:loading in:fade out:fade></div>
 		{/if}
 	</div> -->
-</div>
 
 <Loadbar />
 
 <style lang="scss">
-	.bar {
+	header {
 		grid-column: full;
 		position: sticky;
 		top: 0;
@@ -66,7 +64,7 @@
 		z-index: 999;
 	}
 
-	header {
+	.bar {
 		grid-column: popout;
 		padding-block: var(--gap-sm);
 	}

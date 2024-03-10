@@ -1,5 +1,6 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte'
+	import { splitName } from '$lib/utils'
 	export let data
 </script>
 
@@ -7,29 +8,40 @@
 	looking for friends with lists
 {:then friends}
 	{#if friends.length > 0}
-		<ul>
-			{#each friends as friend}
-				{#if friend}
-					<li>
-						{#if friend.img}
-							<img src={friend.img} alt={friend.nick} />
-						{/if}
+		{#each friends as friend}
+			{#if friend}
+				<details>
+					{#if friend.img}
+						<img src={friend.img} alt={friend.nick} />
+					{/if}
 
-						<a href="/follows/{friend?.userId}">
+					<summary>
+						<!-- <a href="/follows/lists?id={friend.userId}"> -->
+						<b>
 							{friend.nick || friend.name}
-						</a>
-
-						<a href="/follows/discover?id={friend.userId}">follows</a>
+						</b>
+						<!-- </a> -->
 
 						{#if friend.known}
 							<Icon name="friendship" aria="hidden" />
 						{:else if friend.follows}
 							<Icon name="follows" aria="hidden" />
 						{/if}
-					</li>
-				{/if}
-			{/each}
-		</ul>
+
+						<a href="/follows/discover?id={friend.userId}">follows</a>
+					</summary>
+					<ul>
+						{#each friend.lists as list}
+							<li>
+								<a href="/follows/{friend.userId}/{splitName(list)}/?id={list}">
+									{splitName(list)}
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</details>
+			{/if}
+		{/each}
 	{:else}
 		<p>Not following anyone with RSS lists</p>
 	{/if}
