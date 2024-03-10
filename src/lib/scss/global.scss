@@ -12,6 +12,7 @@
 	--clr-light: #d3d3d3;
 	--clr-dark: #1b1b1b;
 
+	--gap-xs: 5px;
 	--gap-sm: 10px;
 	--gap-lg: 100px;
 	--content-max: 75rem;
@@ -98,7 +99,7 @@ body {
 .wrap-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
-	gap: 10px;
+	gap: var(--gap-sm);
 }
 
 .columns {
@@ -112,7 +113,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 5px;
+	gap: var(--gap-xs);
 }
 
 //todo Button comp?
