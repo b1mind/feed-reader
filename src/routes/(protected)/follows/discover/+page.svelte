@@ -13,6 +13,7 @@
 		{#each friends as friend}
 			{#if friend}
 				{@const known = data.user.knows.includes(friend.webId)}
+				{@const following = friend.follows && known}
 				<details>
 					{#if friend.img}
 						<img src={friend.img} alt={friend.nick} />
@@ -25,8 +26,10 @@
 						</b>
 						<!-- </a> -->
 
-						{#if known}
+						{#if known && following}
 							<Icon name="friendship" aria="hidden" />
+						{:else if known}
+							<Icon name="following" aria="hidden" />
 						{:else if friend.follows}
 							<Icon name="follows" aria="hidden" />
 						{/if}

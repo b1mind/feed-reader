@@ -89,6 +89,7 @@ export async function load({ locals, url, parent }) {
 					nick,
 					webId: contact.href,
 					userId: contact.host,
+					knows,
 					// known,
 					follows,
 					lists,
