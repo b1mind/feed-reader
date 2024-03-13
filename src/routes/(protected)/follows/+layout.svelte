@@ -1,6 +1,5 @@
 <script>
-	import Icon from '$lib/components/Icon.svelte'
-	import { splitName } from '$lib/utils'
+	import Follower from '$lib/components/FollowList.svelte'
 
 	export let data
 </script>
@@ -12,45 +11,10 @@
 	{:then friends}
 		{#if friends.length > 0}
 			{#each friends as friend}
-				{#if friend}
-					<details>
-						{#if friend.img}
-							<img src={friend.img} alt={friend.nick} />
-						{/if}
-
-						<summary>
-							<!-- <a href="/follows/lists?id={friend.userId}"> -->
-							<b>
-								{friend.nick || friend.name}
-							</b>
-							<!-- </a> -->
-
-							{#if friend.known}
-								<Icon name="friendship" aria="hidden" />
-							{:else if friend.follows}
-								<Icon name="follows" aria="hidden" />
-							{/if}
-						</summary>
-						<ul>
-							<a href="/follows/discover?id={friend.userId}">follows</a>
-							{#each friend.lists as list}
-								<li>
-									<a
-										href="/follows/{friend.userId}/{splitName(list)}/?id={list}"
-									>
-										{splitName(list)}
-									</a>
-								</li>
-							{/each}
-							<!-- {#each friend.knows as know}
-								{know}
-							{/each} -->
-						</ul>
-					</details>
-				{/if}
+				<Follower {friend} known={friend.known} following="true" />
+			{:else}
+				<b>not following anyone</b>
 			{/each}
-		{:else}
-			<b>not following anyone</b>
 		{/if}
 	{/await}
 </aside>
@@ -59,10 +23,3 @@
 	<h1>Following</h1>
 	<slot />
 </div>
-
-<style lang="scss">
-	img {
-		width: 32px;
-		aspect-ratio: 1;
-	}
-</style>

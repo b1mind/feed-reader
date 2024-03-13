@@ -70,7 +70,7 @@
 <style lang="scss">
 	main {
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: 280px 1fr;
 		@media (max-width: 460px) {
 			grid-template-columns: 1fr;
 		}

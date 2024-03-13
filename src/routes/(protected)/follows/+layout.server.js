@@ -1,4 +1,3 @@
-import { redirect } from '@sveltejs/kit'
 import {
 	getSolidDataset,
 	getThing,
