@@ -70,6 +70,7 @@ export async function load({ locals, url, parent }) {
 				const knows = getUrlAll(friendThing, FOAF.knows)
 
 				let follows = knows.includes(webId)
+				// remove? doing this on the frontend now could also do follows?
 				// let known
 				// if (follows) {
 				// 	const parentData = await parent()

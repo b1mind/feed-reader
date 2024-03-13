@@ -1,5 +1,5 @@
 <script>
-	import Follower from '$lib/components/FollowList.svelte'
+	import Follower from '$lib/components/Follower.svelte'
 
 	export let data
 </script>

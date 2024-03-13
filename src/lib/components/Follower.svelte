@@ -27,6 +27,7 @@
 			<Icon name="follows" aria="hidden" />
 		{/if}
 	</summary>
+
 	<ul>
 		<a href="/follows/discover?id={friend.userId}">follows</a>
 		{#each friend.lists as list}
