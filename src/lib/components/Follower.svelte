@@ -68,6 +68,8 @@
 
 	li {
 		list-style: none;
+		text-align: center;
+		font-size: 1.2rem;
 		border-top: 1px solid var(--clr-secondary-bg);
 		border-bottom: 1px solid var(--clr-secondary-bg);
 

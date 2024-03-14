@@ -182,7 +182,7 @@
 			background-color: var(--clr-secondary-bg);
 			z-index: 9;
 			&:hover {
-				--fill: var(--clr-primary-bg);
+				--fill: var(--clr-primary-dark);
 			}
 		}
 	}
