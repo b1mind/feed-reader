@@ -35,7 +35,12 @@
 			<b>{feedTitle}</b>
 			<br />
 		{/if}
-		<a {target} href={link} on:click={(e) => saveSeen(e, title)}>
+		<a
+			href={link}
+			{target}
+			data-sveltekit-reload
+			on:click={(e) => saveSeen(e, title)}
+		>
 			{title}
 		</a>
 
