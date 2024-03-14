@@ -8,16 +8,18 @@
 </script>
 
 <details>
-	{#if friend.img}
-		<img src={friend.img} alt={friend.nick} />
-	{/if}
-
 	<summary>
-		<!-- <a href="/follows/lists?id={friend.userId}"> -->
+		{#if friend.img}
+			<img src={friend.img} alt={friend.nick} />
+		{/if}
+
 		<b>
 			{friend.nick || friend.name}
 		</b>
-		<!-- </a> -->
+
+		<!-- <a href="/follows/lists?id={friend.userId}">
+			webId
+		</a> -->
 
 		{#if known && following}
 			<Icon name="friendship" aria="hidden" />
@@ -28,8 +30,8 @@
 		{/if}
 	</summary>
 
+	<a href="/follows/discover?id={friend.userId}">follows</a>
 	<ul>
-		<a href="/follows/discover?id={friend.userId}">follows</a>
 		{#each friend.lists as list}
 			<li>
 				<a href="/follows/{friend.userId}/{splitName(list)}/?id={list}">
@@ -44,15 +46,38 @@
 </details>
 
 <style lang="scss">
+	details {
+		background-color: var(--clr-secondary-bg-alt);
+	}
+
 	summary {
 		padding: 0.5rem;
 		font-size: 1.15rem;
-		border-top: 1px solid var(--clr-light);
-		background-color: var(--clr-primary-bg-alt);
+		background-color: var(--clr-secondary-bg);
 	}
 
 	img {
 		width: 32px;
 		aspect-ratio: 1;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		list-style: none;
+		border-top: 1px solid var(--clr-secondary-bg);
+		border-bottom: 1px solid var(--clr-secondary-bg);
+
+		& > a {
+			padding: 0.75rem;
+			display: block;
+		}
+	}
+
+	li + li {
+		border-top: unset;
 	}
 </style>
