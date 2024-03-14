@@ -55,7 +55,7 @@ export async function load({ locals, parent }) {
 			}
 		})
 
-		const friends = await Promise.all(friendPromises)
+		const friends = Promise.all(friendPromises)
 
 		return { friends }
 	} catch (error) {
