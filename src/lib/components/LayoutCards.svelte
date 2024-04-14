@@ -30,7 +30,6 @@
 
 	function sortRandom() {
 		posts = [...randomPosts]
-		console.log(randomPosts === posts)
 		recent = false
 	}
 
@@ -75,7 +74,7 @@
 	<ViewButton on:toggleView={() => (columns = !columns)} {columns} />
 
 	{#key posts}
-		<div class="wrap-cards" class:columns transition:fade={{ duration: 300 }}>
+		<div class="layout-cards" class:columns transition:fade={{ duration: 300 }}>
 			{#each hiddenPosts as post (post.id)}
 				<Card id={post.id} {...post} />
 			{/each}
