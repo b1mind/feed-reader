@@ -55,7 +55,8 @@ export async function load({ locals, parent }) {
 			}
 		})
 
-		const friends = Promise.all(friendPromises)
+		//does not seem to stream online... nginx issue?
+		const friends = await Promise.all(friendPromises)
 
 		return { friends }
 	} catch (error) {

@@ -97,7 +97,7 @@ body {
 	}
 }
 
-.wrap-cards {
+.layout-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
 	gap: var(--gap-sm);
@@ -110,7 +110,7 @@ body {
 	}
 }
 
-.wrap-flex {
+.layout-flex {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;

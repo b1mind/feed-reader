@@ -93,7 +93,7 @@
 			text-align: right;
 		}
 
-		.wrap-cards {
+		.layout-cards {
 			text-align: left;
 		}
 	}
