@@ -8,9 +8,9 @@
 	let rotate = false
 	let down = false
 
-	function saveSeen(e, title) {
+	function saveSeen(e, link) {
 		e.target.closest('article').classList.add('seen')
-		$localSettings.seenPosts = [title, ...$localSettings.seenPosts]
+		$localSettings.seenPosts = [link, ...$localSettings.seenPosts]
 	}
 
 	function toggleImg() {
@@ -28,7 +28,7 @@
 	export let id
 </script>
 
-<article class:seen={lastSeen.includes(title)} data-id={id}>
+<article class:seen={lastSeen.includes(link)} data-id={id}>
 	<header>
 		<!-- //todo check if author fallback to this -->
 		{#if feedTitle}
@@ -39,12 +39,12 @@
 			href={link}
 			{target}
 			data-sveltekit-reload
-			on:click={(e) => saveSeen(e, title)}
+			on:click={(e) => saveSeen(e, link)}
 		>
 			{title}
 		</a>
 
-		<div class="wrap-flex">
+		<div class="layout-flex">
 			{#if categories}
 				{#each categories.slice(-4) as tag}
 					<b>{tag}</b>
@@ -57,7 +57,7 @@
 		<p>
 			{snippet}
 			{#if !title}
-				<a href={link}>..Read More</a>
+				<a href={link} on:click={(e) => saveSeen(e, link)}> ..Read More </a>
 			{/if}
 		</p>
 	{/if}
@@ -137,7 +137,7 @@
 		}
 	}
 
-	.wrap-flex {
+	.layout-flex {
 		justify-content: end;
 		margin-block-start: 4px;
 
