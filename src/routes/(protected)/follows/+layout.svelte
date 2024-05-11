@@ -11,7 +11,9 @@
 	{:then friends}
 		{#if friends.length > 0}
 			{#each friends as friend}
-				<Follower {friend} known={friend.known} following="true" />
+				{#if friend}
+					<Follower {friend} known={friend.known} following="true" />
+				{/if}
 			{:else}
 				<b>not following anyone</b>
 			{/each}
