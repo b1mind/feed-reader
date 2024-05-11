@@ -50,7 +50,8 @@ export async function load({ locals, parent }) {
 					knows,
 				}
 			} catch {
-				console.log('failed')
+				//todo handle friends with no lists better? Do we display them?
+				console.log('friend with no list', contact.href)
 				return null
 			}
 		})

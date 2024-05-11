@@ -71,7 +71,7 @@ async function addList({ locals, request }) {
 			}
 
 			outlines.forEach((outline) => {
-				if (outline.$.type === 'rss') {
+				if (outline.$.type === 'rss' && outline.$.xmlUrl !== '') {
 					//todo solidDataset with things
 					//really need to make a helper function for this
 					name = outline.$.text

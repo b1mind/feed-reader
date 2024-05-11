@@ -153,6 +153,7 @@
 	p {
 		grid-column: 1 / -1;
 		grid-row: content;
+		overflow-wrap: anywhere;
 	}
 
 	.media {
