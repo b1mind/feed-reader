@@ -17,7 +17,7 @@
 FROM node:18.17.1 AS builder
 WORKDIR /user/src/app
 COPY package*.json .
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 RUN npm prune --production
