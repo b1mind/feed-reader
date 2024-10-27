@@ -26,7 +26,8 @@ FROM node:18.17.1
 WORKDIR /user/src/app
 COPY --from=builder /usr/src/app/build build/
 COPY --from=builder /usr/src/app/node_modules node_modules/
+ENV PATH node_modules/.bin:$PATH
 COPY package.json .
 EXPOSE 3000
-ENV NODE_ENV=production
+# ENV NODE_ENV=production
 CMD [ "node", "build" ]
