@@ -1,34 +1,35 @@
-# # Node build and run environment
-# FROM node:18.17.1 as builder
-# RUN mkdir /usr/src/app
-# # ARG GIT_TOKEN
-# WORKDIR /usr/src/app
-# ENV PATH /usr/src/app/node_modules/.bin:$PATH
-# COPY . /usr/src/app
-# RUN npm install
-# RUN npm run push
-# RUN rm -f .npmrc
-# EXPOSE 3000
-# RUN npm run build
-# CMD ["node", "build"]
-
-# better build from https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/
-FROM node:18.17.1 AS builder
+# Node build and run environment
+FROM node:18.17.1 as builder
+RUN mkdir /usr/src/app
+# ARG GIT_TOKEN
 WORKDIR /usr/src/app
-COPY package*.json .
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY . /usr/src/app
 RUN npm install
-COPY . .
-RUN npm run build
-# RUN npm prune --production
-
-FROM node:18.17.1
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app/build build/
-COPY --from=builder /usr/src/app/session.db .
-COPY --from=builder /usr/src/app/drizzle.config.ts .
-COPY --from=builder /usr/src/app/node_modules node_modules/
-COPY package.json .
+RUN npm run push
+RUN rm -f .npmrc
 EXPOSE 3000
-ENV PATH node_modules/.bin:$PATH
-# ENV NODE_ENV=production
-CMD [ "node", "build" ]
+RUN npm run build
+CMD ["node", "build"]
+
+# # todo fix this so it works
+# # better build from https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/
+# FROM node:18.17.1 AS builder
+# WORKDIR /usr/src/app
+# COPY package*.json .
+# RUN npm install
+# COPY . .
+# RUN npm run build
+# # RUN npm prune --production
+
+# FROM node:18.17.1
+# WORKDIR /usr/src/app
+# COPY --from=builder /usr/src/app/build build/
+# COPY --from=builder /usr/src/app/session.db .
+# COPY --from=builder /usr/src/app/drizzle.config.ts .
+# COPY --from=builder /usr/src/app/node_modules node_modules/
+# COPY package.json .
+# EXPOSE 3000
+# ENV PATH node_modules/.bin:$PATH
+# # ENV NODE_ENV=production
+# CMD [ "node", "build" ]
