@@ -89,7 +89,13 @@
 				<picture class="img">
 					<!-- need fallback if fails to load -->
 
-					<img src={media.url} alt={media.alt} loading="lazy" />
+					<img
+						width="300"
+						height="200"
+						src={media.url}
+						alt={media.alt}
+						loading="lazy"
+					/>
 					<!-- <img
 						src="https://picsum.photos/500/350?random={Math.random()}"
 						loading="lazy"
@@ -185,6 +191,10 @@
 			&:hover {
 				--fill: var(--clr-primary-dark);
 			}
+		}
+
+		.img > img {
+			object-fit: cover;
 		}
 	}
 

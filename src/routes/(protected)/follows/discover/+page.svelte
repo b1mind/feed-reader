@@ -10,10 +10,12 @@
 	{#if friends.length > 0}
 		<b>Discover</b>
 		{#each friends as friend}
-			{@const known = data.user.knows.includes(friend.webId)}
-			{@const following = friend.follows && known}
+			{#if friend}
+				{@const known = data.user.knows.includes(friend.webId)}
+				{@const following = friend.follows && known}
 
-			<Follower {friend} {known} {following} />
+				<Follower {friend} {known} {following} />
+			{/if}
 		{/each}
 	{:else}
 		<p>Not following anyone with RSS lists</p>
