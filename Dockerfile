@@ -14,16 +14,16 @@
 # CMD ["node", "build"]
 
 # better build from https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/
-FROM node:22-alpine AS builder
-WORKDIR /app
+FROM node:18.17.1 AS builder
+WORKDIR /user/src/app
 COPY package*.json .
-RUN npm i
+RUN npm ci
 COPY . .
 RUN npm run build
 RUN npm prune --production
 
-FROM node:22-alpine
-WORKDIR /app
+FROM node:18.17.1
+WORKDIR /user/src/app
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
