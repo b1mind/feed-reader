@@ -19,7 +19,7 @@ COPY package*.json .
 RUN npm install
 COPY . .
 RUN npm run build
-RUN npm prune --production
+# RUN npm prune --production
 
 FROM node:18.17.1
 WORKDIR /usr/src/app
@@ -29,5 +29,6 @@ COPY --from=builder /usr/src/app/drizzle.config.ts .
 COPY --from=builder /usr/src/app/node_modules node_modules/
 COPY package.json .
 EXPOSE 3000
-ENV NODE_ENV=production
+ENV PATH node_modules/.bin:$PATH
+# ENV NODE_ENV=production
 CMD [ "node", "build" ]
