@@ -25,6 +25,7 @@ RUN npm prune --production
 FROM node:18.17.1
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/build build/
+COPY --from=builder /usr/src/app/session.db session.db
 COPY --from=builder /usr/src/app/node_modules node_modules/
 COPY package.json .
 EXPOSE 3000
