@@ -23,7 +23,7 @@ RUN npm run build
 RUN npm prune --production
 
 FROM node:18.17.1
-WORKDIR /user/src/app
+WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/build build/
 COPY --from=builder /usr/src/app/node_modules node_modules/
 ENV PATH node_modules/.bin:$PATH
