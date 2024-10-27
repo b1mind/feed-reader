@@ -15,7 +15,7 @@
 
 # better build from https://khromov.se/dockerizing-your-sveltekit-applications-a-practical-guide/
 FROM node:18.17.1 AS builder
-WORKDIR /user/src/app
+WORKDIR /usr/src/app
 COPY package*.json .
 RUN npm install
 COPY . .
@@ -24,8 +24,8 @@ RUN npm prune --production
 
 FROM node:18.17.1
 WORKDIR /user/src/app
-COPY --from=builder /app/build build/
-COPY --from=builder /app/node_modules node_modules/
+COPY --from=builder /usr/src/app/build build/
+COPY --from=builder /usr/src/app/node_modules node_modules/
 COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
